@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Mail, MailOutline, Phone, PhoneOutlined, YouTube } from "@mui/icons-material";
+import { Facebook, Instagram, MailOutline, PhoneOutlined, YouTube } from "@mui/icons-material";
 import React from "react";
 
 const Footer = () => {
