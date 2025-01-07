@@ -1,12 +1,8 @@
 package autoberlo.autoberlo.controller;
 
-import autoberlo.autoberlo.dto.autok.AutoList;
-import autoberlo.autoberlo.dto.autok.AutoRead;
-import autoberlo.autoberlo.dto.autok.AutoSave;
 import autoberlo.autoberlo.dto.users.UserList;
 import autoberlo.autoberlo.dto.users.UserRead;
 import autoberlo.autoberlo.dto.users.UserSave;
-import autoberlo.autoberlo.service.AutoService;
 import autoberlo.autoberlo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -19,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    /*
+
 
     @Autowired
     private UserService userService;
@@ -48,5 +44,5 @@ public class UserController {
     @Operation(summary = "Read user by id")
     public UserRead getUser(@Valid @PathVariable Integer id ) {
         return userService.getUser(id);
-    }*/
+    }
 }

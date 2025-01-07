@@ -5,12 +5,11 @@ import autoberlo.autoberlo.dto.users.UserList;
 import autoberlo.autoberlo.dto.users.UserRead;
 import autoberlo.autoberlo.dto.users.UserSave;
 import autoberlo.autoberlo.model.User;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserConverter {
-/*
+
 
 
     public static UserRead convertModelToRead(User user) {
@@ -70,5 +69,5 @@ public class UserConverter {
         return userList;
     }
 
- */
+
 }

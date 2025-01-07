@@ -1,4 +1,4 @@
-/*
+
 package autoberlo.autoberlo.model;
 
 import jakarta.persistence.Entity;
@@ -18,7 +18,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Entity
 public class User {
-
 
     @Id
 
@@ -41,4 +40,4 @@ public class User {
 
 
 }
- */
+

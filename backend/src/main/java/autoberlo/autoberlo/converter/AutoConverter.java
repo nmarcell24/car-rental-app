@@ -72,6 +72,7 @@ public class AutoConverter {
         autoList.setId(auto.getId());
         autoList.setMarka(auto.getMarka());
         autoList.setType(auto.getType());
+        autoList.setPower(auto.getPower());
         autoList.setPrice(auto.getPrice());
         return autoList;
     }

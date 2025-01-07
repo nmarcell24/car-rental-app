@@ -6,6 +6,7 @@ import autoberlo.autoberlo.dto.users.UserRead;
 import autoberlo.autoberlo.dto.users.UserSave;
 import autoberlo.autoberlo.exception.UserNotFoundException;
 import autoberlo.autoberlo.model.User;
+import autoberlo.autoberlo.repository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @Service
 public class UserService {
-    /*@Autowired
+    @Autowired
     private UserRepository userRepository;
 
 
@@ -40,5 +41,5 @@ public class UserService {
             throw new UserNotFoundException();
         User user = userRepository.getReferenceById(id);
         return UserConverter.convertModelToRead(user);
-    }*/
+    }
 }
