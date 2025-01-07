@@ -22,8 +22,6 @@ public class AutoConverter {
         autoRead.setFuelType(auto.getFuelType());
         autoRead.setTransmissionType(auto.getTransmissionType());
         autoRead.setDrivetrain(auto.getDrivetrain());
-
-
         return autoRead;
     }
 

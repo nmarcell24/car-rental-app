@@ -41,7 +41,6 @@ public class autoberlesController {
         return autoService.updateAuto(id, autoSave);
     }
 
-
     @GetMapping("/auto/{id}")
     @Operation(summary = "Read car by id")
     public AutoRead getAuto(@Valid @PathVariable Integer id ) {

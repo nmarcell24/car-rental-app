@@ -10,8 +10,6 @@ import java.util.List;
 
 public class UserConverter {
 
-
-
     public static UserRead convertModelToRead(User user) {
         UserRead userRead = new UserRead();
         userRead.setId(user.getId());
@@ -35,7 +33,6 @@ public class UserConverter {
         user.setAge(user.getAge());
         user.setDayOfBirth(user.getDayOfBirth());
         user.setMothersName(user.getMothersName());
-
         return user;
     }
 
@@ -49,7 +46,6 @@ public class UserConverter {
         user.setAge(userSave.getAge());
         user.setDayOfBirth(userSave.getDayOfBirth());
         user.setMothersName(userSave.getMothersName());
-
         return user;
     }
 
@@ -65,7 +61,6 @@ public class UserConverter {
         UserList userList = new UserList();
         userList.setId(user.getId());
         userList.setName(user.getName());
-
         return userList;
     }
 
