@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/student")
+@RequestMapping("/cars")
 @Tag(name="Auto Berles manage", description = "CRUD+ List")
 public class autoberlesController {
 
