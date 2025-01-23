@@ -1,4 +1,4 @@
-package autoberlo.autoberlo.dto.autok;
+package autoberlo.autoberlo.dto.cars;
 
 
 import lombok.AllArgsConstructor;
@@ -10,17 +10,17 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AutoRead {
 
-    private Integer id;
+public class CarSave {
 
     private String marka;
     private String type;
     private int power;
     private int modelYear;
     private int numberOfSeats;
-    private int price;
     private String fuelType;
     private String transmissionType;
     private String drivetrain;
+    private int priceId;
+
 }

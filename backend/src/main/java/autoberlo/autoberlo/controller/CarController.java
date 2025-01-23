@@ -1,10 +1,10 @@
 package autoberlo.autoberlo.controller;
 
 
-import autoberlo.autoberlo.dto.autok.AutoList;
-import autoberlo.autoberlo.dto.autok.AutoRead;
-import autoberlo.autoberlo.dto.autok.AutoSave;
-import autoberlo.autoberlo.service.AutoService;
+import autoberlo.autoberlo.dto.cars.CarList;
+import autoberlo.autoberlo.dto.cars.CarRead;
+import autoberlo.autoberlo.dto.cars.CarSave;
+import autoberlo.autoberlo.service.CarService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -17,34 +17,34 @@ import java.util.List;
 @RestController
 @RequestMapping("/cars")
 @Tag(name="Auto Berles manage", description = "CRUD+ List")
-public class autoberlesController {
+public class CarController {
 
     @Autowired
-    private AutoService autoService;
+    private CarService carService;
 
     @GetMapping("/autolist")
     @Operation(summary = "List name all of the cars")
-    public List<AutoList> listAutok() {
-        return autoService.listAutok();
+    public List<CarList> listAutok() {
+        return carService.listAutok();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/autocreate")
     @Operation(summary = "create new car")
-    public AutoRead createAuto(@RequestBody @Valid AutoSave autoSave){
-        return autoService.createAuto(autoSave);
+    public CarRead createAuto(@RequestBody @Valid CarSave carSave){
+        return carService.createAuto(carSave);
     }
 
     @PutMapping("/auto/{id}")
     @Operation(summary = "Update car by id")
-    public AutoRead updateAuto(@Valid @PathVariable Integer id, AutoSave autoSave ) {
-        return autoService.updateAuto(id, autoSave);
+    public CarRead updateAuto(@Valid @PathVariable Integer id, CarSave carSave) {
+        return carService.updateAuto(id, carSave);
     }
 
     @GetMapping("/auto/{id}")
     @Operation(summary = "Read car by id")
-    public AutoRead getAuto(@Valid @PathVariable Integer id ) {
-        return autoService.getAuto(id);
+    public CarRead getAuto(@Valid @PathVariable Integer id ) {
+        return carService.getAuto(id);
     }
 
 
