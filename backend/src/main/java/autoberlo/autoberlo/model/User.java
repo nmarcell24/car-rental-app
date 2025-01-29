@@ -36,8 +36,6 @@ public class User {
 
     private LocalDate dayOfBirth;
 
-    private String mothersName;
-
 
 }
 

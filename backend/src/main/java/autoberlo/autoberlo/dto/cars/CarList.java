@@ -1,4 +1,4 @@
-package autoberlo.autoberlo.dto.autok;
+package autoberlo.autoberlo.dto.cars;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,12 +9,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AutoList {
+public class CarList {
 
     private Integer id;
 
     private String marka;
     private String type;
     private int power;
-    private int price;
+
 }

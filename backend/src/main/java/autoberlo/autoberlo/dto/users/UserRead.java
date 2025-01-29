@@ -19,5 +19,4 @@ public class UserRead {
     private String address;
     private int age;
     private LocalDate dayOfBirth;
-    private String mothersName;
 }
