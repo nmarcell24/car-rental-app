@@ -71,7 +71,7 @@ const Footer = () => {
 
         {/* Bottom Section */}
         <div className="mt-6 text-sm text-gray-400">
-          Copyright © 2023 · Rentcars, All Rights Reserved
+          Copyright © 2025 · Rentcars, All Rights Reserved
         </div>
       </div>
     </footer>

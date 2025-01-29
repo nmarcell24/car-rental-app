@@ -1,0 +1,107 @@
+[
+  {
+    "name": "Toyota Corolla",
+    "fuel_type": "Petrol",
+    "transmission": "Automatic",
+    "seats": 5,
+    "price": 20000
+  },
+  {
+    "name": "Honda Civic",
+    "fuel_type": "Diesel",
+    "transmission": "Manual",
+    "seats": 5,
+    "price": 22000
+  },
+  {
+    "name": "Tesla Model 3",
+    "fuel_type": "Electric",
+    "transmission": "Automatic",
+    "seats": 5,
+    "price": 35000
+  },
+  {
+    "name": "Ford Ranger",
+    "fuel_type": "Diesel",
+    "transmission": "Manual",
+    "seats": 4,
+    "price": 28000
+  },
+  {
+    "name": "Chevrolet Bolt",
+    "fuel_type": "Electric",
+    "transmission": "Automatic",
+    "seats": 5,
+    "price": 31000
+  },
+  {
+    "name": "Hyundai Elantra",
+    "fuel_type": "Petrol",
+    "transmission": "Automatic",
+    "seats": 5,
+    "price": 19000
+  },
+  {
+    "name": "Kia Seltos",
+    "fuel_type": "Diesel",
+    "transmission": "Manual",
+    "seats": 5,
+    "price": 25000
+  },
+  {
+    "name": "Nissan Leaf",
+    "fuel_type": "Electric",
+    "transmission": "Automatic",
+    "seats": 5,
+    "price": 33000
+  },
+  {
+    "name": "Mazda CX-5",
+    "fuel_type": "Petrol",
+    "transmission": "Automatic",
+    "seats": 5,
+    "price": 27000
+  },
+  {
+    "name": "Subaru Outback",
+    "fuel_type": "Petrol",
+    "transmission": "Automatic",
+    "seats": 5,
+    "price": 29000
+  },
+  {
+    "name": "Volkswagen Passat",
+    "fuel_type": "Diesel",
+    "transmission": "Automatic",
+    "seats": 5,
+    "price": 24000
+  },
+  {
+    "name": "Jeep Compass",
+    "fuel_type": "Diesel",
+    "transmission": "Manual",
+    "seats": 5,
+    "price": 28000
+  },
+  {
+    "name": "BMW 3 Series",
+    "fuel_type": "Petrol",
+    "transmission": "Automatic",
+    "seats": 5,
+    "price": 42000
+  },
+  {
+    "name": "Audi A4",
+    "fuel_type": "Diesel",
+    "transmission": "Automatic",
+    "seats": 5,
+    "price": 41000
+  },
+  {
+    "name": "Mercedes-Benz C-Class",
+    "fuel_type": "Petrol",
+    "transmission": "Automatic",
+    "seats": 5,
+    "price": 45000
+  }
+]

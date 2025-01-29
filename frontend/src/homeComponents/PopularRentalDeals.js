@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router";
 
 const cars = [
   {
@@ -92,9 +93,9 @@ const PopularRentalDeals = () => {
           ))}
         </div>
         <div className="mt-10">
-          <button className="bg-gray-100 px-6 py-3 rounded-lg shadow-md text-gray-700 font-medium hover:bg-gray-200 transition">
+          <Link to={"/cataloge"} className="bg-gray-100 px-6 py-3 rounded-lg shadow-md text-gray-700 font-medium hover:bg-gray-200 transition">
             Show all vehicles →
-          </button>
+          </Link>
         </div>
       </div>
     </section>

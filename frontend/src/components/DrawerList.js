@@ -10,8 +10,10 @@ import ListItemText from "@mui/material/ListItemText";
 import MailIcon from "@mui/icons-material/Mail";
 import QuestionMark from "@mui/icons-material/QuestionMark";
 import { CarRental, Home, Menu } from "@mui/icons-material";
+import { Link, useLocation } from "react-router";
 
 export default function TemporaryDrawer() {
+  const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen) => () => {
@@ -21,22 +23,26 @@ export default function TemporaryDrawer() {
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <Home />
-            </ListItemIcon>
-            <ListItemText primary={"Home"} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <CarRental />
-            </ListItemIcon>
-            <ListItemText primary={"Car Cataloge"} />
-          </ListItemButton>
-        </ListItem>
+        <Link to={"/"}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <Home />
+              </ListItemIcon>
+              <ListItemText primary={"Home"} />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Link to={"/cataloge"}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <CarRental />
+              </ListItemIcon>
+              <ListItemText primary={"Car Cataloge"} />
+            </ListItemButton>
+          </ListItem>
+        </Link>
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
@@ -60,8 +66,15 @@ export default function TemporaryDrawer() {
   return (
     <div>
       <div className="md:hidden">
-        <Button onClick={toggleDrawer(true)}><Menu /></Button>
-        <Drawer className="md:hidden relative" open={open} anchor={"right"} onClose={toggleDrawer(false)}>
+        <Button onClick={toggleDrawer(true)}>
+          <Menu />
+        </Button>
+        <Drawer
+          className="md:hidden relative"
+          open={open}
+          anchor={"right"}
+          onClose={toggleDrawer(false)}
+        >
           {DrawerList}
           <div className="flex w-full justify-evenly absolute bottom-0">
             <Button variant="contained">Sign in</Button>
@@ -70,13 +83,89 @@ export default function TemporaryDrawer() {
         </Drawer>
       </div>
       <ul className="hidden md:flex gap-4">
-        <li className="flex items-center">Home</li>
-        <li className="flex items-center">Cataloge</li>
-        <li className="flex items-center">Contact</li>
-        <li className="flex items-center">Help</li>
+        <Link
+          to={"/"}
+          className={
+            pathname == "/cataloge"
+              ? "flex items-center hover:border-b hover:border-black hover:cursor-pointer"
+              : "flex items-center hover:border-b hover:text-white hover:cursor-pointer"
+          }
+        >
+          Home
+        </Link>
+        <Link
+          to={"/cataloge"}
+          className={
+            pathname == "/cataloge"
+              ? "flex items-center hover:border-b hover:border-black hover:cursor-pointer"
+              : "flex items-center hover:border-b hover:text-white hover:cursor-pointer"
+          }
+        >
+          Cataloge
+        </Link>
+        <Link
+          to={"/contact"}
+          className={
+            pathname == "/cataloge"
+              ? "flex items-center hover:border-b hover:border-black hover:cursor-pointer transition-"
+              : "flex items-center hover:border-b hover:text-white hover:cursor-pointer"
+          }
+        >
+          Contact
+        </Link>
+        <Link
+          to={"/help"}
+          className={
+            pathname == "/cataloge"
+              ? "flex items-center hover:border-b hover:border-black hover:cursor-pointer"
+              : "flex items-center hover:border-b hover:text-white hover:cursor-pointer"
+          }
+        >
+          Help
+        </Link>
         <div className="flex gap-2 ml-12">
-          <Button variant="contained">Sign in</Button>
-          <Button variant="outlined">Register</Button>
+          <Button
+            variant="contained"
+            sx={{
+              color: "black",
+              backgroundColor: "white",
+              "&:hover": {
+                backgroundColor: "white",
+                color: "black",
+              },
+            }}
+          >
+            Sign in
+          </Button>
+          {pathname == "/cataloge" ? (
+            <Button
+              variant="outlined"
+              sx={{
+                color: "black",
+                borderColor: "black",
+                "&:hover": {
+                  backgroundColor: "black",
+                  color: "white",
+                },
+              }}
+            >
+              Register
+            </Button>
+          ) : (
+            <Button
+              variant="outlined"
+              sx={{
+                color: "white",
+                borderColor: "white",
+                "&:hover": {
+                  backgroundColor: "white",
+                  color: "black",
+                },
+              }}
+            >
+              Register
+            </Button>
+          )}
         </div>
       </ul>
     </div>

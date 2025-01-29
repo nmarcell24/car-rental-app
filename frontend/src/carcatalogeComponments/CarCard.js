@@ -1,0 +1,38 @@
+import React from "react";
+import { Button } from "@mui/material";
+import { FlightClass, GasMeter, LocalGasStation, Settings } from "@mui/icons-material";
+
+const CarCard = ({ name, fuel_type, transmission, seats, price }) => {    
+  return (
+    <div className="w-64 p-4 border rounded-2xl shadow-lg bg-gray-200">
+      <div className="flex justify-between items-center mb-4">
+        <h6 className="text-lg font-semibold">{ name }</h6>
+        <span className="text-red-500">❤</span>
+      </div>
+      <div className="flex justify-center mb-4">
+        <img
+          src="https://via.placeholder.com/150"
+          alt="Car"
+          className="h-32 object-contain"
+        />
+      </div>
+      <div className="flex justify-between items-center text-sm text-gray-600 mb-4">
+        <span><LocalGasStation />{ fuel_type }</span>
+        <span><Settings />{ transmission }</span>
+        <span><FlightClass />{ seats }</span>
+      </div>
+      <div className="flex justify-between items-center">
+        <span className="text-xl font-bold">${ price }</span>
+        <Button
+          variant="contained"
+          color="primary"
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+        >
+          Book Now
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+export default CarCard;

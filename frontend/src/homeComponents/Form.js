@@ -31,12 +31,12 @@ const Form = () => {
         It'easy for you to <strong>rent a car</strong>
       </h1>
       <FormControl fullWidth className="flex flex-col gap-6">
-        <InputLabel id="demo-simple-select-label">Car type</InputLabel>
+        <InputLabel id="demo-simple-select-label">Car Type</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={carType}
-          name="carType"
+          label="Car Type"
           onChange={handleChange}
         >
           <MenuItem value={"Offroad"}>Offroad</MenuItem>
@@ -71,7 +71,7 @@ const Form = () => {
             onChange={() => setValueTo(valueTo)}
           />
         </div>
-        <Button variant="contained">Reserve Now</Button>
+        <Button variant="contained" sx={{backgroundColor: "#f1c656"}}>Reserve Now</Button>
       </FormControl>
     </div>
   );

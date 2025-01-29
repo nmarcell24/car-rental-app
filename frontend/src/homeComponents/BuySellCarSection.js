@@ -14,7 +14,7 @@ const BuySellCarSection = () => {
             </p>
           </div>
           <div className="flex justify-between items-center">
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+            <button className="bg-[#0D1E3A] text-white px-4 py-2 rounded-lg2">
               Get Started →
             </button>
             <div>

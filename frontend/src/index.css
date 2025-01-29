@@ -7,15 +7,3 @@
   margin: 0;
   box-sizing: border-box;
 }
-
-:root {
-  --primary-color: rgb(241, 198, 86);
-}
-
-.appContainer {
-  background-color: var(--primary-color);
-}
-
-.vh-100 {
-  height: 100vh;
-}
