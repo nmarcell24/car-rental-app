@@ -11,7 +11,7 @@ const cars = [
     airConditioning: true,
     doors: 4,
     price: 1800,
-    image: "https://via.placeholder.com/200x100", // Replace with actual image
+    image: "./images/car21.png", // Replace with actual image
   },
   {
     name: "Audi R8",
@@ -22,7 +22,7 @@ const cars = [
     airConditioning: true,
     doors: 2,
     price: 2100,
-    image: "https://via.placeholder.com/200x100", // Replace with actual image
+    image: "./images/car20.png", // Replace with actual image
   },
   {
     name: "BMW M3",
@@ -33,7 +33,7 @@ const cars = [
     airConditioning: true,
     doors: 4,
     price: 1600,
-    image: "https://via.placeholder.com/200x100", // Replace with actual image
+    image: "./images/car19.png", // Replace with actual image
   },
   {
     name: "Lamborghini Huracan",
@@ -44,7 +44,7 @@ const cars = [
     airConditioning: true,
     doors: 2,
     price: 2300,
-    image: "https://via.placeholder.com/200x100", // Replace with actual image
+    image: "./images/car11.png", // Replace with actual image
   },
 ];
 
@@ -67,7 +67,7 @@ const PopularRentalDeals = () => {
               <img
                 src={car.image}
                 alt={car.name}
-                className="w-full h-32 object-cover rounded-md mb-4"
+                className="w-full h-38 object-fit rounded-md mb-4"
               />
               <h4 className="text-lg font-semibold text-gray-700 mb-2">
                 {car.name}
