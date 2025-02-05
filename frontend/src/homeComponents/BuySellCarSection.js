@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 const BuySellCarSection = () => {
   return (
     <section className="py-12 bg-gray-50">
@@ -14,12 +16,12 @@ const BuySellCarSection = () => {
             </p>
           </div>
           <div className="flex justify-between items-center">
-            <button className="bg-[#0D1E3A] text-white px-4 py-2 rounded-lg2">
+            <Link to={"/cataloge"} className="bg-[#0D1E3A] text-white px-4 py-2 rounded-lg2">
               Get Started →
-            </button>
+            </Link>
             <div>
               <img
-                src="https://via.placeholder.com/60x60"
+                src="./logos/logos7.svg"
                 alt="Looking for car"
                 className="w-16 h-16"
               />
@@ -43,7 +45,7 @@ const BuySellCarSection = () => {
             </button>
             <div>
               <img
-                src="https://via.placeholder.com/60x60"
+                src="./logos/logos6.svg"
                 alt="Sell a car"
                 className="w-16 h-16"
               />
