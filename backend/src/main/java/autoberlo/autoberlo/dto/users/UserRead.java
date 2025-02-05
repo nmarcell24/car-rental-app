@@ -16,6 +16,7 @@ public class UserRead {
     private String name;
     private String phoneNumber;
     private String email;
+    private String password;
     private String address;
     private int age;
     private LocalDate dayOfBirth;

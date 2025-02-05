@@ -30,6 +30,8 @@ public class User {
 
     private String email;
 
+    private String password;
+
     private String address;
 
     private int age;
@@ -38,4 +40,5 @@ public class User {
 
 
 }
+
 

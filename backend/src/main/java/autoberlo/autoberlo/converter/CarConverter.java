@@ -1,5 +1,6 @@
 package autoberlo.autoberlo.converter;
 
+import autoberlo.autoberlo.config.GlobalVariable;
 import autoberlo.autoberlo.dto.cars.CarList;
 import autoberlo.autoberlo.dto.cars.CarRead;
 import autoberlo.autoberlo.dto.cars.CarSave;
@@ -21,22 +22,36 @@ public class CarConverter {
         carRead.setFuelType(car.getFuelType());
         carRead.setTransmissionType(car.getTransmissionType());
         carRead.setDriveTrain(car.getDriveTrain());
-        carRead.setPriceCategoryId(car.getPriceCategoryId());
+        carRead.setPriceCategoryId(extracted(car.getPriceCategoryId()));
+
+
         return carRead;
+    }
+
+    private static int extracted(int priceCategoryId) {
+        int category = 0;
+        if (priceCategoryId == 0){
+            category = GlobalVariable.CATEGORY_LOW_PRICE;
+        } else if (priceCategoryId == 1) {
+            category = GlobalVariable.CATEGORY_MID_PRICE;
+        }else {
+            category = GlobalVariable.CATEGORY_PREMIUM_PRICE;
+        }
+        return category;
     }
 
 
     public static Car convertSaveToModel(CarSave carSave) {
         Car car = new Car();
-        car.setMarka(car.getMarka());
-        car.setCarType(car.getCarType());
-        car.setHorsePower(car.getHorsePower());
-        car.setModelYear(car.getModelYear());
-        car.setNumberOfSeats(car.getNumberOfSeats());
-        car.setFuelType(car.getFuelType());
-        car.setTransmissionType(car.getTransmissionType());
-        car.setDriveTrain(car.getDriveTrain());
-        car.setPriceCategoryId(car.getPriceCategoryId());
+        car.setMarka(carSave.getMarka());
+        car.setCarType(carSave.getCarType());
+        car.setHorsePower(carSave.getHorsePower());
+        car.setModelYear(carSave.getModelYear());
+        car.setNumberOfSeats(carSave.getNumberOfSeats());
+        car.setFuelType(carSave.getFuelType());
+        car.setTransmissionType(carSave.getTransmissionType());
+        car.setDriveTrain(carSave.getDriveTrain());
+        car.setPriceCategoryId(extracted(carSave.getPriceCategoryId()));
 
         return car;
     }
@@ -52,7 +67,7 @@ public class CarConverter {
         car.setFuelType(carSave.getFuelType());
         car.setTransmissionType(carSave.getTransmissionType());
         car.setDriveTrain(carSave.getDriveTrain());
-        car.setPriceCategoryId(carSave.getPriceCategoryId());
+        car.setPriceCategoryId(extracted(carSave.getPriceCategoryId()));
 
         return car;
     }
