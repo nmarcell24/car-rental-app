@@ -14,7 +14,7 @@ public class CarList {
     private Integer id;
 
     private String marka;
-    private String type;
-    private int power;
+    private String carType;
+    private int horsePower;
 
 }

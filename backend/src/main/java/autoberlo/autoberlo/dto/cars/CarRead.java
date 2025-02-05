@@ -15,12 +15,12 @@ public class CarRead {
     private Integer id;
 
     private String marka;
-    private String type;
-    private int power;
+    private String carType;
+    private int horsePower;
     private int modelYear;
     private int numberOfSeats;
     private String fuelType;
     private String transmissionType;
-    private String drivetrain;
-    private int priceId;
+    private String driveTrain;
+    private int priceCategoryId;
 }

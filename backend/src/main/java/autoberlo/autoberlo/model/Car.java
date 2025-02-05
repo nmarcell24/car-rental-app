@@ -21,14 +21,24 @@ public class Car {
     private Integer id;
 
     private String marka;
-    private String type;
-    private int power;
+    private String carType;
+    private int horsePower;
     private int modelYear;
     private int numberOfSeats;
     private String fuelType;
     private String transmissionType;
-    private String drivetrain;
-    private int priceId;
+    private String driveTrain;
+    private int priceCategoryId;
 
 
 }
+//`id` int NOT NULL,
+//  `marka` varchar(255) COLLATE utf8mb3_hungarian_ci NOT NULL,
+//  `car_type` varchar(32) COLLATE utf8mb3_hungarian_ci NOT NULL,
+//  `horse_power` int NOT NULL,
+//  `model_year` int NOT NULL,
+//  `number_of_seats` int NOT NULL,
+//  `fuel_type` varchar(45) COLLATE utf8mb3_hungarian_ci NOT NULL,
+//  `transmission_type` varchar(45) COLLATE utf8mb3_hungarian_ci NOT NULL,
+//  `drive_train` varchar(45) COLLATE utf8mb3_hungarian_ci NOT NULL,
+//  `price_category_id` int NOT NULL,

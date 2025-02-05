@@ -2,5 +2,9 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/backend/src/main/resources/db/dbchangelog/car_rental_car.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/backend/src/main/resources/db/dbchangelog/car_rental_loan_body.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/backend/src/main/resources/db/dbchangelog/car_rental_loan_head.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/backend/src/main/resources/db/dbchangelog/car_rental_price_category.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/backend/src/main/resources/db/dbchangelog/car_rental_user.sql" dialect="MySQL" />
   </component>
 </project>

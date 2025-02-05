@@ -14,14 +14,14 @@ public class CarConverter {
         CarRead carRead = new CarRead();
         carRead.setId(car.getId());
         carRead.setMarka(car.getMarka());
-        carRead.setType(car.getType());
-        carRead.setPower(car.getPower());
+        carRead.setCarType(car.getCarType());
+        carRead.setHorsePower(car.getHorsePower());
         carRead.setModelYear(car.getModelYear());
         carRead.setNumberOfSeats(car.getNumberOfSeats());
         carRead.setFuelType(car.getFuelType());
         carRead.setTransmissionType(car.getTransmissionType());
-        carRead.setDrivetrain(car.getDrivetrain());
-        carRead.setPriceId(car.getPriceId());
+        carRead.setDriveTrain(car.getDriveTrain());
+        carRead.setPriceCategoryId(car.getPriceCategoryId());
         return carRead;
     }
 
@@ -29,14 +29,14 @@ public class CarConverter {
     public static Car convertSaveToModel(CarSave carSave) {
         Car car = new Car();
         car.setMarka(car.getMarka());
-        car.setType(car.getType());
-        car.setPower(car.getPower());
+        car.setCarType(car.getCarType());
+        car.setHorsePower(car.getHorsePower());
         car.setModelYear(car.getModelYear());
         car.setNumberOfSeats(car.getNumberOfSeats());
         car.setFuelType(car.getFuelType());
         car.setTransmissionType(car.getTransmissionType());
-        car.setDrivetrain(car.getDrivetrain());
-        car.setPriceId(car.getPriceId());
+        car.setDriveTrain(car.getDriveTrain());
+        car.setPriceCategoryId(car.getPriceCategoryId());
 
         return car;
     }
@@ -45,14 +45,14 @@ public class CarConverter {
         Car car = new Car();
         car.setId(id);
         car.setMarka(carSave.getMarka());
-        car.setType(carSave.getType());
-        car.setPower(carSave.getPower());
+        car.setCarType(carSave.getCarType());
+        car.setHorsePower(carSave.getHorsePower());
         car.setModelYear(carSave.getModelYear());
         car.setNumberOfSeats(carSave.getNumberOfSeats());
         car.setFuelType(carSave.getFuelType());
         car.setTransmissionType(carSave.getTransmissionType());
-        car.setDrivetrain(carSave.getDrivetrain());
-        car.setPriceId(carSave.getPriceId());
+        car.setDriveTrain(carSave.getDriveTrain());
+        car.setPriceCategoryId(carSave.getPriceCategoryId());
 
         return car;
     }
@@ -69,8 +69,8 @@ public class CarConverter {
         CarList carList = new CarList();
         carList.setId(car.getId());
         carList.setMarka(car.getMarka());
-        carList.setType(car.getType());
-        carList.setPower(car.getPower());
+        carList.setCarType(car.getCarType());
+        carList.setHorsePower(car.getHorsePower());
         return carList;
     }
 }
