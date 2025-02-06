@@ -22,5 +22,6 @@ public class CarRead {
     private String fuelType;
     private String transmissionType;
     private String driveTrain;
+    private String imageUrl;
     private int priceCategoryId;
 }

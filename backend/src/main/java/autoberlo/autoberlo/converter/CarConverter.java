@@ -22,6 +22,7 @@ public class CarConverter {
         carRead.setFuelType(car.getFuelType());
         carRead.setTransmissionType(car.getTransmissionType());
         carRead.setDriveTrain(car.getDriveTrain());
+        carRead.setImageUrl(car.getImageUrl());
         carRead.setPriceCategoryId(extracted(car.getPriceCategoryId()));
 
 
@@ -51,6 +52,7 @@ public class CarConverter {
         car.setFuelType(carSave.getFuelType());
         car.setTransmissionType(carSave.getTransmissionType());
         car.setDriveTrain(carSave.getDriveTrain());
+        car.setImageUrl(carSave.getImageUrl());
         car.setPriceCategoryId(extracted(carSave.getPriceCategoryId()));
 
         return car;
@@ -67,6 +69,7 @@ public class CarConverter {
         car.setFuelType(carSave.getFuelType());
         car.setTransmissionType(carSave.getTransmissionType());
         car.setDriveTrain(carSave.getDriveTrain());
+        car.setImageUrl(carSave.getImageUrl());
         car.setPriceCategoryId(extracted(carSave.getPriceCategoryId()));
 
         return car;
@@ -85,7 +88,11 @@ public class CarConverter {
         carList.setId(car.getId());
         carList.setMarka(car.getMarka());
         carList.setCarType(car.getCarType());
-        carList.setHorsePower(car.getHorsePower());
+        carList.setFuelType(car.getFuelType());
+        carList.setTransmissionType(car.getTransmissionType());
+        carList.setImageUrl(car.getImageUrl());
+        car.setPriceCategoryId(extracted(car.getPriceCategoryId()));
+
         return carList;
     }
 }

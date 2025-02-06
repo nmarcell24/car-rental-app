@@ -15,6 +15,22 @@ public class CarList {
 
     private String marka;
     private String carType;
-    private int horsePower;
+    private int numberOfSeats;
+    private String fuelType;
+    private String transmissionType;
+    private String imageUrl;
+    private int priceCategoryId;
 
 }
+// private Integer id;
+//
+//    private String marka;
+//    private String carType;
+//    private int horsePower;
+//    private int modelYear;
+//    private int numberOfSeats;
+//    private String fuelType;
+//    private String transmissionType;
+//    private String driveTrain;
+//    private int priceCategoryId;
+// name, fuel_type, transmission, seats, price, image
