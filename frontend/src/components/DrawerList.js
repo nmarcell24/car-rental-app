@@ -11,10 +11,12 @@ import MailIcon from "@mui/icons-material/Mail";
 import QuestionMark from "@mui/icons-material/QuestionMark";
 import { CarRental, Home, Menu } from "@mui/icons-material";
 import { Link, useLocation } from "react-router";
+import SignIn from "../pages/SignIn";
 
 export default function TemporaryDrawer() {
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
+  const [openSignIn, setOpenSignIn] = useState(false);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -125,6 +127,7 @@ export default function TemporaryDrawer() {
         </Link>
         <div className="flex gap-2 ml-12">
           <Button
+            onClick={() => setOpenSignIn(true)}
             variant="contained"
             sx={{
               color: "black",
@@ -168,6 +171,7 @@ export default function TemporaryDrawer() {
           )}
         </div>
       </ul>
+      {openSignIn ? <SignIn setOpenSignIn={setOpenSignIn} /> : ""}
     </div>
   );
 }
