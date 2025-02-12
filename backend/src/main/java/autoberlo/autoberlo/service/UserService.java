@@ -26,6 +26,7 @@ public class UserService {
 
     public UserRead createUser(@Valid UserSave userSave) {
         User user = userRepository.save(UserConverter.convertSaveToModel(userSave));
+        user = userRepository.save(user);
         return UserConverter.convertModelToRead(user);
     }
 

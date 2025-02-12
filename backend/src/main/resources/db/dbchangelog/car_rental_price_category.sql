@@ -35,6 +35,7 @@ CREATE TABLE `price_category` (
 
 LOCK TABLES `price_category` WRITE;
 /*!40000 ALTER TABLE `price_category` DISABLE KEYS */;
+INSERT INTO `price_category` VALUES (0,'low'),(1,'mid'),(2,'premium');
 /*!40000 ALTER TABLE `price_category` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -47,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-02-06 17:56:05
+-- Dump completed on 2025-02-12 16:55:25
