@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Cataloge from "./pages/Cataloge";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
+import SignIn from "./pages/SignIn";
 
 function App() {
   return (
