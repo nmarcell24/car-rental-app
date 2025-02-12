@@ -40,7 +40,7 @@ public class UserController {
 
 
     @GetMapping("/user/{id}")
-    @Operation(summary = "Read user by id")
+    @Operation(summary = "Reads user by id")
     public UserRead getUser(@Valid @PathVariable Integer id ) {
         return userService.getUser(id);
     }
