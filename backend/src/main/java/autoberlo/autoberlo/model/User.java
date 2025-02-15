@@ -34,8 +34,6 @@ public class User {
 
     private String address;
 
-    private int age;
-
     private LocalDate dayOfBirth;
 
 

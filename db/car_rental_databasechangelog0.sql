@@ -16,37 +16,37 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `car`
+-- Table structure for table `databasechangelog`
 --
 
-DROP TABLE IF EXISTS `car`;
+DROP TABLE IF EXISTS `databasechangelog`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `car` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `marka` varchar(255) COLLATE utf8mb3_hungarian_ci NOT NULL,
-  `car_type` varchar(32) COLLATE utf8mb3_hungarian_ci NOT NULL,
-  `horse_power` int NOT NULL,
-  `model_year` int NOT NULL,
-  `number_of_seats` int NOT NULL,
-  `fuel_type` varchar(45) COLLATE utf8mb3_hungarian_ci NOT NULL,
-  `transmission_type` varchar(45) COLLATE utf8mb3_hungarian_ci NOT NULL,
-  `drive_train` varchar(45) COLLATE utf8mb3_hungarian_ci NOT NULL,
-  `image_url` varchar(45) COLLATE utf8mb3_hungarian_ci NOT NULL,
-  `price_category_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_car_price_category_idx` (`price_category_id`)
-) ENGINE=MEMORY AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_hungarian_ci;
+CREATE TABLE `databasechangelog` (
+  `ID` varchar(255) NOT NULL,
+  `AUTHOR` varchar(255) NOT NULL,
+  `FILENAME` varchar(255) NOT NULL,
+  `DATEEXECUTED` datetime NOT NULL,
+  `ORDEREXECUTED` int NOT NULL,
+  `EXECTYPE` varchar(10) NOT NULL,
+  `MD5SUM` varchar(35) DEFAULT NULL,
+  `DESCRIPTION` varchar(255) DEFAULT NULL,
+  `COMMENTS` varchar(255) DEFAULT NULL,
+  `TAG` varchar(255) DEFAULT NULL,
+  `LIQUIBASE` varchar(20) DEFAULT NULL,
+  `CONTEXTS` varchar(255) DEFAULT NULL,
+  `LABELS` varchar(255) DEFAULT NULL,
+  `DEPLOYMENT_ID` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `car`
+-- Dumping data for table `databasechangelog`
 --
 
-LOCK TABLES `car` WRITE;
-/*!40000 ALTER TABLE `car` DISABLE KEYS */;
-INSERT INTO `car` VALUES (1,'string','string',0,0,0,'string','string','string','string',10000);
-/*!40000 ALTER TABLE `car` ENABLE KEYS */;
+LOCK TABLES `databasechangelog` WRITE;
+/*!40000 ALTER TABLE `databasechangelog` DISABLE KEYS */;
+/*!40000 ALTER TABLE `databasechangelog` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -58,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-02-15 12:21:37
+-- Dump completed on 2025-02-15 12:21:36

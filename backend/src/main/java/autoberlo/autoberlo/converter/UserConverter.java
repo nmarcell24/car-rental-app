@@ -18,7 +18,6 @@ public class UserConverter {
         userRead.setEmail(user.getEmail());
         userRead.setPassword(user.getPassword());
         userRead.setAddress(user.getAddress());
-        userRead.setAge(user.getAge());
         userRead.setDayOfBirth(user.getDayOfBirth());
 
         return userRead;
@@ -31,7 +30,6 @@ public class UserConverter {
         user.setEmail(userSave.getEmail());
         user.setPassword(userSave.getPassword());
         user.setAddress(userSave.getAddress());
-        user.setAge(userSave.getAge());
         user.setDayOfBirth(userSave.getDayOfBirth());
         return user;
     }
@@ -44,7 +42,6 @@ public class UserConverter {
         user.setEmail(userSave.getEmail());
         user.setPassword(userSave.getPassword());
         user.setAddress(userSave.getAddress());
-        user.setAge(userSave.getAge());
         user.setDayOfBirth(userSave.getDayOfBirth());
         return user;
     }

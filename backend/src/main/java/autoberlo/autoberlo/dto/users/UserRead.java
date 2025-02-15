@@ -18,6 +18,5 @@ public class UserRead {
     private String email;
     private String password;
     private String address;
-    private int age;
     private LocalDate dayOfBirth;
 }

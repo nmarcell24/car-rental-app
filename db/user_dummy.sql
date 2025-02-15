@@ -1,21 +1,6 @@
-INSERT INTO user(id, name, phone_number, email, password, address, age, day_of_birth) VALUES
-(1, 'Kovács Péter', '+36201234567', 'kovacs.peter@example.com', 'Jelszo123', 'Budapest, Andrássy út 12.', 32, '1991-05-14'),
-(2, 'Szabó Anna', '+36209876543', 'szabo.anna@example.com', 'BiztosJelszo456', 'Debrecen, Piac utca 20.', 28, '1995-08-22'),
-(3, 'Tóth László', '+36301112233', 'toth.laszlo@example.com', 'Titok1234', 'Szeged, Kárász utca 5.', 40, '1983-11-10'),
-(4, 'Nagy Zsuzsanna', '+36305556677', 'nagy.zsuzsi@example.com', 'Jelszo789', 'Pécs, Rákóczi út 34.', 35, '1988-03-18'),
-(5, 'Kiss Gergely', '+36701239876', 'kiss.gergely@example.com', 'ErősJelszó567', 'Győr, Szent István út 45.', 30, '1993-07-25'),
-(6, 'Molnár Éva', '+36704561234', 'molnar.eva@example.com', 'EvaMolnar2024', 'Miskolc, Petőfi utca 8.', 27, '1996-12-05'),
-(7, 'Farkas Balázs', '+36201233445', 'farkas.balazs@example.com', 'Balazs12345', 'Szolnok, Kossuth tér 3.', 31, '1992-09-30'),
-(8, 'Varga Katalin', '+36201112244', 'varga.kati@example.com', 'VargaPass678', 'Sopron, Deák tér 7.', 26, '1997-04-12'),
-(9, 'Horváth Dániel', '+36303334455', 'horvath.dani@example.com', 'DaniHorvath999', 'Eger, Dobó István tér 2.', 29, '1994-06-17'),
-(10, 'Balogh Eszter', '+36703332211', 'balogh.eszter@example.com', 'Eszter7890', 'Tatabánya, Mátyás király utca 15.', 34, '1989-10-29'),
-(11, 'Lakatos Bence', '+36209998877', 'lakatos.bence@example.com', 'BencePass123', 'Kecskemét, Arany János utca 9.', 25, '1998-01-22'),
-(12, 'Papp Viktória', '+36306667788', 'papp.viktoria@example.com', 'VikiJelszo246', 'Nyíregyháza, Szent István tér 12.', 37, '1986-05-30'),
-(13, 'Szalai Norbert', '+36205556677', 'szalai.norbi@example.com', 'Norbi7891011', 'Békéscsaba, Kinizsi utca 6.', 33, '1990-08-14'),
-(14, 'Fehér Lilla', '+36701112233', 'feher.lilla@example.com', 'LillaPass333', 'Zalaegerszeg, Ady Endre utca 4.', 24, '1999-12-03'),
-(15, 'Gál Tamás', '+36207778899', 'gal.tamas@example.com', 'Tamas444555', 'Szekszárd, Bartók Béla út 22.', 38, '1985-07-09'),
-(16, 'Juhász Mária', '+36302223344', 'juhasz.maria@example.com', 'MariaJelszo666', 'Dunaújváros, Béke tér 10.', 42, '1981-09-19'),
-(17, 'Bíró Zoltán', '+36703334455', 'biro.zoltan@example.com', 'ZoltanJelszo777', 'Veszprém, Szent László utca 17.', 36, '1987-04-08'),
-(18, 'Hegedűs Anikó', '+36204445566', 'hegedus.aniko@example.com', 'AnikoPass888', 'Esztergom, Batthyány utca 11.', 29, '1994-02-28'),
-(19, 'Kelemen Krisztián', '+36305556677', 'kelemen.krisztian@example.com', 'KrisztianPass999', 'Kaposvár, Kossuth Lajos utca 23.', 41, '1982-06-05'),
-(20, 'Sárközi Judit', '+36208887799', 'sarkozi.judit@example.com', 'JuditJelszo000', 'Hódmezővásárhely, Béke út 13.', 30, '1993-11-15');
+INSERT INTO user( name, phone_number, email, password, address, day_of_birth) VALUES
+( 'Kovács Péter', '+36201234567', 'kovacs.peter@example.com', 'Jelszo123', 'Budapest, Andrássy út 12.',  '1991-05-14'),
+('Szabó Anna', '+36209876543', 'szabo.anna@example.com', 'BiztosJelszo456', 'Debrecen, Piac utca 20.',  '1995-08-22'),
+( 'Tóth László', '+36301112233', 'toth.laszlo@example.com', 'Titok1234', 'Szeged, Kárász utca 5.',  '1983-11-10'),
+('Nagy Zsuzsanna', '+36305556677', 'nagy.zsuzsi@example.com', 'Jelszo789', 'Pécs, Rákóczi út 34.',  '1988-03-18'),
+( 'Kiss Gergely', '+36701239876', 'kiss.gergely@example.com', 'ErősJelszó567', 'Győr, Szent István út 45.', '1993-07-25');

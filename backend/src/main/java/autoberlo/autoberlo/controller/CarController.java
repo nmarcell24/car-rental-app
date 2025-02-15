@@ -17,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/cars")
 @Tag(name="Auto Berles manage", description = "CRUD+ List")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CarController {
 
     @Autowired

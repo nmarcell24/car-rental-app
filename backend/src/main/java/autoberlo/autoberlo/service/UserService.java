@@ -9,6 +9,7 @@ import autoberlo.autoberlo.model.User;
 import autoberlo.autoberlo.repository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,8 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     public List<UserList> listUsers() {
@@ -42,5 +45,16 @@ public class UserService {
             throw new UserNotFoundException();
         User user = userRepository.getReferenceById(id);
         return UserConverter.convertModelToRead(user);
+    }
+
+
+
+
+    public boolean login(String email, String password) {
+        User user = userRepository.findUserByEmail(email);
+        if (user == null) {
+            throw new UserNotFoundException();
+        }
+        return passwordEncoder.matches(password, user.getPassword());
     }
 }
