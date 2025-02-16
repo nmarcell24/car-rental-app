@@ -11,18 +11,22 @@ import MailIcon from "@mui/icons-material/Mail";
 import QuestionMark from "@mui/icons-material/QuestionMark";
 import { CarRental, Home, Menu } from "@mui/icons-material";
 import { Link, useLocation } from "react-router";
-import SignIn from "../pages/SignIn";
+import { useUserContext } from "../hooks/useUserContext";
+import { userContext } from "../contexts/userContextProvider";
 
-export default function TemporaryDrawer() {
+export default function DrawerList({
+  setOpenDialogSignIn,
+  setOpenDialogSignUp,
+}) {
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
-  const [openSignIn, setOpenSignIn] = useState(false);
+  const { currentUser, setCurrentUser } = useUserContext(userContext);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
 
-  const DrawerList = (
+  const DrawerListt = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
         <Link to={"/"}>
@@ -77,18 +81,56 @@ export default function TemporaryDrawer() {
           anchor={"right"}
           onClose={toggleDrawer(false)}
         >
-          {DrawerList}
-          <div className="flex w-full justify-evenly absolute bottom-0">
-            <Button variant="contained">Sign in</Button>
-            <Button variant="outlined">Register</Button>
-          </div>
+          {DrawerListt}
+          {!currentUser ? (
+            <div className="flex w-full justify-evenly absolute bottom-0">
+              <Button
+                variant="contained"
+                onClick={() => {
+                  setOpenDialogSignIn(true);
+                  setOpen(false)
+                }}
+              >
+                Sign in
+              </Button>
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  setOpenDialogSignUp(true);
+                  setOpen(false)
+                }}
+              >
+                Register
+              </Button>
+            </div>
+          ) : (
+            <div className="w-full text-center absolute bottom-0 flex flex-col justify-center gap-3">
+              <h1 className="text-lg font-semibold flex items-center justify-center md:mr-6">
+                {currentUser.email}
+              </h1>
+              <Button
+                onClick={() => setCurrentUser(null)}
+                variant="contained"
+                sx={{
+                  color: "black",
+                  backgroundColor: "white",
+                  "&:hover": {
+                    backgroundColor: "white",
+                    color: "black",
+                  },
+                }}
+              >
+                Log out
+              </Button>
+            </div>
+          )}
         </Drawer>
       </div>
       <ul className="hidden md:flex gap-4">
         <Link
           to={"/"}
           className={
-            pathname == "/cataloge"
+            pathname === "/cataloge"
               ? "flex items-center hover:border-b hover:border-black hover:cursor-pointer"
               : "flex items-center hover:border-b hover:text-white hover:cursor-pointer"
           }
@@ -98,7 +140,7 @@ export default function TemporaryDrawer() {
         <Link
           to={"/cataloge"}
           className={
-            pathname == "/cataloge"
+            pathname === "/cataloge"
               ? "flex items-center hover:border-b hover:border-black hover:cursor-pointer"
               : "flex items-center hover:border-b hover:text-white hover:cursor-pointer"
           }
@@ -108,7 +150,7 @@ export default function TemporaryDrawer() {
         <Link
           to={"/contact"}
           className={
-            pathname == "/cataloge"
+            pathname === "/cataloge"
               ? "flex items-center hover:border-b hover:border-black hover:cursor-pointer transition-"
               : "flex items-center hover:border-b hover:text-white hover:cursor-pointer"
           }
@@ -118,7 +160,7 @@ export default function TemporaryDrawer() {
         <Link
           to={"/help"}
           className={
-            pathname == "/cataloge"
+            pathname === "/cataloge"
               ? "flex items-center hover:border-b hover:border-black hover:cursor-pointer"
               : "flex items-center hover:border-b hover:text-white hover:cursor-pointer"
           }
@@ -126,52 +168,71 @@ export default function TemporaryDrawer() {
           Help
         </Link>
         <div className="flex gap-2 ml-12">
-          <Button
-            onClick={() => setOpenSignIn(true)}
-            variant="contained"
-            sx={{
-              color: "black",
-              backgroundColor: "white",
-              "&:hover": {
-                backgroundColor: "white",
-                color: "black",
-              },
-            }}
-          >
-            Sign in
-          </Button>
-          {pathname == "/cataloge" ? (
-            <Button
-              variant="outlined"
-              sx={{
-                color: "black",
-                borderColor: "black",
-                "&:hover": {
-                  backgroundColor: "black",
-                  color: "white",
-                },
-              }}
-            >
-              Register
-            </Button>
-          ) : (
-            <Button
-              variant="outlined"
-              sx={{
-                color: "white",
-                borderColor: "white",
-                "&:hover": {
-                  backgroundColor: "white",
+          {currentUser ? (
+            <>
+              <h1 className="text-lg font-semibold flex items-center mr-6">
+                {currentUser.email}
+              </h1>
+              <Button
+                onClick={() => setCurrentUser(null)}
+                variant="contained"
+                sx={{
                   color: "black",
-                },
-              }}
-            >
-              Register
-            </Button>
+                  backgroundColor: "white",
+                  "&:hover": {
+                    backgroundColor: "white",
+                    color: "black",
+                  },
+                }}
+              >
+                Log out
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                onClick={() => setOpenDialogSignIn(true)}
+                variant="contained"
+                sx={{
+                  color: "black",
+                  backgroundColor: "white",
+                  "&:hover": {
+                    backgroundColor: "white",
+                    color: "black",
+                  },
+                }}
+              >
+                Sign in
+              </Button>
+              <Button
+                variant="outlined"
+                onClick={() => setOpenDialogSignUp(true)}
+                sx={
+                  pathname === "/cataloge"
+                    ? {
+                        color: "black",
+                        borderColor: "black",
+                        "&:hover": {
+                          backgroundColor: "black",
+                          color: "white",
+                        },
+                      }
+                    : {
+                        color: "white",
+                        borderColor: "white",
+                        "&:hover": {
+                          backgroundColor: "white",
+                          color: "black",
+                        },
+                      }
+                }
+              >
+                Register
+              </Button>
+            </>
           )}
         </div>
       </ul>
-      {openSignIn ? <SignIn setOpenSignIn={setOpenSignIn} /> : ""}
     </div>
   );
 }
