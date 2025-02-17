@@ -45,6 +45,15 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    public static final String[] PUBLIC_URLS = {
+            "/public/",
+            "/swagger-ui/",
+            "/swagger-resources/",
+            "/v2/api-docs",
+            "/v3/api-docs",
+            "/v3/api-docs/",
+            "/users/login"
+    };
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -55,7 +64,7 @@ public class SecurityConfig {
                         .requestMatchers("/swagger-ui/", "/v3/api-docs/", "/swagger-ui.html").permitAll()
                         .requestMatchers("/api/admin/").hasRole("ADMIN")
                         .requestMatchers("/api/user/").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/public/**").permitAll()
+                        .requestMatchers(PUBLIC_URLS).permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(withDefaults());

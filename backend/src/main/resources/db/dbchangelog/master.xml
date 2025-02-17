@@ -12,4 +12,8 @@
     <include file="car_rental_price_category.sql" relativeToChangelogFile="true"/>
     <include file="car_rental_user.sql" relativeToChangelogFile="true"/>
 
+    <include file="user_dummy.sql" relativeToChangelogFile="true"/>
+    <include file="car_dummy.sql" relativeToChangelogFile="true"/>
+    <include file="price_category_dummy.sql" relativeToChangelogFile="true"/>
+
 </databaseChangeLog>
