@@ -31,7 +31,7 @@ public class CarController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/autocreate")
     @Operation(summary = "create new car")
-    public CarRead createAuto(@RequestBody @Valid CarSave carSave){
+    public CarRead createAuto(@RequestBody @Valid CarSave carSave) {
         return carService.createAuto(carSave);
     }
 
@@ -43,7 +43,7 @@ public class CarController {
 
     @GetMapping("/auto/{id}")
     @Operation(summary = "Read car by id")
-    public CarRead getAuto(@Valid @PathVariable Integer id ) {
+    public CarRead getAuto(@Valid @PathVariable Integer id) {
         return carService.getAuto(id);
     }
 

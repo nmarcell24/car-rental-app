@@ -1,46 +1,57 @@
 package autoberlo.autoberlo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.URL;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-
+@Table(name = "car")
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotBlank(message = "A márka nem lehet üres.")
     private String marka;
+
+    @NotBlank(message = "A jármű típusa nem lehet üres.")
     private String carType;
+
+    @Min(value = 0, message = "A lóerő nem lehet negatív.")
     private int horsePower;
+
+    @Min(value = 1886, message = "A modell évének legalább 1886-nak kell lennie.")
+    @Max(value = 2025, message = "A modell éve nem lehet a jövőben.")
     private int modelYear;
+
+    @Min(value = 1, message = "A férőhelyek száma legalább 1 kell, hogy legyen.")
     private int numberOfSeats;
+
+    @NotBlank(message = "A üzemanyag típusa nem lehet üres.")
     private String fuelType;
+
+    @NotBlank(message = "A váltó típusa nem lehet üres.")
     private String transmissionType;
+
+    @NotBlank(message = "A hajtáslánc típusa nem lehet üres.")
     private String driveTrain;
+
+    @URL(message = "Kérlek, adj meg egy érvényes URL-t a képhez.")
     private String imageUrl;
+
+    @Min(value = 0, message = "Az ár kategória azonosítója nem lehet negatív.")
     private int priceCategoryId;
 
 
 
 }
-//`id` int NOT NULL,
-//  `marka` varchar(255) COLLATE utf8mb3_hungarian_ci NOT NULL,
-//  `car_type` varchar(32) COLLATE utf8mb3_hungarian_ci NOT NULL,
-//  `horse_power` int NOT NULL,
-//  `model_year` int NOT NULL,
-//  `number_of_seats` int NOT NULL,
-//  `fuel_type` varchar(45) COLLATE utf8mb3_hungarian_ci NOT NULL,
-//  `transmission_type` varchar(45) COLLATE utf8mb3_hungarian_ci NOT NULL,
-//  `drive_train` varchar(45) COLLATE utf8mb3_hungarian_ci NOT NULL,
-//  `price_category_id` int NOT NULL,

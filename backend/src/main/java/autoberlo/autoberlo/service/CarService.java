@@ -19,20 +19,21 @@ public class CarService {
     @Autowired
     private CarRepository carRepository;
 
-
     public CarRead getAuto(Integer id) {
-        if(!carRepository.existsById(id))
+        if (!carRepository.existsById(id)) {
             throw new AutoNotFoundException();
+        }
         Car car = carRepository.getReferenceById(id);
         return CarConverter.convertModelToRead(car);
     }
-    public CarRead updateAuto(Integer id, CarSave carSave) {
-        if(!carRepository.existsById(id))
+
+    public CarRead updateAuto(Integer id, @Valid CarSave carSave) {
+        if (!carRepository.existsById(id)) {
             throw new AutoNotFoundException();
+        }
         Car car = carRepository.save(CarConverter.convertSaveToModel(id, carSave));
         return CarConverter.convertModelToRead(car);
     }
-
 
     public List<CarList> listAutok() {
         List<Car> autok = carRepository.findAll();
@@ -43,6 +44,4 @@ public class CarService {
         Car car = carRepository.save(CarConverter.convertSaveToModel(carSave));
         return CarConverter.convertModelToRead(car);
     }
-
-
 }

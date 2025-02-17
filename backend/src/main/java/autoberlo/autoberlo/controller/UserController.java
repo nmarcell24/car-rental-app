@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -55,6 +56,16 @@ public class UserController {
             return ResponseEntity.ok("Sikeres belépés");
         } else {
             return ResponseEntity.status(401).body("Hibás felhasználónév vagy jelszó");
+        }
+    }
+
+    @DeleteMapping("/user/{id}")
+    @Operation(summary = "Delete user by id")
+    @ResponseStatus(HttpStatus.NO_CONTENT) // 204 No Content, ha a törlés sikeres
+    public void deleteUser (@PathVariable Integer id) {
+        boolean isDeleted = userService.deleteUser (id);
+        if (!isDeleted) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Felhasználó nem található.");
         }
     }
 }
