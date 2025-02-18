@@ -1,13 +1,14 @@
 import { Box, Button, Checkbox, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { useUserContext } from "../hooks/useUserContext";
+import axios from "axios";
 
 export default function SignIn({ setOpenDialog }) {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
-  const {setUserContext} = useUserContext();
+  const { setCurrentUser } = useUserContext();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -23,8 +24,14 @@ export default function SignIn({ setOpenDialog }) {
     if (emailError || passwordError) {
       alert("Form is invalid! Please check the fields...");
     } else {
-      alert("Form is valid! Submitting the form...");
-      setOpenDialog(false);
+      axios
+        .post("/users/login", {
+          email,
+          password,
+        })
+        .then(({ data }) => setCurrentUser(data))
+        .then(() => setOpenDialog(false))
+        .catch((error) => alert(error));
     }
   };
 

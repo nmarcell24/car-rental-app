@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@mui/material";
 import { FavoriteOutlined, FlightClass, HeartBrokenOutlined, LocalGasStation, Settings } from "@mui/icons-material";
+import { Link } from "react-router";
 
 const CarCard = ({ name, fuel_type, transmission, seats, price, image }) => {    
   return (
@@ -23,13 +24,15 @@ const CarCard = ({ name, fuel_type, transmission, seats, price, image }) => {
       </div>
       <div className="flex justify-between items-center">
         <span className="text-xl font-bold">${ price }</span>
-        <Button
-          variant="contained"
-          color="primary"
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-        >
-          Book Now
-        </Button>
+        {/* <Link to={`/cataloge/${id}`}> */}
+          <Button
+            variant="contained"
+            color="primary"
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+          >
+            See more
+          </Button>
+        {/* </Link> */}
       </div>
     </div>
   );

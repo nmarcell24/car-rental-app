@@ -7,9 +7,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
 import QuestionMark from "@mui/icons-material/QuestionMark";
-import { CarRental, Home, Menu } from "@mui/icons-material";
+import { AttachMoney, CarRental, Home, Menu } from "@mui/icons-material";
 import { Link, useLocation } from "react-router";
 import { useUserContext } from "../hooks/useUserContext";
 import { userContext } from "../contexts/userContextProvider";
@@ -39,22 +38,22 @@ export default function DrawerList({
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link to={"/cataloge"}>
+        <Link to={"/rent"}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
                 <CarRental />
               </ListItemIcon>
-              <ListItemText primary={"Car Cataloge"} />
+              <ListItemText primary={"Rent a car"} />
             </ListItemButton>
           </ListItem>
         </Link>
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
-              <MailIcon />
+              <AttachMoney />
             </ListItemIcon>
-            <ListItemText primary={"Contact Us"} />
+            <ListItemText primary={"Publish a car"} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
@@ -130,7 +129,7 @@ export default function DrawerList({
         <Link
           to={"/"}
           className={
-            pathname === "/cataloge"
+            pathname === "/rent"
               ? "flex items-center hover:border-b hover:border-black hover:cursor-pointer"
               : "flex items-center hover:border-b hover:text-white hover:cursor-pointer"
           }
@@ -138,29 +137,29 @@ export default function DrawerList({
           Home
         </Link>
         <Link
-          to={"/cataloge"}
+          to={"/rent"}
           className={
-            pathname === "/cataloge"
+            pathname === "/rent"
               ? "flex items-center hover:border-b hover:border-black hover:cursor-pointer"
               : "flex items-center hover:border-b hover:text-white hover:cursor-pointer"
           }
         >
-          Cataloge
+          Rent
         </Link>
         <Link
-          to={"/contact"}
+          to={"/publish"}
           className={
-            pathname === "/cataloge"
+            pathname === "/rent"
               ? "flex items-center hover:border-b hover:border-black hover:cursor-pointer transition-"
               : "flex items-center hover:border-b hover:text-white hover:cursor-pointer"
           }
         >
-          Contact
+          Publish
         </Link>
         <Link
           to={"/help"}
           className={
-            pathname === "/cataloge"
+            pathname === "/rent"
               ? "flex items-center hover:border-b hover:border-black hover:cursor-pointer"
               : "flex items-center hover:border-b hover:text-white hover:cursor-pointer"
           }
@@ -208,7 +207,7 @@ export default function DrawerList({
                 variant="outlined"
                 onClick={() => setOpenDialogSignUp(true)}
                 sx={
-                  pathname === "/cataloge"
+                  pathname === "/rent"
                     ? {
                         color: "black",
                         borderColor: "black",

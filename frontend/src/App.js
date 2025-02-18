@@ -7,6 +7,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import { useState } from "react";
 import { Dialog } from "@mui/material";
+import CarDetail from "./pages/CarDeail";
 
 function App() {
   const [openDialogSignIn, setOpenDialogSignIn] = useState(false);
@@ -17,7 +18,8 @@ function App() {
       <Header setOpenDialogSignIn={setOpenDialogSignIn} setOpenDialogSignUp={setOpenDialogSignUp} />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/cataloge" element={<Cataloge />} />
+        <Route path="/rent" element={<Cataloge />} />
+        <Route path="/rent/:id" element={<CarDetail />} />
       </Routes>
       <Footer />
 

@@ -7,10 +7,10 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useUserContext } from "../hooks/useUserContext";
 
 export default function SignUp({ setOpenDialog }) {
-  const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [birthDate, setBirthDate] = useState(dayjs("2022-10-04"));
-  const {setUserContext} = useUserContext();
+  const { setCurrentUser } = useUserContext();
+
 
   const [formData, setFormData] = useState({
     name: "",
@@ -18,7 +18,7 @@ export default function SignUp({ setOpenDialog }) {
     email: "",
     password: "",
     address: "",
-  });
+  });  
 
   const handleChange = (e) => {
     setFormData({
@@ -63,17 +63,22 @@ export default function SignUp({ setOpenDialog }) {
     if (!validateForm()) {
       return;
     } else {
-      if(!birthDate.isValid) {
+      if (!birthDate.isValid) {
         return;
       }
-      const validBirthDate = birthDate.year + "-" + (birthDate.month + 1) + "-" + birthDate.date; 
-      axios.post("http://localhost:8081/users/usercreate", {
-        ...formData,
-        dayOfBirth: validBirthDate,
-      })
-      .then(({data}) => setUserContext(data))
-      .catch(error => alert(error))
-      setOpenDialog(false);
+
+      console.log({...formData, dayOfBirth: birthDate.format("YYYY-MM-DD")}); 
+        
+      axios
+        .post("/users/usercreate", {
+          ...formData,
+          dayOfBirth: birthDate.format("YYYY-MM-DD"),
+        })
+        .then(({ data }) => {
+          setCurrentUser(data);
+          setOpenDialog(false);
+        })
+        .catch((error) => alert(error));
     }
   };
 
