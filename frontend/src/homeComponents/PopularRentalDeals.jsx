@@ -86,14 +86,14 @@ const PopularRentalDeals = () => {
               <p className="text-lg font-bold text-gray-800 mb-4 flex items-center justify-between">
                 Price: <span>${car.price} <span className="text-gray-600">/day</span></span>
               </p>
-              <button className="bg-yellow-500 w-full text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition">
+              <Link to={`/rent/${car.name}`} className="bg-yellow-500 w-full block text-center text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition">
                 Rent Now →
-              </button>
+              </Link>
             </div>
           ))}
         </div>
         <div className="mt-10">
-          <Link to={"/cataloge"} className="bg-gray-100 px-6 py-3 rounded-lg shadow-md text-gray-700 font-medium hover:bg-gray-200 transition">
+          <Link to={"/rent"} className="bg-gray-100 px-6 py-3 rounded-lg shadow-md text-gray-700 font-medium hover:bg-gray-200 transition">
             Show all vehicles →
           </Link>
         </div>

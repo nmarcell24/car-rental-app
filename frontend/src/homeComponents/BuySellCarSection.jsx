@@ -16,7 +16,7 @@ const BuySellCarSection = () => {
             </p>
           </div>
           <div className="flex justify-between items-center">
-            <Link to={"/cataloge"} className="bg-[#0D1E3A] text-white px-4 py-2 rounded-lg2">
+            <Link to={"/rent"} className="bg-[#0D1E3A] text-white px-4 py-2 rounded-lg2">
               Get Started →
             </Link>
             <div>
