@@ -11,14 +11,13 @@ export default function SignUp({ setOpenDialog }) {
   const [birthDate, setBirthDate] = useState(dayjs("2022-10-04"));
   const { setCurrentUser } = useUserContext();
 
-
   const [formData, setFormData] = useState({
     name: "",
     phoneNumber: "",
     email: "",
     password: "",
     address: "",
-  });  
+  });
 
   const handleChange = (e) => {
     setFormData({
@@ -67,13 +66,21 @@ export default function SignUp({ setOpenDialog }) {
         return;
       }
 
-      console.log({...formData, dayOfBirth: birthDate.format("YYYY-MM-DD")}); 
-        
+      console.log({ ...formData, dayOfBirth: birthDate.format("YYYY-MM-DD") });
+
       axios
-        .post("/users/usercreate", {
-          ...formData,
-          dayOfBirth: birthDate.format("YYYY-MM-DD"),
-        })
+        .post(
+          "/api/users/usercreate",
+          {
+            ...formData,
+            dayOfBirth: birthDate.format("YYYY-MM-DD"),
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
         .then(({ data }) => {
           setCurrentUser(data);
           setOpenDialog(false);

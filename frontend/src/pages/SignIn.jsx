@@ -24,8 +24,10 @@ export default function SignIn({ setOpenDialog }) {
     if (emailError || passwordError) {
       alert("Form is invalid! Please check the fields...");
     } else {
+      console.log(email, password);
+
       axios
-        .post("/users/login", {
+        .post("/api/users/login", {
           email,
           password,
         })

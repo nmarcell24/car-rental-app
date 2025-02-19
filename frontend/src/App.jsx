@@ -15,7 +15,10 @@ function App() {
 
   return (
     <div>
-      <Header setOpenDialogSignIn={setOpenDialogSignIn} setOpenDialogSignUp={setOpenDialogSignUp} />
+      <Header
+        setOpenDialogSignIn={setOpenDialogSignIn}
+        setOpenDialogSignUp={setOpenDialogSignUp}
+      />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/rent" element={<Cataloge />} />
@@ -23,15 +26,20 @@ function App() {
       </Routes>
       <Footer />
 
-
       {/* Sign in */}
-      <Dialog open={openDialogSignIn} onClose={() => setOpenDialogSignIn(false)}>
-        <SignIn setOpenDialog={setOpenDialogSignIn}/>
+      <Dialog
+        open={openDialogSignIn}
+        onClose={() => setOpenDialogSignIn(false)}
+      >
+        <SignIn setOpenDialog={setOpenDialogSignIn} />
       </Dialog>
-      
+
       {/* Sign up */}
-      <Dialog open={openDialogSignUp} onClose={() => setOpenDialogSignUp(false)}>
-        <SignUp setOpenDialog={setOpenDialogSignUp}/>
+      <Dialog
+        open={openDialogSignUp}
+        onClose={() => setOpenDialogSignUp(false)}
+      >
+        <SignUp setOpenDialog={setOpenDialogSignUp} />
       </Dialog>
     </div>
   );
