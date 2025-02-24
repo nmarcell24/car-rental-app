@@ -59,7 +59,6 @@ public class UserConverter {
         userList.setId(user.getId());
         userList.setName(user.getName());
         userList.setEmail(user.getEmail());
-        userList.setPassword(user.getPassword());
         return userList;
     }
 

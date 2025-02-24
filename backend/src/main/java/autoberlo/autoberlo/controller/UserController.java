@@ -53,7 +53,7 @@ public class UserController {
     public ResponseEntity<String> login(@RequestBody UserLogin userLogin) {
         boolean isAuthenticated = userService.login(userLogin.getEmail(), userLogin.getPassword());
         if (isAuthenticated) {
-            return ResponseEntity.ok("Sikeres belépés");
+            return ResponseEntity.ok(userLogin.getEmail());
         } else {
             return ResponseEntity.status(401).body("Hibás felhasználónév vagy jelszó");
         }

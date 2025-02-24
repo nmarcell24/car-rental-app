@@ -26,7 +26,4 @@ public class UserList {
     @Email(message = "Kérlek, adj meg egy érvényes email címet.")
     private String email;
 
-    @NotBlank(message = "A jelszó nem lehet üres.")
-    @Size(min = 4, message = "A jelszónak legalább 4 karakter hosszúnak kell lennie.")
-    private String password;
 }
