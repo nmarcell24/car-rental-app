@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `car`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `car` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `marka` varchar(255) COLLATE utf8mb3_hungarian_ci NOT NULL,
+  `brand` varchar(255) COLLATE utf8mb3_hungarian_ci NOT NULL,
   `car_type` varchar(32) COLLATE utf8mb3_hungarian_ci NOT NULL,
   `horse_power` int NOT NULL,
   `model_year` int NOT NULL,
@@ -32,11 +32,11 @@ CREATE TABLE `car` (
   `fuel_type` varchar(45) COLLATE utf8mb3_hungarian_ci NOT NULL,
   `transmission_type` varchar(45) COLLATE utf8mb3_hungarian_ci NOT NULL,
   `drive_train` varchar(45) COLLATE utf8mb3_hungarian_ci NOT NULL,
-  `image_url` varchar(45) COLLATE utf8mb3_hungarian_ci NOT NULL,
+  `image_url` varchar(145) COLLATE utf8mb3_hungarian_ci NOT NULL,
   `price_category_id` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_car_price_category_idx` (`price_category_id`)
-) ENGINE=MEMORY AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_hungarian_ci;
+) ENGINE=MEMORY DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_hungarian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,7 +45,6 @@ CREATE TABLE `car` (
 
 LOCK TABLES `car` WRITE;
 /*!40000 ALTER TABLE `car` DISABLE KEYS */;
-INSERT INTO `car` VALUES (1,'string','string',0,0,0,'string','string','string','string',10000);
 /*!40000 ALTER TABLE `car` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -58,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-02-15 12:21:37
+-- Dump completed on 2025-02-24 17:12:30
