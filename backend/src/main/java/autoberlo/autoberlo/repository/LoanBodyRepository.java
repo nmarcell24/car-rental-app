@@ -1,4 +1,7 @@
 package autoberlo.autoberlo.repository;
 
-public class LoanRepository {
+import autoberlo.autoberlo.model.LoanBody;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface LoanBodyRepository extends JpaRepository<LoanBody, Integer> {
 }

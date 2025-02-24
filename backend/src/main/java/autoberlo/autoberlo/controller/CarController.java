@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cars")
-@Tag(name="Auto Berles manage", description = "CRUD+ List")
+@Tag(name="Car manage", description = "Cru + list")
 public class CarController {
 
     @Autowired

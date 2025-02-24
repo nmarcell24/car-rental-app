@@ -1,6 +1,4 @@
-USE car_rental;
-
-INSERT INTO car (marka, car_type, horse_power, model_year, number_of_seats, fuel_type, transmission_type, drive_train, image_url, price_category_id) VALUES 
+INSERT INTO car (brand, car_type, horse_power, model_year, number_of_seats, fuel_type, transmission_type, drive_train, image_url, price_category_id) VALUES
 ('Toyota', 'Sedan', 150, 2020, 5, 'Petrol', 'Automatic', 'FWD', './images/car1.png', 1),
 ('Ford', 'SUV', 200, 2019, 7, 'Diesel', 'Automatic', 'AWD', './images/car2.png', 2),
 ('Volkswagen', 'Hatchback', 110, 2021, 5, 'Petrol', 'Manual', 'FWD', './images/car3.png', 0),

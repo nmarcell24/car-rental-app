@@ -22,7 +22,7 @@ public class Car {
     private Integer id;
 
     @NotBlank(message = "A márka nem lehet üres.")
-    private String marka;
+    private String brand;
 
     @NotBlank(message = "A jármű típusa nem lehet üres.")
     private String carType;

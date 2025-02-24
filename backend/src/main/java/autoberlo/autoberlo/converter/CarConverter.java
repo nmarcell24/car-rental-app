@@ -14,7 +14,7 @@ public class CarConverter {
     public static CarRead convertModelToRead(Car car) {
         CarRead carRead = new CarRead();
         carRead.setId(car.getId());
-        carRead.setMarka(car.getMarka());
+        carRead.setBrand(car.getBrand());
         carRead.setCarType(car.getCarType());
         carRead.setHorsePower(car.getHorsePower());
         carRead.setModelYear(car.getModelYear());
@@ -44,7 +44,7 @@ public class CarConverter {
 
     public static Car convertSaveToModel(CarSave carSave) {
         Car car = new Car();
-        car.setMarka(carSave.getMarka());
+        car.setBrand(carSave.getBrand());
         car.setCarType(carSave.getCarType());
         car.setHorsePower(carSave.getHorsePower());
         car.setModelYear(carSave.getModelYear());
@@ -61,7 +61,7 @@ public class CarConverter {
     public static Car convertSaveToModel(Integer id, CarSave carSave) {
         Car car = new Car();
         car.setId(id);
-        car.setMarka(carSave.getMarka());
+        car.setBrand(carSave.getBrand());
         car.setCarType(carSave.getCarType());
         car.setHorsePower(carSave.getHorsePower());
         car.setModelYear(carSave.getModelYear());
@@ -86,7 +86,7 @@ public class CarConverter {
     private static CarList convertModelToList(Car car) {
         CarList carList = new CarList();
         carList.setId(car.getId());
-        carList.setMarka(car.getMarka());
+        carList.setBrand(car.getBrand());
         carList.setCarType(car.getCarType());
         carList.setFuelType(car.getFuelType());
         carList.setTransmissionType(car.getTransmissionType());

@@ -6,6 +6,7 @@ import autoberlo.autoberlo.dto.users.UserRead;
 import autoberlo.autoberlo.dto.users.UserSave;
 import autoberlo.autoberlo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@Tag(name="User manage", description = "Crud + list + login")
 public class UserController {
 
     @Autowired
