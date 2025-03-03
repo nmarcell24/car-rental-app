@@ -14,6 +14,7 @@ const Form = () => {
   const [carType, setCarType] = useState("");
   const [valueFrom, setValueFrom] = useState();
   const [valueTo, setValueTo] = useState();
+  const [clicked, setClicked] = useState(false);
 
   const handleChange = (event) => {
     setCarType(event.target.value);

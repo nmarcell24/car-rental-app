@@ -27,7 +27,7 @@ export default function SignIn({ setOpenDialog }) {
       console.log(email, password);
 
       axios
-        .post("/api/users/login", {
+        .post("/api/user/login", {
           email,
           password,
         })

@@ -5,9 +5,10 @@ import { Routes, Route, useNavigation } from "react-router-dom";
 import Header from "./components/Header";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dialog } from "@mui/material";
 import CarDetail from "./pages/CarDeail";
+import SellYourCar from "./pages/SellYourCar";
 
 function App() {
   const [openDialogSignIn, setOpenDialogSignIn] = useState(false);
@@ -23,6 +24,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/rent" element={<Cataloge />} />
         <Route path="/rent/:id" element={<CarDetail />} />
+        <Route path="/publish" element={<SellYourCar />} />
       </Routes>
       <Footer />
 
