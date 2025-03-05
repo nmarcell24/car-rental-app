@@ -17,14 +17,14 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 @Tag(name="User manage", description = "Crud + list + login")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("/userlist")
+    @GetMapping("/ist")
     @Operation(summary = "List name all of the user")
     public List<UserList> listUser() {
         return userService.listUsers();
@@ -32,20 +32,20 @@ public class UserController {
 
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/usercreate")
+    @PostMapping("/create")
     @Operation(summary = "create new user")
     public UserRead createUser(@RequestBody @Valid UserSave userSave){
         return userService.createUser(userSave);
     }
 
-    @PutMapping("/user/{id}")
+    @PutMapping("/{id}")
     @Operation(summary = "Update user by id")
     public UserRead updateUser(@Valid @PathVariable Integer id, UserSave userSave ) {
         return userService.updateUser(id, userSave);
     }
 
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/{id}")
     @Operation(summary = "Reads user by id")
     public UserRead getUser(@Valid @PathVariable Integer id ) {
         return userService.getUser(id);
@@ -61,7 +61,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping("/{id}")
     @Operation(summary = "Delete user by id")
     @ResponseStatus(HttpStatus.NO_CONTENT) // 204 No Content, ha a törlés sikeres
     public void deleteUser (@PathVariable Integer id) {

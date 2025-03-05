@@ -26,14 +26,14 @@ public class LoanBodyController {
     @Autowired
     private LoanBodyService loanBodyService;
 
-    @GetMapping("/loanbodylist")
+    @GetMapping("/list")
     @Operation(summary = "List id all of the loanBody")
     public List<LoanBodyList> listAutok() {
         return loanBodyService.listLoanBody();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/loanbodycreat")
+    @PostMapping("/creat")
     @Operation(summary = "create new loanbody")
     public LoanBodyRead createLoanBody(@RequestBody @Valid LoanBodySave loanBodySave) {
         return loanBodyService.createLoanBody(loanBodySave);
