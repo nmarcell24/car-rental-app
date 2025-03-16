@@ -8,22 +8,24 @@ import {
   Speed,
   Star,
 } from "@mui/icons-material";
+import { Dialog } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { ReservSteps } from "../components/ReservSteps";
 
 export default function CarDetail() {
   const [car, setCar] = useState({});
+  const [open, setOpen] = useState(false);
   const params = useParams();
 
   useEffect(() => {
     const fetchCar = async () => {
       const res = await axios.get(`/api/cars/auto/${params.id}`);
-      setCar(res.data);      
+      setCar(res.data);
     };
 
     fetchCar();
-    
   }, []);
 
   const specLogos = [
@@ -45,7 +47,7 @@ export default function CarDetail() {
     { label: "Seats", value: car.numberOfSeats },
     { label: "Car gearbox", value: car.transmissionType },
     { label: "Fuel", value: car.fuelType },
-    { label: "Car brand", value: car.marka },
+    { label: "Car brand", value: car.brand },
     { label: "Type car", value: car.carType },
     { label: "Drive train", value: car.driveTrain },
   ];
@@ -54,7 +56,11 @@ export default function CarDetail() {
     <div className="max-w-6xl mx-auto p-6">
       <div className="grid md:grid-cols-2 gap-6">
         <div>
-          <img src={car.imageUrl && car.imageUrl.slice(1)} alt="Car" className="w-full rounded-lg" />
+          <img
+            src={car.imageUrl && car.imageUrl.slice(1)}
+            alt="Car"
+            className="w-full rounded-lg"
+          />
           <div className="grid grid-cols-3 gap-2 mt-2">
             {images.map((img, index) => (
               <img
@@ -68,7 +74,7 @@ export default function CarDetail() {
         </div>
         <div>
           <h2 className="text-2xl font-semibold">
-            {car.marka} {car.modelYear}
+            {car.brand} {car.modelYear}
           </h2>
           <div className="flex items-center mt-2">
             <Star className="text-yellow-500" />
@@ -98,12 +104,25 @@ export default function CarDetail() {
               <h3 className="text-lg font-semibold">Price:</h3>
               <p className="text-2xl font-bold ">600</p>
             </div>
-            <button className="w-full mt-2 bg-[#f1c656] text-white py-2 rounded">
+            <button
+              onClick={() => setOpen(true)}
+              className="w-full mt-2 bg-[#f1c656] text-white py-2 rounded"
+            >
               Reserv
             </button>
           </div>
         </div>
       </div>
+      {open && (
+        <Dialog
+          onClose={() => setOpen(false)}
+          open={open}
+          maxWidth={"md"}
+          fullWidth
+        >
+          <ReservSteps car={car} specLogos={specLogos} specs={specs} setOpen={setOpen} />
+        </Dialog>
+      )}
     </div>
   );
 }

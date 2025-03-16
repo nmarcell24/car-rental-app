@@ -1,14 +1,15 @@
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Cataloge from "./pages/Cataloge";
-import { Routes, Route, useNavigation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Dialog } from "@mui/material";
 import CarDetail from "./pages/CarDeail";
 import SellYourCar from "./pages/SellYourCar";
+import { NotFound } from "./pages/NotFound";
 
 function App() {
   const [openDialogSignIn, setOpenDialogSignIn] = useState(false);
@@ -25,6 +26,7 @@ function App() {
         <Route path="/rent" element={<Cataloge />} />
         <Route path="/rent/:id" element={<CarDetail />} />
         <Route path="/publish" element={<SellYourCar />} />
+        <Route path="/*" element={<NotFound />} />
       </Routes>
       <Footer />
 
