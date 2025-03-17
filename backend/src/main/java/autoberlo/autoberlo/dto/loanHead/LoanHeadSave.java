@@ -1,18 +1,17 @@
-package autoberlo.autoberlo.dto.loanBody;
+package autoberlo.autoberlo.dto.loanHead;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoanBodyList {
-    private Integer id;
+public class LoanHeadSave {
 
-    private int carId;
+    private int userId;
 
+    private int loanBodyId;
 }

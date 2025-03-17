@@ -22,8 +22,7 @@ public class UserList {
     @NotBlank(message = "A név nem lehet üres.")
     private String name;
 
-    @NotBlank(message = "Az email cím nem lehet üres.")
-    @Email(message = "Kérlek, adj meg egy érvényes email címet.")
-    private String email;
+    @NotBlank(message = "A név nem lehet üres.")
+    private String username;
 
 }

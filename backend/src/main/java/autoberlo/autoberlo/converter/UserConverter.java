@@ -14,6 +14,7 @@ public class UserConverter {
         UserRead userRead = new UserRead();
         userRead.setId(user.getId());
         userRead.setName(user.getName());
+        userRead.setUsername(userRead.getUsername());
         userRead.setPhoneNumber(user.getPhoneNumber());
         userRead.setEmail(user.getEmail());
         userRead.setPassword(user.getPassword());
@@ -26,6 +27,7 @@ public class UserConverter {
     public static User convertSaveToModel(UserSave userSave) {
         User user = new User();
         user.setName(userSave.getName());
+        user.setUsername(userSave.getUsername());
         user.setPhoneNumber(userSave.getPhoneNumber());
         user.setEmail(userSave.getEmail());
         user.setPassword(userSave.getPassword());
@@ -38,6 +40,7 @@ public class UserConverter {
         User user = new User();
         user.setId(id);
         user.setName(userSave.getName());
+        user.setUsername(userSave.getUsername());
         user.setPhoneNumber(userSave.getPhoneNumber());
         user.setEmail(userSave.getEmail());
         user.setPassword(userSave.getPassword());
@@ -58,7 +61,7 @@ public class UserConverter {
         UserList userList = new UserList();
         userList.setId(user.getId());
         userList.setName(user.getName());
-        userList.setEmail(user.getEmail());
+        userList.setUsername(user.getUsername());
         return userList;
     }
 

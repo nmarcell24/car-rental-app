@@ -1,13 +1,9 @@
 package autoberlo.autoberlo.controller;
 
 
-import autoberlo.autoberlo.dto.cars.CarList;
-import autoberlo.autoberlo.dto.cars.CarRead;
-import autoberlo.autoberlo.dto.cars.CarSave;
 import autoberlo.autoberlo.dto.loanBody.LoanBodyList;
-import autoberlo.autoberlo.dto.loanBody.LoanBodyRead;
 import autoberlo.autoberlo.dto.loanBody.LoanBodySave;
-import autoberlo.autoberlo.service.CarService;
+import autoberlo.autoberlo.dto.loanBody.LoanBodyRead;
 import autoberlo.autoberlo.service.LoanBodyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,13 +24,13 @@ public class LoanBodyController {
 
     @GetMapping("/list")
     @Operation(summary = "List id all of the loanBody")
-    public List<LoanBodyList> listAutok() {
+    public List<LoanBodyList> listLoanBody() {
         return loanBodyService.listLoanBody();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/creat")
-    @Operation(summary = "create new loanbody")
+    @Operation(summary = "create new loanBody")
     public LoanBodyRead createLoanBody(@RequestBody @Valid LoanBodySave loanBodySave) {
         return loanBodyService.createLoanBody(loanBodySave);
     }

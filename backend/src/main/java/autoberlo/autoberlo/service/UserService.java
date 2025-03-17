@@ -1,5 +1,6 @@
 package autoberlo.autoberlo.service;
 
+import autoberlo.autoberlo.auth.PermissionCollector;
 import autoberlo.autoberlo.converter.UserConverter;
 import autoberlo.autoberlo.dto.users.UserList;
 import autoberlo.autoberlo.dto.users.UserRead;
@@ -9,6 +10,8 @@ import autoberlo.autoberlo.model.User;
 import autoberlo.autoberlo.repository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +40,7 @@ public class UserService {
 
     public UserRead updateUser (Integer id, @Valid UserSave userSave) {
         if (!userRepository.existsById(id)) {
-            throw new UserNotFoundException();
+            throw new UserNotFoundException(NO_USER_FOUND_BY_USERNAME);
         }
         User user = UserConverter.convertSaveToModel(id, userSave);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -47,26 +50,26 @@ public class UserService {
 
     public UserRead getUser (@Valid Integer id) {
         if (!userRepository.existsById(id)) {
-            throw new UserNotFoundException();
+            throw new UserNotFoundException(NO_USER_FOUND_BY_USERNAME);
         }
         User user = userRepository.getReferenceById(id);
         return UserConverter.convertModelToRead(user);
     }
 
-    public boolean login(String email, String password) {
-        User user = userRepository.findUserByEmail(email);
+    public static final String NO_USER_FOUND_BY_USERNAME = "No user found by username: ";
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findUserByUsername(username);
         if (user == null) {
-            throw new UserNotFoundException();
+            throw new UserNotFoundException(NO_USER_FOUND_BY_USERNAME + username);
+        } else {
+            PermissionCollector permissionCollector = new PermissionCollector(user);
+            return permissionCollector;
         }
-        return passwordEncoder.matches(password, user.getPassword());
     }
 
-    public boolean deleteUser (Integer id) {
-        Optional<User> user = userRepository.findById(id);
-        if (user.isPresent()) {
-            userRepository.delete(user.get());
-            return true;
-        }
-        return false;
+    public User findUserByUsername(String username) {
+        return userRepository.findUserByUsername(username);
     }
 }

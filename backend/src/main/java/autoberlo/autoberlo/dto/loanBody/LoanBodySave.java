@@ -5,13 +5,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoanBodySave {
 
-    private int userId;
+    private int carId;
 
-    private int loanBodyId;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private int totalPrice;
 }

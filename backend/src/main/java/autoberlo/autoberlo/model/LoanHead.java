@@ -9,22 +9,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class LoanBody {
+public class LoanHead{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private int carId;
+    private int userId;
 
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private int totalPrice;
+    private int loanBodyId;
 }

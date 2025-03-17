@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -12,7 +14,9 @@ import lombok.Setter;
 public class LoanBodyRead {
     private Integer id;
 
-    private int userId;
+    private int carId;
 
-    private int loanBodyId;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private int totalPrice;
 }

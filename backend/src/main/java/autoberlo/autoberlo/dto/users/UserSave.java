@@ -17,6 +17,9 @@ public class UserSave {
     @NotBlank(message = "A név nem lehet üres.")
     private String name;
 
+    @NotBlank(message = "A név nem lehet üres.")
+    private String username;
+
     @NotBlank(message = "A telefonszám nem lehet üres.")
     @Pattern(regexp = "^\\+?[0-9. ()-]{7,}$", message = "Kérlek, adj meg egy érvényes telefonszámot.")
     private String phoneNumber;
