@@ -37,4 +37,6 @@ public class UserSave {
 
     @Past(message = "A születési dátumnak a múltban kell lennie.")
     private LocalDate dayOfBirth;
+
+    private String role;
 }

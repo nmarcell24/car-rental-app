@@ -24,7 +24,7 @@ public class PermissionCollector implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<String> permissions = userService.findPermissionsByUser(this.user.getUsername());
+        List<String> permissions = userService.findPermissionsByUser(this.user.getId());
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         permissions.forEach(permission -> authorities.add(new SimpleGrantedAuthority(permission)));
         return authorities;
@@ -33,6 +33,26 @@ public class PermissionCollector implements UserDetails {
     @Override
     public String getUsername() {
         return this.user.getUsername();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
     }
 
     @Override

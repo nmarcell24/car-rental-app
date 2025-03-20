@@ -8,10 +8,14 @@ import autoberlo.autoberlo.dto.users.UserSave;
 import autoberlo.autoberlo.exception.UserNotFoundException;
 import autoberlo.autoberlo.model.User;
 import autoberlo.autoberlo.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +23,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService {
+@Transactional
+@Qualifier("userDetailsService")
+public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
@@ -58,18 +64,16 @@ public class UserService {
 
     public static final String NO_USER_FOUND_BY_USERNAME = "No user found by username: ";
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findUserByUsername(username);
-        if (user == null) {
-            throw new UserNotFoundException(NO_USER_FOUND_BY_USERNAME + username);
-        } else {
-            PermissionCollector permissionCollector = new PermissionCollector(user);
-            return permissionCollector;
-        }
+    public List<String> findPermissionsByUser(Integer userId) {
+        return userRepository.findPermissionsByUser(userId);
     }
 
     public User findUserByUsername(String username) {
         return userRepository.findUserByUsername(username);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return null;
     }
 }

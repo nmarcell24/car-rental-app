@@ -2,6 +2,7 @@ package autoberlo.autoberlo.exception;
 
 import autoberlo.autoberlo.dto.ExceptionResponse;
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import java.nio.file.AccessDeniedException;
 
 import static org.springframework.http.HttpStatus.*;
 
+@Hidden
 @RestControllerAdvice
 public class ExceptionHandling implements ErrorController {
     private static final String INCORRECT_CREDENTIALS = "Username / password incorrect. Please try again";

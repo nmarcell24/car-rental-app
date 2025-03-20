@@ -1,22 +1,19 @@
-package autoberlo.autoberlo.dto.loanBody;
+package autoberlo.autoberlo.dto.loan;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoanBodyRead {
+public class LoanList {
     private Integer id;
 
     private int carId;
+    private int userId;
 
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private int totalPrice;
 }

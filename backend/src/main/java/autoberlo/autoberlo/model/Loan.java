@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class LoanBody {
+public class Loan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -27,4 +27,5 @@ public class LoanBody {
     private LocalDate startDate;
     private LocalDate endDate;
     private int totalPrice;
+    private int userId;
 }

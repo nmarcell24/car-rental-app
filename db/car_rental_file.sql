@@ -51,54 +51,70 @@ COLLATE = utf8_hungarian_ci;
 CREATE TABLE IF NOT EXISTS `car_rental`.`user` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
-  `username` VARCHAR(205) NOT NULL,
   `phone_number` VARCHAR(45) NOT NULL,
   `email` VARCHAR(32) NOT NULL,
   `password` VARCHAR(250) NOT NULL,
   `address` VARCHAR(145) NOT NULL,
   `day_of_birth` DATE NOT NULL,
-  `permissions` VARCHAR(45) NOT NULL,
+  `role` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`));
 
 
 -- -----------------------------------------------------
--- Table `car_rental`.`loan_body`
+-- Table `car_rental`.`loan`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `car_rental`.`loan_body` (
+CREATE TABLE IF NOT EXISTS `car_rental`.`loan` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `car_id` INT NOT NULL,
   `start_date` DATE NOT NULL,
   `end_date` DATE NOT NULL,
   `total_price` INT NOT NULL,
+  `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_loan_body_car1_idx` (`car_id` ASC) VISIBLE,
+  INDEX `fk_loan_user1_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_loan_body_car1`
     FOREIGN KEY (`car_id`)
     REFERENCES `car_rental`.`car` (`id`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_loan_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `car_rental`.`user` (`id`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
 
 -- -----------------------------------------------------
--- Table `car_rental`.`loan_head`
+-- Table `car_rental`.`permissions`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `car_rental`.`loan_head` (
+CREATE TABLE IF NOT EXISTS `car_rental`.`permissions` (
+  `id` VARCHAR(30) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `car_rental`.`allocate`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `car_rental`.`allocate` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
-  `loan_body_id` INT NOT NULL,
-  PRIMARY KEY (`id`, `loan_body_id`),
-  INDEX `fk_loan_head_user1_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_loan_head_loan_body1_idx` (`loan_body_id` ASC) VISIBLE,
-  CONSTRAINT `fk_loan_head_user1`
+  `permissions_id` VARCHAR(30) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_Allocate_user1_idx` (`user_id` ASC) VISIBLE,
+  INDEX `fk_Allocate_permissions1_idx` (`permissions_id` ASC) VISIBLE,
+  CONSTRAINT `fk_Allocate_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `car_rental`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_loan_head_loan_body1`
-    FOREIGN KEY (`loan_body_id`)
-    REFERENCES `car_rental`.`loan_body` (`id`)
+  CONSTRAINT `fk_Allocate_permissions1`
+    FOREIGN KEY (`permissions_id`)
+    REFERENCES `car_rental`.`permissions` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

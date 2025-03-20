@@ -1,4 +1,4 @@
-package autoberlo.autoberlo.dto.loanBody;
+package autoberlo.autoberlo.dto.loan;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,11 +11,12 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoanBodySave {
+public class LoanSave {
 
     private int carId;
 
     private LocalDate startDate;
     private LocalDate endDate;
     private int totalPrice;
+    private int userId;
 }
