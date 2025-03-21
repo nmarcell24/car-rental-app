@@ -18,10 +18,15 @@ export default function CarDetail() {
   const [car, setCar] = useState({});
   const [open, setOpen] = useState(false);
   const params = useParams();
+  let HungarianForint = new Intl.NumberFormat('hu-HU', {
+    style: 'currency',
+    currency: 'HUF',
+    maximumSignificantDigits: "1"
+});
 
   useEffect(() => {
     const fetchCar = async () => {
-      const res = await axios.get(`/api/cars/auto/${params.id}`);
+      const res = await axios.get(`/api/car/${params.id}`);
       setCar(res.data);
     };
 
@@ -102,7 +107,7 @@ export default function CarDetail() {
           <div className="mt-4 p-4 border rounded-lg">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold">Price:</h3>
-              <p className="text-2xl font-bold ">600</p>
+              <p className="text-2xl font-bold ">{ HungarianForint.format(car.priceCategoryId) } / day</p>
             </div>
             <button
               onClick={() => setOpen(true)}

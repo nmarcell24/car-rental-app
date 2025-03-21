@@ -4,6 +4,7 @@ import PopularRentalDeals from "../homeComponents/PopularRentalDeals"
 import Form from "../homeComponents/Form";
 import LogoShow from "../homeComponents/LogoShow";
 import StatsCounter from "../homeComponents/StatsCounter";
+import { motion } from "framer-motion";
 
 const Home = () => {
 
@@ -12,14 +13,19 @@ const Home = () => {
       <div className="mb-6">
         <div className="flex items-center justify-around">
           <Form />
-          <img
+          <motion.img
             className="hidden md:block md:h-52 lg:h-80"
             src="/dodge_cropped.png"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+                duration: 1.8,
+            }}
           />
         </div>
       </div>
       <LogoShow />
-      <Browse />
+      {/* <Browse /> */}
       <PopularRentalDeals />
       <BuySellCarSection />
       <StatsCounter />

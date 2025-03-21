@@ -7,7 +7,6 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import QuestionMark from "@mui/icons-material/QuestionMark";
 import { AttachMoney, CarRental, Home, Menu } from "@mui/icons-material";
 import { Link, useLocation } from "react-router";
 import { useUserContext } from "../hooks/useUserContext";
@@ -48,22 +47,16 @@ export default function DrawerList({
             </ListItemButton>
           </ListItem>
         </Link>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <AttachMoney />
-            </ListItemIcon>
-            <ListItemText primary={"Publish a car"} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <QuestionMark />
-            </ListItemIcon>
-            <ListItemText primary={"Help"} />
-          </ListItemButton>
-        </ListItem>
+        <Link to={"/publish"}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <AttachMoney />
+              </ListItemIcon>
+              <ListItemText primary={"Publish a car"} />
+            </ListItemButton>
+          </ListItem>
+        </Link>
       </List>
     </Box>
   );
@@ -72,7 +65,7 @@ export default function DrawerList({
     <div>
       <div className="md:hidden">
         <Button onClick={toggleDrawer(true)}>
-          <Menu />
+          <Menu className="text-black" />
         </Button>
         <Drawer
           className="md:hidden relative"
@@ -87,7 +80,11 @@ export default function DrawerList({
                 variant="contained"
                 onClick={() => {
                   setOpenDialogSignIn(true);
-                  setOpen(false)
+                  setOpen(false);
+                }}
+                sx={{
+                  color: "white",
+                  backgroundColor: "#f1c656",
                 }}
               >
                 Sign in
@@ -96,7 +93,11 @@ export default function DrawerList({
                 variant="outlined"
                 onClick={() => {
                   setOpenDialogSignUp(true);
-                  setOpen(false)
+                  setOpen(false);
+                }}
+                sx={{
+                  color: "#f1c656",
+                  borderColor: "#f1c656",
                 }}
               >
                 Register
@@ -155,16 +156,6 @@ export default function DrawerList({
           }
         >
           Publish
-        </Link>
-        <Link
-          to={"/help"}
-          className={
-            pathname === "/rent"
-              ? "flex items-center hover:border-b hover:border-black hover:cursor-pointer"
-              : "flex items-center hover:border-b hover:text-white hover:cursor-pointer"
-          }
-        >
-          Help
         </Link>
         <div className="flex gap-2 ml-12">
           {currentUser ? (

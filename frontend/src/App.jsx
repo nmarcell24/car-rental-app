@@ -35,7 +35,7 @@ function App() {
         open={openDialogSignIn}
         onClose={() => setOpenDialogSignIn(false)}
       >
-        <SignIn setOpenDialog={setOpenDialogSignIn} />
+        <SignIn setOpenDialog={setOpenDialogSignIn} setOpenDialogSignUp={setOpenDialogSignUp} />
       </Dialog>
 
       {/* Sign up */}
@@ -43,7 +43,7 @@ function App() {
         open={openDialogSignUp}
         onClose={() => setOpenDialogSignUp(false)}
       >
-        <SignUp setOpenDialog={setOpenDialogSignUp} />
+        <SignUp setOpenDialog={setOpenDialogSignUp} setOpenDialogSignIn={setOpenDialogSignIn} />
       </Dialog>
     </div>
   );

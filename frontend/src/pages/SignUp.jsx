@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useUserContext } from "../hooks/useUserContext";
 
-export default function SignUp({ setOpenDialog }) {
+export default function SignUp({ setOpenDialog, setOpenDialogSignIn }) {
   const [errors, setErrors] = useState({});
   const [birthDate, setBirthDate] = useState(dayjs("2022-10-04"));
   const { setCurrentUser } = useUserContext();
@@ -180,6 +180,7 @@ export default function SignUp({ setOpenDialog }) {
             color="primary"
             className="mt-4"
             type="submit"
+            sx={{ backgroundColor: "#f1c656" }}
           >
             Sign Up
           </Button>
@@ -200,7 +201,11 @@ export default function SignUp({ setOpenDialog }) {
             variant="contained"
             color="primary"
             className="mt-4"
-            onClick={() => setOpenDialog(false)}
+            onClick={() => {
+              setOpenDialog(false);
+              setOpenDialogSignIn(true);
+            }}
+            sx={{ backgroundColor: "#f1c656" }}
           >
             Sign In
           </Button>

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useUserContext } from "../hooks/useUserContext";
 import axios from "axios";
 
-export default function SignIn({ setOpenDialog }) {
+export default function SignIn({ setOpenDialog, setOpenDialogSignUp }) {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
   const [email, setEmail] = useState("");
@@ -82,6 +82,7 @@ export default function SignIn({ setOpenDialog }) {
             color="primary"
             className="mt-4"
             type="submit"
+            sx={{ backgroundColor: "#f1c656" }}
           >
             Sign In
           </Button>
@@ -102,7 +103,11 @@ export default function SignIn({ setOpenDialog }) {
             variant="contained"
             color="primary"
             className="mt-4"
-            onClick={() => setOpenDialog(false)}
+            onClick={() => {
+              setOpenDialog(false);
+              setOpenDialogSignUp(true);
+            }}
+            sx={{ backgroundColor: "#f1c656" }}
           >
             Sign Up
           </Button>

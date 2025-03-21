@@ -40,9 +40,9 @@ const BuySellCarSection = () => {
             </p>
           </div>
           <div className="flex justify-between items-center">
-            <button className="bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition">
+            <Link to={"/publish"} className="bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition">
               Get Started →
-            </button>
+            </Link>
             <div>
               <img
                 src="./logos/logos6.svg"
