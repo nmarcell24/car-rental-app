@@ -1,5 +1,5 @@
 INSERT INTO allocate( user_id, permissions_id) VALUES
-	(1, 'GET_SUBMARINE'),
+	(1, 'CREAT_AUTO'),
     (2, 'GET_SUBMARINE'),
     (3, 'SINK_SUBMARINE'),
     (4, 'SINK_SUBMARINE'),
