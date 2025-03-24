@@ -17,6 +17,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -31,6 +32,8 @@ public class SecurityConfiguration {
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final UserDetailsService userDetailsService;
+    private BCryptPasswordEncoder passwordEncoder;
+
 
     public static final String[] PUBLIC_URLS = {
             "/swagger-ui/**", "/swagger-resources/**",
@@ -43,11 +46,14 @@ public class SecurityConfiguration {
     public SecurityConfiguration(JwtAuthorizationFilter jwtAuthorizationFilter,
                                  JwtAccessDeniedHandler jwtAccessDeniedHandler,
                                  JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
-                                 @Qualifier("userDetailsService") UserDetailsService userDetailsService) {
+                                 @Qualifier("userDetailsService") UserDetailsService userDetailsService,
+                                 BCryptPasswordEncoder passwordEncoder) {
+
         this.jwtAuthorizationFilter = jwtAuthorizationFilter;
         this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
         this.userDetailsService = userDetailsService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Bean
@@ -64,14 +70,14 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(request -> request
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
                         .requestMatchers(PUBLIC_URLS).permitAll()
-                        .requestMatchers(HttpMethod.POST, "/user/login").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/car/{id}").hasAuthority(("UPDATE_CAR"))
+                        .requestMatchers("user/login").permitAll()
+                        /*.requestMatchers(HttpMethod.PUT, "/car/{id}").hasAuthority(("UPDATE_CAR"))
                         .requestMatchers(HttpMethod.POST, "/car/create").hasAuthority(("CREATE_CAR"))
                         .requestMatchers(HttpMethod.GET, "/loan/list").hasAuthority(("LIST_LOANS"))
                         .requestMatchers(HttpMethod.POST, "/loan/create").hasAuthority(("CREATE_LOAN"))
 
                         .requestMatchers(HttpMethod.PUT, "/user/{id}").hasAuthority(("UPDATE_USER"))
-                        .requestMatchers(HttpMethod.GET, "/user/{id}").hasAuthority(("READ_USER"))
+                        .requestMatchers(HttpMethod.GET, "/user/{id}").hasAuthority(("READ_USER"))*/
                         .anyRequest().authenticated()
                 )
                 .httpBasic(withDefaults())

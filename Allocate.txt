@@ -1,0 +1,103 @@
+
+    (2, 'UPDATE_USER'),
+    (2, 'READ_USER'),
+    (2, 'CREATE_LOAN'),
+    (2, 'CREATE_CAR'),
+    (2, 'UPDATE_CAR'),
+    
+    (3, 'UPDATE_USER'),
+    (3, 'READ_USER'),
+    (3, 'CREATE_LOAN'),
+    (3, 'CREATE_CAR'),
+    (3, 'UPDATE_CAR'),
+    
+    (4, 'UPDATE_USER'),
+    (4, 'READ_USER'),
+    (4, 'CREATE_LOAN'),
+    (4, 'CREATE_CAR'),
+    (4, 'UPDATE_CAR'),
+    
+    (5, 'UPDATE_USER'),
+    (5, 'READ_USER'),
+    (5, 'CREATE_LOAN'),
+    (5, 'CREATE_CAR'),
+    (5, 'UPDATE_CAR'),
+    
+    (6, 'UPDATE_USER'),
+    (6, 'READ_USER'),
+    (6, 'CREATE_LOAN'),
+    (6, 'CREATE_CAR'),
+    (6, 'UPDATE_CAR'),
+    
+    (7, 'UPDATE_USER'),
+    (7, 'READ_USER'),
+    (7, 'CREATE_LOAN'),
+    (7, 'CREATE_CAR'),
+    (7, 'UPDATE_CAR'),
+    
+    (8, 'UPDATE_USER'),
+    (8, 'READ_USER'),
+    (8, 'CREATE_LOAN'),
+    (8, 'CREATE_CAR'),
+    (8, 'UPDATE_CAR'),
+    
+    (9, 'UPDATE_USER'),
+    (9, 'READ_USER'),
+    (9, 'CREATE_LOAN'),
+    (9, 'CREATE_CAR'),
+    (9, 'UPDATE_CAR'),
+    
+    (10, 'UPDATE_USER'),
+    (10, 'READ_USER'),
+    (10, 'CREATE_LOAN'),
+    (10, 'CREATE_CAR'),
+    (10, 'UPDATE_CAR'),
+    
+    (11, 'UPDATE_USER'),
+    (11, 'READ_USER'),
+    (11, 'CREATE_LOAN'),
+    (11, 'CREATE_CAR'),
+    (11, 'UPDATE_CAR'),
+    
+    (12, 'UPDATE_USER'),
+    (12, 'READ_USER'),
+    (12, 'CREATE_LOAN'),
+    (12, 'CREATE_CAR'),
+    (12, 'UPDATE_CAR'),
+    
+    (13, 'UPDATE_USER'),
+    (13, 'READ_USER'),
+    (13, 'CREATE_LOAN'),
+    (13, 'CREATE_CAR'),
+    (13, 'UPDATE_CAR'),
+    
+    (14, 'UPDATE_USER'),
+    (14, 'READ_USER'),
+    (14, 'CREATE_LOAN'),
+    (14, 'CREATE_CAR'),
+    (14, 'UPDATE_CAR'),
+    
+    (15, 'UPDATE_USER'),
+    (15, 'READ_USER'),
+    (15, 'CREATE_LOAN'),
+    (15, 'CREATE_CAR'),
+    (15, 'UPDATE_CAR'),
+    
+    (16, 'UPDATE_USER'),
+    (16, 'READ_USER'),
+    (16, 'CREATE_LOAN'),
+    (16, 'CREATE_CAR'),
+    (16, 'UPDATE_CAR'),
+    
+    (17, 'UPDATE_USER'),
+    (17, 'READ_USER'),
+    (17, 'CREATE_LOAN'),
+    (17, 'CREATE_CAR'),
+    (17, 'UPDATE_CAR'),
+    
+    
+    (18, 'UPDATE_USER'),
+    (18, 'READ_USER'),
+    (18, 'CREATE_LOAN'),
+    (18, 'CREATE_CAR'),
+    (18, 'UPDATE_CAR')

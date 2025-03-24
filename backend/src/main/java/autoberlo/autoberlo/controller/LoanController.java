@@ -23,14 +23,14 @@ public class LoanController {
     @Autowired
     private LoanService loanService;
 
-    @PreAuthorize("hasAuthority('LIST_LOANS')")
+    //@PreAuthorize("hasAuthority('LIST_LOANS')")
     @GetMapping("/list")
     @Operation(summary = "List id all of the loan")
     public List<LoanList> listLoan() {
         return loanService.listLoan();
     }
 
-    @PreAuthorize("hasAuthority('CREATE_LOAN')")
+    //@PreAuthorize("hasAuthority('CREATE_LOAN')")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create")
     @Operation(summary = "create new loan")

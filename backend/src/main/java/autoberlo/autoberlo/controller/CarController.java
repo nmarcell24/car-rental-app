@@ -29,7 +29,7 @@ public class CarController {
         return carService.listAutok();
     }
 
-    @PreAuthorize("hasAuthority('CREATE_CAR')")
+    //@PreAuthorize("hasAuthority('CREATE_CAR')")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create")
     @Operation(summary = "create new car")
@@ -37,7 +37,7 @@ public class CarController {
         return carService.createAuto(carSave);
     }
 
-    @PreAuthorize("hasAuthority('UPDATE_CAR')")
+    //@PreAuthorize("hasAuthority('UPDATE_CAR')")
     @PutMapping("/{id}")
     @Operation(summary = "Update car by id")
     public CarRead updateAuto(@Valid @PathVariable Integer id, CarSave carSave) {

@@ -1,7 +1,6 @@
 package autoberlo.autoberlo.model;
 
-public enum Permissions {
-        LIST_USERS,
+public enum Permission {
         UPDATE_USER,
         READ_USER,
         LIST_LOANS,

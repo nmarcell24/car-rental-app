@@ -16,7 +16,7 @@ public class Allocate {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "permission_id")
-    private Permissions permissions;
+    private Permission permission;
 
 
 }
