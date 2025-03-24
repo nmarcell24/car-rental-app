@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
@@ -60,7 +61,8 @@ public class UserController {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
     }
 
-    @GetMapping("/ist")
+    @PreAuthorize("hasAuthority('LIST_USERS')")
+    @GetMapping("/list")
     @Operation(summary = "List name all of the user")
     public List<UserList> listUser() {
         return userService.listUsers();
@@ -74,13 +76,14 @@ public class UserController {
         return userService.createUser(userSave);
     }
 
+    @PreAuthorize("hasAuthority('UPDATE_USER')")
     @PutMapping("/{id}")
     @Operation(summary = "Update user by id")
     public UserRead updateUser(@Valid @PathVariable Integer id, UserSave userSave ) {
         return userService.updateUser(id, userSave);
     }
 
-
+    @PreAuthorize("hasAuthority('READ_USER')")
     @GetMapping("/{id}")
     @Operation(summary = "Reads user by id")
     public UserRead getUser(@Valid @PathVariable Integer id ) {

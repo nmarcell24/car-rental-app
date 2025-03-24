@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class CarController {
         return carService.listAutok();
     }
 
+    @PreAuthorize("hasAuthority('CREATE_AUTO')")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create")
     @Operation(summary = "create new car")
@@ -35,11 +37,13 @@ public class CarController {
         return carService.createAuto(carSave);
     }
 
+    @PreAuthorize("hasAuthority('UPDATE_AUTO')")
     @PutMapping("/{id}")
     @Operation(summary = "Update car by id")
     public CarRead updateAuto(@Valid @PathVariable Integer id, CarSave carSave) {
         return carService.updateAuto(id, carSave);
     }
+
 
     @GetMapping("/{id}")
     @Operation(summary = "Read car by id")

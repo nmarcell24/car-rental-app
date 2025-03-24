@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -33,6 +34,7 @@ public class SecurityConfiguration {
     public static final String[] PUBLIC_URLS = {
             "/swagger-ui/**", "/swagger-resources/**",
             "/v2/api-docs", "/v3/api-docs", "/v3/api-docs/**",
+
     };
 
     @Autowired
@@ -60,6 +62,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(request -> request
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
                         .requestMatchers(PUBLIC_URLS).permitAll()
+                        /*.requestMatchers(HttpMethod.GET, "/car/{id}").hasAuthority(("READ_CAR"))*/
                         .anyRequest().authenticated()
                 )
                 .httpBasic(withDefaults())
