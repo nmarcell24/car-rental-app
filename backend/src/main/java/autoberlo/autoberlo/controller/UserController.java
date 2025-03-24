@@ -42,8 +42,7 @@ public class UserController {
     @PostMapping("/login")
     @Operation(summary = "User log in")
     public ResponseEntity<UserRead> login(@RequestBody LoginRequest loginRequest) {
-
-        //authenticate(loginRequest.getUsername(), loginRequest.getPassword());
+        authenticate(loginRequest.getUsername(), loginRequest.getPassword());
         User user = userService.findUserByUsername(loginRequest.getUsername());
         PermissionCollector collector = new PermissionCollector(user);
         HttpHeaders jwtHeader = getJWTHeader(collector);

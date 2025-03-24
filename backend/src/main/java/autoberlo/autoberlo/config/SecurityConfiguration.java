@@ -70,14 +70,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(request -> request
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
                         .requestMatchers(PUBLIC_URLS).permitAll()
-                        .requestMatchers("user/login").permitAll()
-                        /*.requestMatchers(HttpMethod.PUT, "/car/{id}").hasAuthority(("UPDATE_CAR"))
-                        .requestMatchers(HttpMethod.POST, "/car/create").hasAuthority(("CREATE_CAR"))
-                        .requestMatchers(HttpMethod.GET, "/loan/list").hasAuthority(("LIST_LOANS"))
-                        .requestMatchers(HttpMethod.POST, "/loan/create").hasAuthority(("CREATE_LOAN"))
-
-                        .requestMatchers(HttpMethod.PUT, "/user/{id}").hasAuthority(("UPDATE_USER"))
-                        .requestMatchers(HttpMethod.GET, "/user/{id}").hasAuthority(("READ_USER"))*/
+                        .requestMatchers("/user/login").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(withDefaults())
@@ -86,6 +79,8 @@ public class SecurityConfiguration {
                         .accessDeniedHandler(jwtAccessDeniedHandler))
                 .authenticationManager(getAuthenticationManager(http))
                 .sessionManagement(sess -> sess.sessionCreationPolicy(STATELESS))
+
+                // A JWT szűrőt az autentikációs folyamat előtt alkalmazzuk
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
