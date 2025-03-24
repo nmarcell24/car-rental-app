@@ -88,10 +88,11 @@ public class CarConverter {
         carList.setId(car.getId());
         carList.setBrand(car.getBrand());
         carList.setCarType(car.getCarType());
+        carList.setNumberOfSeats(car.getNumberOfSeats());
         carList.setFuelType(car.getFuelType());
         carList.setTransmissionType(car.getTransmissionType());
         carList.setImageUrl(car.getImageUrl());
-        car.setPriceCategoryId(extracted(car.getPriceCategoryId()));
+        carList.setPriceCategoryId(extracted(car.getPriceCategoryId()));
 
         return carList;
     }

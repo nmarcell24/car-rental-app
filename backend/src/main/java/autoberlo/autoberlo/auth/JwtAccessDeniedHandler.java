@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
-//import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Component

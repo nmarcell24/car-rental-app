@@ -55,13 +55,11 @@ public class UserController {
         jwtHeader.add("JWT_Token", jwtTokenProvider.generateJwtToken(collector));
         return jwtHeader;
     }
-    // 17:40
 
     private void authenticate(String username, String password) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
     }
 
-    @PreAuthorize("hasAuthority('LIST_USERS')")
     @GetMapping("/list")
     @Operation(summary = "List name all of the user")
     public List<UserList> listUser() {

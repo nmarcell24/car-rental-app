@@ -51,6 +51,7 @@ COLLATE = utf8_hungarian_ci;
 CREATE TABLE IF NOT EXISTS `car_rental`.`user` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
+  `username` VARCHAR(45) NOT NULL,
   `phone_number` VARCHAR(45) NOT NULL,
   `email` VARCHAR(32) NOT NULL,
   `password` VARCHAR(250) NOT NULL,

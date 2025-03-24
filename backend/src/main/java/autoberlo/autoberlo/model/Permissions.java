@@ -1,7 +1,11 @@
 package autoberlo.autoberlo.model;
 
 public enum Permissions {
-        CREAT,
-        READ,
-        SHOOT_TORPEDO
+        LIST_USERS,
+        UPDATE_USER,
+        READ_USER,
+        LIST_LOANS,
+        CREATE_LOAN,
+        CREATE_CAR,
+        UPDATE_CAR
 }

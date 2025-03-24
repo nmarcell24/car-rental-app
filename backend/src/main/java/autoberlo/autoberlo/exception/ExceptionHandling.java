@@ -44,6 +44,4 @@ public class ExceptionHandling implements ErrorController {
     public ResponseEntity<ExceptionResponse> tokenExpiredException(TokenExpiredException exception) {
         return createHttpResponse(UNAUTHORIZED, exception.getMessage());
     }
-
-
 }

@@ -3,6 +3,7 @@ package autoberlo.autoberlo.config;
 import autoberlo.autoberlo.auth.JwtAccessDeniedHandler;
 import autoberlo.autoberlo.auth.JwtAuthenticationEntryPoint;
 import autoberlo.autoberlo.auth.JwtAuthorizationFilter;
+import io.swagger.v3.oas.models.PathItem;
 import jakarta.servlet.DispatcherType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,6 +35,7 @@ public class SecurityConfiguration {
     public static final String[] PUBLIC_URLS = {
             "/swagger-ui/**", "/swagger-resources/**",
             "/v2/api-docs", "/v3/api-docs", "/v3/api-docs/**",
+            "/user/login", "/user/create", "/car/list", "/car/{id}", "/user/list"
 
     };
 
@@ -62,7 +64,14 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(request -> request
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
                         .requestMatchers(PUBLIC_URLS).permitAll()
-                        /*.requestMatchers(HttpMethod.GET, "/car/{id}").hasAuthority(("READ_CAR"))*/
+                        .requestMatchers(HttpMethod.POST, "/user/login").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/car/{id}").hasAuthority(("UPDATE_CAR"))
+                        .requestMatchers(HttpMethod.POST, "/car/create").hasAuthority(("CREATE_CAR"))
+                        .requestMatchers(HttpMethod.GET, "/loan/list").hasAuthority(("LIST_LOANS"))
+                        .requestMatchers(HttpMethod.POST, "/loan/create").hasAuthority(("CREATE_LOAN"))
+
+                        .requestMatchers(HttpMethod.PUT, "/user/{id}").hasAuthority(("UPDATE_USER"))
+                        .requestMatchers(HttpMethod.GET, "/user/{id}").hasAuthority(("READ_USER"))
                         .anyRequest().authenticated()
                 )
                 .httpBasic(withDefaults())
