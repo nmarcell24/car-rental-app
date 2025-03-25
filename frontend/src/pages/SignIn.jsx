@@ -6,32 +6,40 @@ import axios from "axios";
 export default function SignIn({ setOpenDialog, setOpenDialogSignUp }) {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
-  const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState(false);
+  const [username, setUsername] = useState("");
+  const [usernameError, setUsernameError] = useState(false);
+  const [users, setUsers] = useState([]);
   const { setCurrentUser } = useUserContext();
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-    if (!/^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/.test(e.target.value)) {
-      setEmailError("Invalid email address");
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+    if (!/^[a-zA-Z\s]+$/.test(username)) {
+      setUsernameError(
+        "Username must contain only letters and numbers)"
+      );
     } else {
-      setEmailError(false);
+      setUsernameError(false);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (emailError || passwordError) {
+    if (usernameError || passwordError) {
       alert("Form is invalid! Please check the fields...");
     } else {
-      console.log(email, password);
+      console.log(username, password);
 
       axios
         .post("/api/user/login", {
-          email,
+          username,
           password,
         })
-        .then(({ data }) => setCurrentUser(data))
+        .then((res) => {
+          setCurrentUser(res.data);
+          console.log(res);
+
+          localStorage.setItem("token", res.headers.jwt_token);
+        })
         .then(() => setOpenDialog(false))
         .catch((error) => alert(error));
     }
@@ -41,9 +49,9 @@ export default function SignIn({ setOpenDialog, setOpenDialogSignUp }) {
     <div className="bg-white p-8 rounded-2xl shadow-lg w-full">
       <div className="flex justify-center mb-4">
         <img
-          src="https://mui.com/static/logo.png"
-          alt="MUI Logo"
-          className="h-10"
+          src="./logos/Rento_yellow-cropped.svg"
+          alt="Rento Logo"
+          className="h-18"
         />
       </div>
       <h5 className="text-center font-bold text-2xl">
@@ -56,13 +64,13 @@ export default function SignIn({ setOpenDialog, setOpenDialogSignUp }) {
         <TextField
           fullWidth
           required
-          value={email}
-          onChange={handleEmailChange}
-          error={emailError}
-          label="Email"
-          type="email"
+          value={username}
+          onChange={handleUsernameChange}
+          error={usernameError}
+          label="Username"
+          type="text"
           margin="normal"
-          helperText={emailError ? "Please enter a valid email" : ""}
+          helperText={usernameError ? "Please enter a valid username" : ""}
         />
         <TextField
           required

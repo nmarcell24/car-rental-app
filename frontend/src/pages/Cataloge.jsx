@@ -88,7 +88,7 @@ const Cataloge = () => {
               />
             ))
           : paginatedItems.map((car, index) => (
-              <CarCard {...car} index={index} />
+              <CarCard {...car} key={car.id} index={index} />
             ))}
         <Pagination
           className="w-full flex justify-center"
