@@ -21,6 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static autoberlo.autoberlo.model.Permission.UPDATE_USER;
 import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -71,6 +72,13 @@ public class SecurityConfiguration {
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
                         .requestMatchers(PUBLIC_URLS).permitAll()
                         .requestMatchers("/user/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "loan/create").hasAnyAuthority("CREATE_LOAN")
+                        .requestMatchers(HttpMethod.GET, "loan/list").hasAnyAuthority("LIST_LOANS")
+                        .requestMatchers(HttpMethod.POST, "car/create").hasAnyAuthority("CREATE_CAR")
+                        .requestMatchers(HttpMethod.PUT, "car/{id}").hasAnyAuthority("UPDATE_CAR")
+                        .requestMatchers(HttpMethod.PUT, "user/{id}").hasAnyAuthority("UPDATE_USER")
+                        .requestMatchers(HttpMethod.GET, "user/{id}").hasAnyAuthority("READ_USER")
+
                         .anyRequest().authenticated()
                 )
                 .httpBasic(withDefaults())
@@ -79,8 +87,6 @@ public class SecurityConfiguration {
                         .accessDeniedHandler(jwtAccessDeniedHandler))
                 .authenticationManager(getAuthenticationManager(http))
                 .sessionManagement(sess -> sess.sessionCreationPolicy(STATELESS))
-
-                // A JWT szűrőt az autentikációs folyamat előtt alkalmazzuk
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

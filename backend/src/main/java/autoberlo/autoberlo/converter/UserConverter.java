@@ -14,7 +14,7 @@ public class UserConverter {
         UserRead userRead = new UserRead();
         userRead.setId(user.getId());
         userRead.setName(user.getName());
-        userRead.setUsername(userRead.getUsername());
+        userRead.setUsername(user.getUsername());
         userRead.setPhoneNumber(user.getPhoneNumber());
         userRead.setEmail(user.getEmail());
         userRead.setPassword(user.getPassword());
