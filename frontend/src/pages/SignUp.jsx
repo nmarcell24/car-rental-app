@@ -1,5 +1,5 @@
 import { Box, Button, TextField } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -9,15 +9,34 @@ import { useUserContext } from "../hooks/useUserContext";
 export default function SignUp({ setOpenDialog, setOpenDialogSignIn }) {
   const [errors, setErrors] = useState({});
   const [birthDate, setBirthDate] = useState(dayjs("2022-10-04"));
+  const [users, setUsers] = useState([]);
   const { setCurrentUser } = useUserContext();
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      await axios.get("/api/user/list").then(({ data }) => setUsers(data));
+    };
+
+    fetchUsers();
+  }, []);
 
   const [formData, setFormData] = useState({
     name: "",
+    username: "",
     phoneNumber: "",
     email: "",
     password: "",
     address: "",
   });
+
+  const isUniqueUsername = () => {
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].username === formData.username) {
+        return false;
+      }
+    }
+    return true;
+  };
 
   const handleChange = (e) => {
     setFormData({
@@ -30,6 +49,12 @@ export default function SignUp({ setOpenDialog, setOpenDialogSignIn }) {
     let newErrors = {};
     if (!/^[a-zA-Z\s]+$/.test(formData.name)) {
       newErrors.name = "Name must contain only letters and spaces";
+    }
+    if (!isUniqueUsername()) {
+      newErrors.username = "Username must be unique";
+    }
+    if (!/^[a-zA-Z\s]+$/.test(formData.username)) {
+      newErrors.username = "Invalid username";
     }
     if (
       !/^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/.test(formData.email)
@@ -45,7 +70,7 @@ export default function SignUp({ setOpenDialog, setOpenDialogSignIn }) {
     // if (formData.password !== formData.passwordAgain) {
     //   newErrors.passwordAgain = "Passwords do not match";
     // }
-    if (!/^[0-9]{10}$/.test(formData.phoneNumber)) {
+    if (!/^[0-9]{11}$/.test(formData.phoneNumber)) {
       newErrors.phoneNumber = "Invalid phone number";
     }
     if (!/^[a-zA-Z0-9\s,.-]+$/.test(formData.address)) {
@@ -53,7 +78,6 @@ export default function SignUp({ setOpenDialog, setOpenDialogSignIn }) {
     }
     setErrors(newErrors);
 
-    console.log(errors);
     return Object.keys(newErrors).length === 0;
   };
 
@@ -70,10 +94,11 @@ export default function SignUp({ setOpenDialog, setOpenDialogSignIn }) {
 
       axios
         .post(
-          "/api/users/usercreate",
+          "/api/user/create",
           {
             ...formData,
             dayOfBirth: birthDate.format("YYYY-MM-DD"),
+            role: "COMMON_USER",
           },
           {
             headers: {
@@ -82,8 +107,17 @@ export default function SignUp({ setOpenDialog, setOpenDialogSignIn }) {
           }
         )
         .then(({ data }) => {
-          setCurrentUser(data);
-          setOpenDialog(false);
+          axios
+            .post("/api/user/login", {
+              username: data.username,
+              password: formData.password,
+            })
+            .then((res) => {
+              setCurrentUser(res.data);
+              localStorage.setItem("token", res.headers.jwt_token);
+            })
+            .then(() => setOpenDialog(false))
+            .catch((error) => alert(error));
         })
         .catch((error) => alert(error));
     }
@@ -93,9 +127,9 @@ export default function SignUp({ setOpenDialog, setOpenDialogSignIn }) {
     <div className="bg-white p-8 rounded-2xl shadow-lg w-full">
       <div className="flex justify-center mb-4">
         <img
-          src="https://mui.com/static/logo.png"
-          alt="MUI Logo"
-          className="h-10"
+          src="./logos/Rento_yellow-cropped.svg"
+          alt="Rento Logo"
+          className="h-18"
         />
       </div>
       <h5 className="text-center font-bold text-2xl">
@@ -116,6 +150,17 @@ export default function SignUp({ setOpenDialog, setOpenDialogSignIn }) {
             name="name"
             label="Name"
             helperText={errors.name}
+          />
+          <TextField
+            fullWidth
+            required
+            onChange={handleChange}
+            error={!!errors.username}
+            value={formData.username}
+            margin="normal"
+            name="username"
+            label="Username"
+            helperText={errors.username}
           />
           <TextField
             fullWidth
@@ -165,7 +210,7 @@ export default function SignUp({ setOpenDialog, setOpenDialogSignIn }) {
           />
           <DatePicker
             required
-            className="!mt-4 w-full"
+            className="!mt-4 w-full col-span-2"
             onChange={(nW) => setBirthDate(nW)}
             value={birthDate}
             margin="normal"

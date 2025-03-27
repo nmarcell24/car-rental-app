@@ -8,21 +8,29 @@ import {
   Speed,
   Star,
 } from "@mui/icons-material";
-import { Dialog } from "@mui/material";
+import { Alert, Dialog } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { AnimatePresence, motion } from "framer-motion";
 import { ReservSteps } from "../components/ReservSteps";
 
 export default function CarDetail() {
   const [car, setCar] = useState({});
   const [open, setOpen] = useState(false);
+  const [alert, setAlert] = useState(false);
+
+  if (alert) {
+    setTimeout(() => {
+      setAlert(false);
+    }, 4000);
+  }
   const params = useParams();
-  let HungarianForint = new Intl.NumberFormat('hu-HU', {
-    style: 'currency',
-    currency: 'HUF',
-    maximumSignificantDigits: "1"
-});
+  let HungarianForint = new Intl.NumberFormat("hu-HU", {
+    style: "currency",
+    currency: "HUF",
+    maximumSignificantDigits: "1",
+  });
 
   useEffect(() => {
     const fetchCar = async () => {
@@ -107,10 +115,16 @@ export default function CarDetail() {
           <div className="mt-4 p-4 border rounded-lg">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold">Price:</h3>
-              <p className="text-2xl font-bold ">{ HungarianForint.format(car.priceCategoryId) } / day</p>
+              <p className="text-2xl font-bold ">
+                {HungarianForint.format(car.priceCategoryId)} / day
+              </p>
             </div>
             <button
-              onClick={() => setOpen(true)}
+              onClick={() => {
+                localStorage.getItem("token") === null
+                  ? setAlert(true)
+                  : setOpen(true);
+              }}
               className="w-full mt-2 bg-[#f1c656] text-white py-2 rounded"
             >
               Reserv
@@ -125,9 +139,31 @@ export default function CarDetail() {
           maxWidth={"md"}
           fullWidth
         >
-          <ReservSteps car={car} specLogos={specLogos} specs={specs} setOpen={setOpen} />
+          <ReservSteps
+            car={car}
+            specLogos={specLogos}
+            specs={specs}
+            setOpen={setOpen}
+          />
         </Dialog>
       )}
+      {
+        <AnimatePresence initial={false}>
+          {alert ? (
+            <motion.div
+              initial={{ opacity: 0, y: 50 }} // Start hidden and move up
+              animate={{ opacity: 1, y: 0 }} // Animate in
+              exit={{ opacity: 0, y: 50 }} // Animate out
+              transition={{ duration: 0.5 }}
+              className="fixed bottom-2 right-2 z-20"
+            >
+              <Alert variant="filled" severity="error">
+                You must sign in to make a reservation.
+              </Alert>
+            </motion.div>
+          ) : null}
+        </AnimatePresence>
+      }
     </div>
   );
 }

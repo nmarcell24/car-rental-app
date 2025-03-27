@@ -11,6 +11,9 @@ import { AttachMoney, CarRental, Home, Menu } from "@mui/icons-material";
 import { Link, useLocation } from "react-router";
 import { useUserContext } from "../hooks/useUserContext";
 import { userContext } from "../contexts/userContextProvider";
+import { AnimatePresence, motion } from "framer-motion";
+import { Alert } from "@mui/material";
+import { useNavigate } from "react-router";
 
 export default function DrawerList({
   setOpenDialogSignIn,
@@ -18,7 +21,15 @@ export default function DrawerList({
 }) {
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
+  const [alert, setAlert] = useState(false);
   const { currentUser, setCurrentUser } = useUserContext(userContext);
+  const navigate = useNavigate();
+
+  if (alert) {
+    setTimeout(() => {
+      setAlert(false);
+    }, 4000);
+  }
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -47,7 +58,13 @@ export default function DrawerList({
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link to={"/publish"}>
+        <button
+          onClick={() => {
+            localStorage.getItem("token") === null
+              ? setAlert(true)
+              : navigate("/publish")
+          }}
+        >
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -56,7 +73,7 @@ export default function DrawerList({
               <ListItemText primary={"Publish a car"} />
             </ListItemButton>
           </ListItem>
-        </Link>
+        </button>
       </List>
     </Box>
   );
@@ -109,7 +126,11 @@ export default function DrawerList({
                 {currentUser.email}
               </h1>
               <Button
-                onClick={() => setCurrentUser(null)}
+                onClick={() => {
+                  setCurrentUser(null);
+                  localStorage.removeItem("token");
+                  navigate("/")
+                }}
                 variant="contained"
                 sx={{
                   color: "black",
@@ -147,16 +168,20 @@ export default function DrawerList({
         >
           Rent
         </Link>
-        <Link
-          to={"/publish"}
+        <button
+          onClick={() => {
+            localStorage.getItem("token") === null
+              ? setAlert(true)
+              : navigate("/publish")
+          }}
           className={
             pathname === "/rent"
-              ? "flex items-center hover:border-b hover:border-black hover:cursor-pointer transition-"
+              ? "flex items-center hover:border-b hover:border-black hover:cursor-pointer transition"
               : "flex items-center hover:border-b hover:text-white hover:cursor-pointer"
           }
         >
           Publish
-        </Link>
+        </button>
         <div className="flex gap-2 ml-12">
           {currentUser ? (
             <>
@@ -164,7 +189,11 @@ export default function DrawerList({
                 {currentUser.email}
               </h1>
               <Button
-                onClick={() => setCurrentUser(null)}
+                onClick={() => {
+                  setCurrentUser(null);
+                  localStorage.removeItem("token");
+                  navigate("/")
+                }}
                 variant="contained"
                 sx={{
                   color: "black",
@@ -223,6 +252,23 @@ export default function DrawerList({
           )}
         </div>
       </ul>
+      {
+        <AnimatePresence initial={false}>
+          {alert ? (
+            <motion.div
+              initial={{ opacity: 0, y: 50 }} // Start hidden and move up
+              animate={{ opacity: 1, y: 0 }} // Animate in
+              exit={{ opacity: 0, y: 50 }} // Animate out
+              transition={{ duration: 0.5 }}
+              className="fixed bottom-2 right-2 z-20"
+            >
+              <Alert variant="filled" severity="error">
+                You must sign in to publish a car.
+              </Alert>
+            </motion.div>
+          ) : null}
+        </AnimatePresence>
+      }
     </div>
   );
 }

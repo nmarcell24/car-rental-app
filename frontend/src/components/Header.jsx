@@ -12,7 +12,7 @@ const Header = ({ setOpenDialogSignIn, setOpenDialogSignUp }) => {
           : "bg-[#f1c656] p-4 w-full flex items-center justify-between"
       }
     >
-      <h1 className="text-2xl lg:ml-12">Rento</h1>
+      <img src="./logos/Rento_black-cropped.svg" className="h-15" />
       <DrawerList setOpenDialogSignIn={setOpenDialogSignIn} setOpenDialogSignUp={setOpenDialogSignUp} />
     </div>
   );
