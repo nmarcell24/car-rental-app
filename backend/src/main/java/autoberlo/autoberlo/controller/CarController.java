@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,5 +52,11 @@ public class CarController {
         return carService.getAuto(id);
     }
 
+    @PreAuthorize("hasAuthority('DELETE_CAR')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteAuto(@PathVariable Integer id) {
+        carService.deleteAuto(id);
+        return ResponseEntity.ok("Az autó adatai törölve lettek, de az ID megmaradt.");
+    }
 
 }

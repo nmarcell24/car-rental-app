@@ -45,6 +45,9 @@ public class LoanConverter {
         LoanList loanList = new LoanList();
         loanList.setId(loans.getId());
         loanList.setCarId(loans.getCarId());
+        loanList.setStartDate(loans.getStartDate());
+        loanList.setEndDate(loans.getEndDate());
+        loanList.setTotalPrice(loans.getTotalPrice());
         loanList.setUserId(loans.getUserId());
 
         return loanList;

@@ -44,4 +44,22 @@ public class CarService {
         Car car = carRepository.save(CarConverter.convertSaveToModel(carSave));
         return CarConverter.convertModelToRead(car);
     }
+
+    public void deleteAuto(Integer id) {
+        Car car = carRepository.findById(id)
+                .orElseThrow(AutoNotFoundException::new);
+
+        car.setBrand("");
+        car.setCarType("");
+        car.setHorsePower(0);
+        car.setModelYear(0);
+        car.setNumberOfSeats(0);
+        car.setFuelType("");
+        car.setTransmissionType("");
+        car.setDriveTrain("");
+        car.setImageUrl("");
+        car.setPriceCategoryId(0);
+
+        carRepository.save(car);
+    }
 }

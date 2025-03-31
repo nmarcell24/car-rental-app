@@ -39,7 +39,7 @@ public class SecurityConfiguration {
     public static final String[] PUBLIC_URLS = {
             "/swagger-ui/**", "/swagger-resources/**",
             "/v2/api-docs", "/v3/api-docs", "/v3/api-docs/**",
-            "/user/login", "/user/create", "/car/list", "/car/{id}", "/user/list"
+            "/user/login", "/user/create", "/car/list", "/car/{id}", "/user/list", "/allocate/create", "allocate/list"
 
     };
 
@@ -78,6 +78,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.PUT, "car/{id}").hasAnyAuthority("UPDATE_CAR")
                         .requestMatchers(HttpMethod.PUT, "user/{id}").hasAnyAuthority("UPDATE_USER")
                         .requestMatchers(HttpMethod.GET, "user/{id}").hasAnyAuthority("READ_USER")
+                        .requestMatchers(HttpMethod.DELETE, "car/{id}").hasAnyAuthority("DELETE_CAR")
 
                         .anyRequest().authenticated()
                 )

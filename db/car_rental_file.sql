@@ -72,24 +72,24 @@ CREATE TABLE IF NOT EXISTS `car_rental`.`loan` (
   `total_price` INT NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_loan_body_car1_idx` (`car_id` ASC) VISIBLE,
   INDEX `fk_loan_user1_idx` (`user_id` ASC) VISIBLE,
-  CONSTRAINT `fk_loan_body_car1`
-    FOREIGN KEY (`car_id`)
-    REFERENCES `car_rental`.`car` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+  INDEX `fk_loan_car1_idx` (`car_id` ASC) VISIBLE,
   CONSTRAINT `fk_loan_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `car_rental`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_loan_car1`
+    FOREIGN KEY (`car_id`)
+    REFERENCES `car_rental`.`car` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
 
 -- -----------------------------------------------------
--- Table `car_rental`.`permissions`
+-- Table `car_rental`.`permission`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `car_rental`.`permissions` (
+CREATE TABLE IF NOT EXISTS `car_rental`.`permission` (
   `id` VARCHAR(30) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -101,18 +101,18 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `car_rental`.`allocate` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
-  `permissions_id` VARCHAR(30) NOT NULL,
+  `permission_id` VARCHAR(30) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Allocate_user1_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_Allocate_permissions1_idx` (`permissions_id` ASC) VISIBLE,
+  INDEX `fk_Allocate_permissions1_idx` (`permission_id` ASC) VISIBLE,
   CONSTRAINT `fk_Allocate_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `car_rental`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Allocate_permissions1`
-    FOREIGN KEY (`permissions_id`)
-    REFERENCES `car_rental`.`permissions` (`id`)
+    FOREIGN KEY (`permission_id`)
+    REFERENCES `car_rental`.`permission` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
