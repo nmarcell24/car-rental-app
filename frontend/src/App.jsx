@@ -11,11 +11,17 @@ import CarDetail from "./pages/CarDetails";
 import SellYourCar from "./pages/SellYourCar";
 import { NotFound } from "./pages/NotFound";
 import UserProfile from "./pages/UserProfile";
+import AdminDashboard from "./pages/AdminDashboard";
+import { useUserContext } from "./hooks/useUserContext";
 
 function App() {
   const [openDialogSignIn, setOpenDialogSignIn] = useState(false);
   const [openDialogSignUp, setOpenDialogSignUp] = useState(false);
+  const { currentUser } = useUserContext();
 
+  if (currentUser && currentUser.id === 1){
+    return <AdminDashboard/>
+  }
   return (
     <div>
       <Header
@@ -28,6 +34,7 @@ function App() {
         <Route path="/rent/:id" element={<CarDetail />} />
         <Route path="/publish" element={<SellYourCar />} />
         <Route path="/user" element={<UserProfile />} />
+        <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
       <Footer />
@@ -37,7 +44,10 @@ function App() {
         open={openDialogSignIn}
         onClose={() => setOpenDialogSignIn(false)}
       >
-        <SignIn setOpenDialog={setOpenDialogSignIn} setOpenDialogSignUp={setOpenDialogSignUp} />
+        <SignIn
+          setOpenDialog={setOpenDialogSignIn}
+          setOpenDialogSignUp={setOpenDialogSignUp}
+        />
       </Dialog>
 
       {/* Sign up */}
@@ -45,7 +55,10 @@ function App() {
         open={openDialogSignUp}
         onClose={() => setOpenDialogSignUp(false)}
       >
-        <SignUp setOpenDialog={setOpenDialogSignUp} setOpenDialogSignIn={setOpenDialogSignIn} />
+        <SignUp
+          setOpenDialog={setOpenDialogSignUp}
+          setOpenDialogSignIn={setOpenDialogSignIn}
+        />
       </Dialog>
     </div>
   );
