@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CarService {
@@ -36,7 +37,15 @@ public class CarService {
     }
 
     public List<CarList> listAutok() {
-        List<Car> autok = carRepository.findAll();
+        List<Car> autok = carRepository.findAll().stream()
+                .filter(car -> car.getBrand() != null
+                        && car.getCarType() != null
+                        && car.getNumberOfSeats() != 0
+                        && car.getFuelType() != null
+                        && car.getTransmissionType() != null
+                        && car.getImageUrl() != null
+                        && car.getPriceCategoryId() != -1)
+                .collect(Collectors.toList());
         return CarConverter.convertModelsToList(autok);
     }
 
@@ -49,16 +58,16 @@ public class CarService {
         Car car = carRepository.findById(id)
                 .orElseThrow(AutoNotFoundException::new);
 
-        car.setBrand("");
-        car.setCarType("");
+        car.setBrand(null);
+        car.setCarType(null);
         car.setHorsePower(0);
         car.setModelYear(0);
         car.setNumberOfSeats(0);
-        car.setFuelType("");
-        car.setTransmissionType("");
-        car.setDriveTrain("");
-        car.setImageUrl("");
-        car.setPriceCategoryId(0);
+        car.setFuelType(null);
+        car.setTransmissionType(null);
+        car.setDriveTrain(null);
+        car.setImageUrl(null);
+        car.setPriceCategoryId(-1);
 
         carRepository.save(car);
     }
