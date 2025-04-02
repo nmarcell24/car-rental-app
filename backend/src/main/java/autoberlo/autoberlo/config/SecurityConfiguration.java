@@ -3,7 +3,6 @@ package autoberlo.autoberlo.config;
 import autoberlo.autoberlo.auth.JwtAccessDeniedHandler;
 import autoberlo.autoberlo.auth.JwtAuthenticationEntryPoint;
 import autoberlo.autoberlo.auth.JwtAuthorizationFilter;
-import io.swagger.v3.oas.models.PathItem;
 import jakarta.servlet.DispatcherType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,8 +19,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import static autoberlo.autoberlo.model.Permission.UPDATE_USER;
 import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 

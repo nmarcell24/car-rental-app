@@ -1,8 +1,5 @@
 package autoberlo.autoberlo.dto;
 
-
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 import java.text.SimpleDateFormat;
