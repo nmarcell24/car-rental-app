@@ -10,11 +10,19 @@ import { Dialog } from "@mui/material";
 import CarDetail from "./pages/CarDeail";
 import SellYourCar from "./pages/SellYourCar";
 import { NotFound } from "./pages/NotFound";
+import AdminDashboard from "./pages/AdminDashboard";
+// import ManageCars from "./pages/ManageCars";
+// import ManageUsers from "./pages/ManageUsers";
+// import { useUserContext } from "./hooks/useUserContext";
 
 function App() {
   const [openDialogSignIn, setOpenDialogSignIn] = useState(false);
   const [openDialogSignUp, setOpenDialogSignUp] = useState(false);
+  //const { currentUser } = useUserContext();
 
+  // if (currentUser && currentUser.username === "admin"){
+  //   return <AdminDashboard/>
+  // }
   return (
     <div>
       <Header
@@ -26,6 +34,7 @@ function App() {
         <Route path="/rent" element={<Cataloge />} />
         <Route path="/rent/:id" element={<CarDetail />} />
         <Route path="/publish" element={<SellYourCar />} />
+        <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
       <Footer />
