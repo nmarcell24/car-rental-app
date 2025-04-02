@@ -65,7 +65,7 @@ const PopularRentalDeals = () => {
                 <p className="text-lg font-bold text-gray-800 mb-4 flex items-center justify-between">
                   Price:{" "}
                   <span>
-                    ${car.priceCategoryId}{" "}
+                    {car.priceCategoryId}Ft{" "}
                     <span className="text-gray-600">/day</span>
                   </span>
                 </p>

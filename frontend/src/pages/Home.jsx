@@ -7,7 +7,6 @@ import StatsCounter from "../homeComponents/StatsCounter";
 import { motion } from "framer-motion";
 
 const Home = () => {
-
   return (
     <div className="bg-[#f1c656] pt-7">
       <div className="mb-6">

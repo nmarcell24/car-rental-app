@@ -9,16 +9,7 @@ import { useUserContext } from "../hooks/useUserContext";
 export default function SignUp({ setOpenDialog, setOpenDialogSignIn }) {
   const [errors, setErrors] = useState({});
   const [birthDate, setBirthDate] = useState(dayjs("2022-10-04"));
-  const [users, setUsers] = useState([]);
-  const { setCurrentUser } = useUserContext();
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      await axios.get("/api/user/list").then(({ data }) => setUsers(data));
-    };
-
-    fetchUsers();
-  }, []);
+  const { setCurrentUser, users } = useUserContext();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -28,6 +19,20 @@ export default function SignUp({ setOpenDialog, setOpenDialogSignIn }) {
     password: "",
     address: "",
   });
+
+  const addAllocates = async (data) => {
+    await axios.post("api/allocate/create", {
+      data,
+      permission: "UPDATE_USER",
+    });
+    await axios.post("api/allocate/create", { data, permission: "READ_USER" });
+    await axios.post("api/allocate/create", {
+      data,
+      permission: "CREATE_LOAN",
+    });
+    await axios.post("api/allocate/create", { data, permission: "CREATE_CAR" });
+    await axios.post("api/allocate/create", { data, permission: "UPDATE_CAR" });
+  };
 
   const isUniqueUsername = () => {
     for (let i = 0; i < users.length; i++) {
@@ -47,7 +52,7 @@ export default function SignUp({ setOpenDialog, setOpenDialogSignIn }) {
 
   const validateForm = () => {
     let newErrors = {};
-    if (!/^[a-zA-Z\s]+$/.test(formData.name)) {
+    if (!/^[a-záéíóöőúüűÁÉÍÓÖŐÚÜŰA-Z\s]+$/.test(formData.name)) {
       newErrors.name = "Name must contain only letters and spaces";
     }
     if (!isUniqueUsername()) {
@@ -67,13 +72,10 @@ export default function SignUp({ setOpenDialog, setOpenDialogSignIn }) {
       newErrors.password =
         "Password must be at least 8 characters long, include at least one letter and one number";
     }
-    // if (formData.password !== formData.passwordAgain) {
-    //   newErrors.passwordAgain = "Passwords do not match";
-    // }
     if (!/^[0-9]{11}$/.test(formData.phoneNumber)) {
       newErrors.phoneNumber = "Invalid phone number";
     }
-    if (!/^[a-zA-Z0-9\s,.-]+$/.test(formData.address)) {
+    if (!/^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ0-9\s,.-]+$/.test(formData.address)) {
       newErrors.address = "Invalid address format";
     }
     setErrors(newErrors);
@@ -89,9 +91,6 @@ export default function SignUp({ setOpenDialog, setOpenDialogSignIn }) {
       if (!birthDate.isValid) {
         return;
       }
-
-      console.log({ ...formData, dayOfBirth: birthDate.format("YYYY-MM-DD") });
-
       axios
         .post(
           "/api/user/create",
@@ -106,18 +105,12 @@ export default function SignUp({ setOpenDialog, setOpenDialogSignIn }) {
             },
           }
         )
-        .then(({ data }) => {
-          axios
-            .post("/api/user/login", {
-              username: data.username,
-              password: formData.password,
-            })
-            .then((res) => {
-              setCurrentUser(res.data);
-              localStorage.setItem("token", res.headers.jwt_token);
-            })
-            .then(() => setOpenDialog(false))
-            .catch((error) => alert(error));
+        .then((res) => {
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${res.headers.jwt_token}`;
+          // addAllocates(res.data);
+          setOpenDialog(false);
         })
         .catch((error) => alert(error));
     }

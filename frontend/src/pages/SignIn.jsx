@@ -8,7 +8,6 @@ export default function SignIn({ setOpenDialog, setOpenDialogSignUp }) {
   const [passwordError, setPasswordError] = useState(false);
   const [username, setUsername] = useState("");
   const [usernameError, setUsernameError] = useState(false);
-  const [users, setUsers] = useState([]);
   const { setCurrentUser } = useUserContext();
 
   const handleUsernameChange = (e) => {
@@ -27,16 +26,14 @@ export default function SignIn({ setOpenDialog, setOpenDialogSignUp }) {
     if (usernameError || passwordError) {
       alert("Form is invalid! Please check the fields...");
     } else {
-      console.log(username, password);
-
       axios
         .post("/api/user/login", {
           username,
           password,
         })
         .then((res) => {
+          axios.defaults.headers.common['Authorization'] = `Bearer ${res.headers.jwt_token}`;
           setCurrentUser(res.data);
-          console.log(res);
 
           localStorage.setItem("token", res.headers.jwt_token);
         })

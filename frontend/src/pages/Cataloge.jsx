@@ -4,6 +4,7 @@ import axios from "axios";
 import {
   Checkbox,
   FormControl,
+  FormHelperText,
   InputLabel,
   ListItemText,
   MenuItem,
@@ -11,19 +12,17 @@ import {
   Pagination,
   Select,
   Skeleton,
-  useMediaQuery,
 } from "@mui/material";
 
 const Cataloge = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [cars, setCars] = useState([]);
   const [page, setPage] = useState(1);
-
-  const ITEMS_PER_PAGE = 10;
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const paginatedItems = cars.slice(
-    (page - 1) * ITEMS_PER_PAGE,
-    page * ITEMS_PER_PAGE
+    (page - 1) * itemsPerPage,
+    page * itemsPerPage
   );
 
   const fetchCars = async () => {
@@ -90,12 +89,28 @@ const Cataloge = () => {
           : paginatedItems.map((car, index) => (
               <CarCard {...car} key={car.id} index={index} />
             ))}
-        <Pagination
-          className="w-full flex justify-center"
-          count={cars.length / ITEMS_PER_PAGE}
-          page={page}
-          onChange={handleChange}
-        />
+        <div className="w-full flex items-center justify-center gap-10">
+          <Pagination
+            className="flex justify-center items-center"
+            count={Math.floor(cars.length / itemsPerPage) + 1}
+            page={page}
+            onChange={handleChange}
+          />
+          <FormControl sx={{ minWidth: 120 }} className="flex justify-center items-center">
+            <Select
+            fullWidth
+              value={itemsPerPage}
+              onChange={(e) => setItemsPerPage(e.target.value)}
+              displayEmpty
+              inputProps={{ "aria-label": "Without label" }}
+            >
+              <MenuItem value={6}>6 items</MenuItem>
+              <MenuItem value={10}>10 items</MenuItem>
+              <MenuItem value={12}>12 items</MenuItem>
+              <MenuItem value={16}>16 items</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
       </div>
     </div>
   );

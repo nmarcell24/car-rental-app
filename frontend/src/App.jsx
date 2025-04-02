@@ -7,9 +7,10 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import { useState } from "react";
 import { Dialog } from "@mui/material";
-import CarDetail from "./pages/CarDeail";
+import CarDetail from "./pages/CarDetails";
 import SellYourCar from "./pages/SellYourCar";
 import { NotFound } from "./pages/NotFound";
+import UserProfile from "./pages/UserProfile";
 
 function App() {
   const [openDialogSignIn, setOpenDialogSignIn] = useState(false);
@@ -26,6 +27,7 @@ function App() {
         <Route path="/rent" element={<Cataloge />} />
         <Route path="/rent/:id" element={<CarDetail />} />
         <Route path="/publish" element={<SellYourCar />} />
+        <Route path="/user" element={<UserProfile />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
       <Footer />

@@ -19,6 +19,7 @@ export default function CarDetail() {
   const [car, setCar] = useState({});
   const [open, setOpen] = useState(false);
   const [alert, setAlert] = useState(false);
+  const [isValidImage, setIsValidImage] = useState(true);
 
   if (alert) {
     setTimeout(() => {
@@ -70,7 +71,7 @@ export default function CarDetail() {
       <div className="grid md:grid-cols-2 gap-6">
         <div>
           <img
-            src={car.imageUrl && car.imageUrl.slice(1)}
+            src={isValidImage ? car.imageUrl && car.imageUrl.slice(1) : "./images/placeholder.svg"} onError={() => setIsValidImage(false)}
             alt="Car"
             className="w-full rounded-lg"
           />

@@ -1,8 +1,12 @@
-import React, { useState } from "react";
-import { TextField, MenuItem, Autocomplete, Button } from "@mui/material";
-import { motion } from "framer-motion";
-import { gsap } from "gsap";
+import React, { useEffect, useState } from "react";
+import { TextField, MenuItem, Autocomplete, Alert } from "@mui/material";
+import { AnimatePresence, motion } from "framer-motion";
+import { Create } from "@mui/icons-material";
+import { useNavigate } from "react-router";
+import { useUserContext } from "../hooks/useUserContext";
+import axios from "axios";
 
+//Dummy data
 const carTypes = [
   "Sedan",
   "SUV",
@@ -16,7 +20,8 @@ const carTypes = [
 const fuelTypes = ["Petrol", "Diesel", "Electric", "Hybrid"];
 const transmissionTypes = ["Manual", "Automatic"];
 const driveTrains = ["FWD", "RWD", "AWD", "4WD"];
-const priceCategories = ["Economy", "Standard", "Luxury", "Premium"];
+const numberInputs = ["horsePower", "modelYear", "numberOfSeats"];
+const priceCategories = ["Low", "Mid", "High"];
 const carBrands = [
   "Toyota",
   "Ford",
@@ -29,44 +34,70 @@ const carBrands = [
 ];
 
 const SellCarForm = () => {
+  const { currentUser } = useUserContext();
+  const navigate = useNavigate();
+  const [priceCategoryId, setPriceCategoryId] = useState("");
+  const [created, setCreated] = useState(false);
   const [carDetails, setCarDetails] = useState({
     brand: "",
     carType: "",
-    horsePower: "",
-    modelYear: "",
-    numberOfSeats: "",
+    horsePower: 0,
+    modelYear: 0,
+    numberOfSeats: 0,
     fuelType: "",
     transmissionType: "",
     driveTrain: "",
     imageUrl: "",
-    priceCategoryId: "",
   });
+
+  if (created) {
+    setTimeout(() => {
+      setCreated(false);
+    }, 4000);
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setCarDetails((prev) => ({ ...prev, [name]: value }));
+    if (numberInputs.includes(name)) {
+      setCarDetails((prev) => ({ ...prev, [name]: Number(value) }));
+    } else {
+      setCarDetails((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    gsap.to("#submit-btn", {
-      scale: 1.1,
-      duration: 0.2,
-      yoyo: true,
-      repeat: 1,
-    });
-    console.log("Car details submitted:", carDetails);
+    axios
+      .post("api/car/create", {
+        ...carDetails,
+        priceCategoryId:
+          priceCategoryId === "Low" ? 0 : priceCategoryId === "Mid" ? 1 : 2,
+      })
+      .then(() => setCreated(true))
+      .catch((err) => console.log(err.message));
   };
 
+  // if no user is logged in
+  useEffect(() => {
+    if (currentUser === null) {
+      navigate("/");
+    }
+  }, []);
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="p-6 max-w-lg mx-auto bg-white shadow-lg rounded-2xl"
-    >
-      <h2 className="text-2xl font-bold mb-4 text-center">Publish Your Car</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="p-6 md:w-[70vw] mx-auto rounded-2xl my-10">
+      <h2 className="text-4xl font-bold mb-10">Publish Your Car!</h2>
+      <h4 className="text-2xl font-bold flex items-center">
+        <Create className="bg-[#f1c656] rounded-full p-1 mr-3" />
+        Details
+      </h4>
+      <p className="text-gray-500 pb-5 pt-2">
+        Please fill in the fileds below abour your car!
+      </p>
+      <form
+        onSubmit={handleSubmit}
+        className="grid grid-cols-1 sm:grid-cols-2 gap-5 px-10 py-5 rounded-2xl shadow-md"
+      >
         <Autocomplete
           options={carBrands}
           renderInput={(params) => (
@@ -114,14 +145,6 @@ const SellCarForm = () => {
           fullWidth
           variant="outlined"
           type="number"
-          onChange={handleChange}
-          required
-        />
-        <TextField
-          label="Image URL"
-          name="imageUrl"
-          fullWidth
-          variant="outlined"
           onChange={handleChange}
           required
         />
@@ -176,7 +199,7 @@ const SellCarForm = () => {
           name="priceCategoryId"
           fullWidth
           variant="outlined"
-          onChange={handleChange}
+          onChange={(e) => setPriceCategoryId(e.target.value)}
           required
         >
           {priceCategories.map((category) => (
@@ -185,17 +208,30 @@ const SellCarForm = () => {
             </MenuItem>
           ))}
         </TextField>
-        <motion.button
-          id="submit-btn"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+        <button
           type="submit"
-          className="w-full py-2 bg-blue-600 text-white font-bold rounded-xl shadow-md hover:bg-blue-700 transition"
+          className="w-full py-2 bg-[#f1c656] hover:grayscale-25 text-white font-bold rounded-xl shadow-md  transition"
         >
           Submit
-        </motion.button>
+        </button>
       </form>
-    </motion.div>
+
+      <AnimatePresence initial={false}>
+        {created ? (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }} // Start hidden and move up
+            animate={{ opacity: 1, y: 0 }} // Animate in
+            exit={{ opacity: 0, y: 50 }} // Animate out
+            transition={{ duration: 0.5 }}
+            className="fixed bottom-2 right-2 z-20"
+          >
+            <Alert variant="filled" severity="success">
+              Car created successfully.
+            </Alert>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+    </div>
   );
 };
 

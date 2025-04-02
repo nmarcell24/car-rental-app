@@ -62,7 +62,7 @@ export default function DrawerList({
           onClick={() => {
             localStorage.getItem("token") === null
               ? setAlert(true)
-              : navigate("/publish")
+              : navigate("/publish");
           }}
         >
           <ListItem disablePadding>
@@ -122,14 +122,14 @@ export default function DrawerList({
             </div>
           ) : (
             <div className="w-full text-center absolute bottom-0 flex flex-col justify-center gap-3">
-              <h1 className="text-lg font-semibold flex items-center justify-center md:mr-6">
+              <Link to={"/user"} className="text-lg font-semibold flex items-center justify-center md:mr-6">
                 {currentUser.email}
-              </h1>
+              </Link>
               <Button
                 onClick={() => {
                   setCurrentUser(null);
                   localStorage.removeItem("token");
-                  navigate("/")
+                  navigate("/");
                 }}
                 variant="contained"
                 sx={{
@@ -172,7 +172,7 @@ export default function DrawerList({
           onClick={() => {
             localStorage.getItem("token") === null
               ? setAlert(true)
-              : navigate("/publish")
+              : navigate("/publish");
           }}
           className={
             pathname === "/rent"
@@ -185,14 +185,14 @@ export default function DrawerList({
         <div className="flex gap-2 ml-12">
           {currentUser ? (
             <>
-              <h1 className="text-lg font-semibold flex items-center mr-6">
+              <Link to={"/user"} className="text-lg font-semibold flex items-center mr-6">
                 {currentUser.email}
-              </h1>
+              </Link>
               <Button
                 onClick={() => {
                   setCurrentUser(null);
                   localStorage.removeItem("token");
-                  navigate("/")
+                  navigate("/");
                 }}
                 variant="contained"
                 sx={{
@@ -252,23 +252,22 @@ export default function DrawerList({
           )}
         </div>
       </ul>
-      {
-        <AnimatePresence initial={false}>
-          {alert ? (
-            <motion.div
-              initial={{ opacity: 0, y: 50 }} // Start hidden and move up
-              animate={{ opacity: 1, y: 0 }} // Animate in
-              exit={{ opacity: 0, y: 50 }} // Animate out
-              transition={{ duration: 0.5 }}
-              className="fixed bottom-2 right-2 z-20"
-            >
-              <Alert variant="filled" severity="error">
-                You must sign in to publish a car.
-              </Alert>
-            </motion.div>
-          ) : null}
-        </AnimatePresence>
-      }
+
+      <AnimatePresence initial={false}>
+        {alert ? (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }} // Start hidden and move up
+            animate={{ opacity: 1, y: 0 }} // Animate in
+            exit={{ opacity: 0, y: 50 }} // Animate out
+            transition={{ duration: 0.5 }}
+            className="fixed bottom-2 right-2 z-20"
+          >
+            <Alert variant="filled" severity="error">
+              You must sign in to publish a car.
+            </Alert>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@mui/material";
 import {
   FavoriteOutlined,
@@ -25,6 +25,8 @@ const CarCard = ({
     maximumSignificantDigits: "1",
   });
 
+  const [isValidImage, setIsValidImage] = useState(true);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -41,7 +43,7 @@ const CarCard = ({
         </span>
       </div>
       <div className="flex justify-center mb-4">
-        <img src={imageUrl} alt="Car" className="h-32 object-contain" />
+        <img src={isValidImage ? imageUrl : "./images/placeholder.svg"} onError={() => setIsValidImage(false)} alt="Car" className="h-32 object-contain" />
       </div>
       <div className="flex justify-between items-center text-sm text-gray-600 mb-4">
         <span>
