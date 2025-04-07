@@ -23,7 +23,6 @@ public class Loan {
     private Integer id;
 
     private int carId;
-
     private LocalDate startDate;
     private LocalDate endDate;
     private int totalPrice;

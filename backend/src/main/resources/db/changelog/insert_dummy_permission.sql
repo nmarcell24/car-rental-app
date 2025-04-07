@@ -1,4 +1,4 @@
-INSERT INTO permission( id) VALUES
+INSERT INTO permission(id) VALUES
     ('UPDATE_USER'),
     ('READ_USER'),
     ('LIST_LOANS'),

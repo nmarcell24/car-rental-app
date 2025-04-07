@@ -14,7 +14,6 @@ import java.time.LocalDate;
 public class LoanSave {
 
     private int carId;
-
     private LocalDate startDate;
     private LocalDate endDate;
     private int totalPrice;
