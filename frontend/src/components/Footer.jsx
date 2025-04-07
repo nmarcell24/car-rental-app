@@ -1,18 +1,47 @@
-import { Facebook, Instagram, MailOutline, PhoneOutlined, YouTube } from "@mui/icons-material";
+import {
+  Facebook,
+  Instagram,
+  MailOutline,
+  PhoneOutlined,
+  YouTube,
+} from "@mui/icons-material";
 import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0D1E3A] text-gray-400 py-8 px-24 ">
+    <footer className="bg-[#0D1E3A] text-gray-400 py-8 px-24">
       <div className="container mx-auto px-4">
         {/* Top Section */}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8 border-b border-gray-700 pb-6">
           {/* Logo and Contact */}
           <div>
             <h2 className="text-xl font-semibold mb-4">RENTCARS</h2>
-            <p className="text-sm">25566 Hc 1, Glenallen, <br /> Alaska, 99588, USA</p>
-            <p className="text-sm mt-2"><PhoneOutlined /> +603 4784 273 12</p>
-            <p className="text-sm mt-2"><MailOutline /> rentcars@gmail.com</p>
+            <p className="text-sm">
+              <a
+                href="https://maps.google.com/?q=25566+Hc+1,+Glenallen,+Alaska,+99588"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors"
+              >
+                25566 Hc 1, Glenallen, <br /> Alaska, 99588, USA
+              </a>
+            </p>
+            <p className="text-sm mt-2">
+              <a
+                href="tel:+603478427312"
+                className="hover:text-white transition-colors flex items-center gap-1"
+              >
+                <PhoneOutlined /> +603 4784 273 12
+              </a>
+            </p>
+            <p className="text-sm mt-2">
+              <a
+                href="mailto:rentcars@gmail.com"
+                className="hover:text-white transition-colors flex items-center gap-1"
+              >
+                <MailOutline /> rentcars@gmail.com
+              </a>
+            </p>
           </div>
 
           {/* Links: Our Product */}
