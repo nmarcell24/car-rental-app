@@ -28,14 +28,6 @@ public class CarService {
         return CarConverter.convertModelToRead(car);
     }
 
-    public CarRead updateAuto(Integer id, @Valid CarSave carSave) {
-        if (!carRepository.existsById(id)) {
-            throw new AutoNotFoundException();
-        }
-        Car car = carRepository.save(CarConverter.convertSaveToModel(id, carSave));
-        return CarConverter.convertModelToRead(car);
-    }
-
     public List<CarList> listAutok() {
         List<Car> autok = carRepository.findAll().stream()
                 .filter(car -> car.getBrand() != null

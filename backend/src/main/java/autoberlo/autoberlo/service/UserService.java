@@ -46,6 +46,7 @@ public class UserService implements UserDetailsService {
             throw new UserNotFoundException(NO_USER_FOUND_BY_USERNAME);
         }
         User user = UserConverter.convertSaveToModel(id, userSave);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user = userRepository.save(user);
         return UserConverter.convertModelToRead(user);
     }
