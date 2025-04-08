@@ -38,14 +38,6 @@ public class CarController {
         return carService.createAuto(carSave);
     }
 
-    @PreAuthorize("hasAuthority('UPDATE_CAR')")
-    @PutMapping("/{id}")
-    @Operation(summary = "Update car by id")
-    public CarRead updateAuto(@Valid @PathVariable Integer id, CarSave carSave) {
-        return carService.updateAuto(id, carSave);
-    }
-
-
     @GetMapping("/{id}")
     @Operation(summary = "Read car by id")
     public CarRead getAuto(@Valid @PathVariable Integer id) {

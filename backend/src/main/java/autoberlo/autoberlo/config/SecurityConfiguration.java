@@ -72,7 +72,6 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "loan/create").hasAnyAuthority("CREATE_LOAN")
                         .requestMatchers(HttpMethod.GET, "loan/list").hasAnyAuthority("LIST_LOANS")
                         .requestMatchers(HttpMethod.POST, "car/create").hasAnyAuthority("CREATE_CAR")
-                        .requestMatchers(HttpMethod.PUT, "car/{id}").hasAnyAuthority("UPDATE_CAR")
                         .requestMatchers(HttpMethod.PUT, "user/{id}").hasAnyAuthority("UPDATE_USER")
                         .requestMatchers(HttpMethod.GET, "user/{id}").hasAnyAuthority("READ_USER")
                         .requestMatchers(HttpMethod.DELETE, "car/{id}").hasAnyAuthority("DELETE_CAR")

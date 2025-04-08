@@ -58,22 +58,6 @@ public class CarConverter {
         return car;
     }
 
-    public static Car convertSaveToModel(Integer id, CarSave carSave) {
-        Car car = new Car();
-        car.setId(id);
-        car.setBrand(carSave.getBrand());
-        car.setCarType(carSave.getCarType());
-        car.setHorsePower(carSave.getHorsePower());
-        car.setModelYear(carSave.getModelYear());
-        car.setNumberOfSeats(carSave.getNumberOfSeats());
-        car.setFuelType(carSave.getFuelType());
-        car.setTransmissionType(carSave.getTransmissionType());
-        car.setDriveTrain(carSave.getDriveTrain());
-        car.setImageUrl(carSave.getImageUrl());
-        car.setPriceCategoryId(extracted(carSave.getPriceCategoryId()));
-
-        return car;
-    }
 
     public static List<CarList> convertModelsToList(List<Car> autok) {
         List<CarList> dtoAuto = new ArrayList<>();
