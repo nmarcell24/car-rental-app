@@ -6,5 +6,6 @@ public enum Permission {
         LIST_LOANS,
         CREATE_LOAN,
         CREATE_CAR,
-        UPDATE_CAR
+        UPDATE_CAR,
+        DELETE_CAR
 }

@@ -31,7 +31,6 @@ export default function SignUp({ setOpenDialog, setOpenDialogSignIn }) {
       permission: "CREATE_LOAN",
     });
     await axios.post("api/allocate/create", { data, permission: "CREATE_CAR" });
-    await axios.post("api/allocate/create", { data, permission: "UPDATE_CAR" });
   };
 
   const isUniqueUsername = () => {
@@ -109,7 +108,7 @@ export default function SignUp({ setOpenDialog, setOpenDialogSignIn }) {
           axios.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${res.headers.jwt_token}`;
-          // addAllocates(res.data);
+          addAllocates(res.data);
           setOpenDialog(false);
         })
         .catch((error) => alert(error));

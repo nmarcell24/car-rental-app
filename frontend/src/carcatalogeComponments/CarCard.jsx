@@ -30,20 +30,20 @@ const CarCard = ({
   return (
     <motion.div
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1}}
+      animate={{ opacity: 1 }}
       transition={{
         duration: 1,
       }}
       className="w-64 p-4 rounded-2xl shadow-lg bg-gray-100"
     >
-      <div className="flex justify-between items-center mb-4">
-        <h6 className="text-lg font-semibold">{brand}</h6>
-        <span className="text-gray-400 hover:text-red-500">
-          <FavoriteOutlined />
-        </span>
-      </div>
+      <h6 className="text-lg font-semibold mb-4">{brand}</h6>
       <div className="flex justify-center mb-4">
-        <img src={isValidImage ? imageUrl : "./images/placeholder.svg"} onError={() => setIsValidImage(false)} alt="Car" className="h-32 object-contain" />
+        <img
+          src={isValidImage ? imageUrl : "./images/placeholder.svg"}
+          onError={() => setIsValidImage(false)}
+          alt="Car"
+          className="h-32 object-contain"
+        />
       </div>
       <div className="flex justify-between items-center text-sm text-gray-600 mb-4">
         <span>

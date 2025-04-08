@@ -47,7 +47,7 @@ const SellCarForm = () => {
     fuelType: "",
     transmissionType: "",
     driveTrain: "",
-    imageUrl: "",
+    imageUrl: "./images/placeholder.svg",
   });
 
   if (created) {

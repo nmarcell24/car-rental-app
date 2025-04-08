@@ -9,6 +9,40 @@ const UserProfile = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const { currentUser } = useUserContext();
   const [users, setUsers] = useState([]);
+  const [userLoans, setUserLoans] = useState([
+    {
+      imageUrl: "./images/car1.png",
+      startDate: "2025-04-03",
+      endDate: "2025-04-03",
+      totalPrice: 0,
+      brand: "Mercedes",
+      priceCategoryId: 1,
+    },
+    {
+      imageUrl: "./images/car2.png",
+      startDate: "2025-03-05",
+      endDate: "2025-03-06",
+      totalPrice: 0,
+      brand: "Ford",
+      priceCategoryId: 4,
+    },
+    {
+      imageUrl: "./images/car1.png",
+      startDate: "2025-04-03",
+      endDate: "2025-04-03",
+      totalPrice: 0,
+      brand: "Mercedes",
+      priceCategoryId: 1,
+    },
+    {
+      imageUrl: "./images/car2.png",
+      startDate: "2025-03-05",
+      endDate: "2025-03-06",
+      totalPrice: 0,
+      brand: "Ford",
+      priceCategoryId: 4,
+    },
+  ]);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -30,7 +64,7 @@ const UserProfile = () => {
   });
 
   const isUniqueUsername = () => {
-    if(formData.username === currentUser.username) {
+    if (formData.username === currentUser.username) {
       return true;
     }
     for (let i = 0; i < users.length; i++) {
@@ -201,9 +235,36 @@ const UserProfile = () => {
             </div>
           </>
         ) : (
-          <Typography variant="h6" fontWeight="bold" gutterBottom>
-            My Rents (This is a different tab content)
-          </Typography>
+          <>
+            <Typography variant="h6" fontWeight="bold" gutterBottom>
+              My Rents
+            </Typography>
+            <div className="max-h-[50vh] overflow-y-scroll">
+              {userLoans.map((loan) => (
+                <div key={loan.id} className="flex items-center mb-4 bg-gray-50 p-3 rounded-xl text-[120%] px-6">
+                  <img
+                    src={loan.imageUrl}
+                    alt="Car"
+                    className="w-45 h-30 rounded-lg mr-4"
+                  />
+                  <div className="flex flex-col">
+                    <h1 className="font-bold text-xl mb-2">
+                      {loan.brand}
+                    </h1>
+                    <p>
+                      <span className="text-gray-500">Start Date:</span> {loan.startDate}
+                    </p>
+                    <p>
+                    <span className="text-gray-500">End Date:</span> {loan.endDate}
+                    </p>
+                    <p>
+                    <span className="text-gray-500">Total Price:</span> {loan.totalPrice} HUF
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
         )}
       </div>
     </div>

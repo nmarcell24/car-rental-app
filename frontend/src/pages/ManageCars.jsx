@@ -54,19 +54,22 @@ const ManageCars = () => {
   const handleDeleteClick = (id) => {
     setCarToDelete(id);
     setOpenDialog(true);
-
-    axios.delete(`/api/car/${id}`).then(({data}) => {
-      console.log("Car deleted:", data);
-    }).catch((err) => {
-      console.error("Error deleting car:", err);
-    })
   };
 
   const handleDeleteConfirm = () => {
-    // Az autó "törlése" a felületen
-    const carToRemove = cars.find((car) => car.id === carToDelete);
-    setDeletedCars([...deletedCars, carToRemove]); // Hozzáadjuk a törölt autókhoz
-    setCars(cars.filter((car) => car.id !== carToDelete)); // Eltávolítjuk a listából
+    axios
+      .delete(`/api/car/${carToDelete}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        }
+      })
+      .then(() => {
+        setCars(cars.filter((car) => car.id !== carToDelete));
+      })
+      .catch((err) => {
+        console.error("Error deleting car:", err);
+      });
+
     setOpenDialog(false);
     setCarToDelete(null);
   };
@@ -91,21 +94,28 @@ const ManageCars = () => {
     });
   };
 
-  const uniqueBrands = [...new Set(cars.map(car => car.brand))];
-  const uniqueCarTypes = [...new Set(cars.map(car => car.carType))];
-  const uniqueFuelTypes = [...new Set(cars.map(car => car.fuelType))];
-  const uniqueSeats = [...new Set(cars.map(car => car.numberOfSeats))].sort((a, b) => a - b);
+  const uniqueBrands = [...new Set(cars.map((car) => car.brand))];
+  const uniqueCarTypes = [...new Set(cars.map((car) => car.carType))];
+  const uniqueFuelTypes = [...new Set(cars.map((car) => car.fuelType))];
+  const uniqueSeats = [...new Set(cars.map((car) => car.numberOfSeats))].sort(
+    (a, b) => a - b
+  );
 
-  const filteredCars = cars.filter((car) =>
-    (filters.brand === "" || car.brand === filters.brand) &&
-    (filters.carType === "" || car.carType === filters.carType) &&
-    (filters.numberOfSeats === "" || car.numberOfSeats === Number(filters.numberOfSeats)) &&
-    (filters.fuelType === "" || car.fuelType === filters.fuelType) &&
-    (filters.transmissionType === "" || car.transmissionType === filters.transmissionType) &&
-    (filters.priceCategoryId === "" || 
-      (filters.priceCategoryId === "10000" && car.priceCategoryId === 10000) || // Low
-      (filters.priceCategoryId === "20000" && car.priceCategoryId === 20000) || // Mid
-      (filters.priceCategoryId === "30000" && car.priceCategoryId === 30000)) // High
+  const filteredCars = cars.filter(
+    (car) =>
+      (filters.brand === "" || car.brand === filters.brand) &&
+      (filters.carType === "" || car.carType === filters.carType) &&
+      (filters.numberOfSeats === "" ||
+        car.numberOfSeats === Number(filters.numberOfSeats)) &&
+      (filters.fuelType === "" || car.fuelType === filters.fuelType) &&
+      (filters.transmissionType === "" ||
+        car.transmissionType === filters.transmissionType) &&
+      (filters.priceCategoryId === "" ||
+        (filters.priceCategoryId === "10000" &&
+          car.priceCategoryId === 10000) || // Low
+        (filters.priceCategoryId === "20000" &&
+          car.priceCategoryId === 20000) || // Mid
+        (filters.priceCategoryId === "30000" && car.priceCategoryId === 30000)) // High
   );
 
   return (
@@ -121,8 +131,10 @@ const ManageCars = () => {
             displayEmpty
           >
             <MenuItem value="">All Brands</MenuItem>
-            {uniqueBrands.map(brand => (
-              <MenuItem key={brand} value={brand}>{brand}</MenuItem>
+            {uniqueBrands.map((brand) => (
+              <MenuItem key={brand} value={brand}>
+                {brand}
+              </MenuItem>
             ))}
           </Select>
         </Grid>
@@ -135,8 +147,10 @@ const ManageCars = () => {
             displayEmpty
           >
             <MenuItem value="">All Car Types</MenuItem>
-            {uniqueCarTypes.map(type => (
-              <MenuItem key={type} value={type}>{type}</MenuItem>
+            {uniqueCarTypes.map((type) => (
+              <MenuItem key={type} value={type}>
+                {type}
+              </MenuItem>
             ))}
           </Select>
         </Grid>
@@ -149,8 +163,10 @@ const ManageCars = () => {
             displayEmpty
           >
             <MenuItem value="">All Seats</MenuItem>
-            {uniqueSeats.map(seat => (
-              <MenuItem key={seat} value={seat}>{seat}</MenuItem>
+            {uniqueSeats.map((seat) => (
+              <MenuItem key={seat} value={seat}>
+                {seat}
+              </MenuItem>
             ))}
           </Select>
         </Grid>
@@ -163,8 +179,10 @@ const ManageCars = () => {
             displayEmpty
           >
             <MenuItem value="">All Fuel Types</MenuItem>
-            {uniqueFuelTypes.map(fuel => (
-              <MenuItem key={fuel} value={fuel}>{fuel}</MenuItem>
+            {uniqueFuelTypes.map((fuel) => (
+              <MenuItem key={fuel} value={fuel}>
+                {fuel}
+              </MenuItem>
             ))}
           </Select>
         </Grid>
@@ -201,9 +219,9 @@ const ManageCars = () => {
         <Button
           variant="outlined"
           style={{
-            backgroundColor: '#f1c656',
-            color: '#000',
-            marginBottom: "20px"
+            backgroundColor: "#f1c656",
+            color: "#000",
+            marginBottom: "20px",
           }}
           onClick={handleClearFilters}
         >
@@ -213,31 +231,52 @@ const ManageCars = () => {
 
       <hr style={{ borderTop: "2px solid #ccc", margin: "20px 0" }} />
 
-      <TableContainer component={Paper} style={{ maxHeight: "400px", overflowY: "auto" }}>
+      <TableContainer
+        component={Paper}
+        style={{ maxHeight: "400px", overflowY: "auto" }}
+      >
         <Table size="small" stickyHeader>
           <TableHead>
             <TableRow>
-              <TableCell><strong>ID</strong></TableCell>
-              <TableCell><strong>Brand</strong></TableCell>
-              <TableCell><strong>Type</strong></TableCell>
-              <TableCell><strong>Seats</strong></TableCell>
-              <TableCell><strong>Fuel</strong></TableCell>
-              <TableCell><strong>Transmission</strong></TableCell>
-              <TableCell><strong>Price</strong></TableCell>
-              <TableCell><strong>Image</strong></TableCell>
-              <TableCell><strong>Actions</strong></TableCell>
+              <TableCell>
+                <strong>ID</strong>
+              </TableCell>
+              <TableCell>
+                <strong>Brand</strong>
+              </TableCell>
+              <TableCell>
+                <strong>Type</strong>
+              </TableCell>
+              <TableCell>
+                <strong>Seats</strong>
+              </TableCell>
+              <TableCell>
+                <strong>Fuel</strong>
+              </TableCell>
+              <TableCell>
+                <strong>Transmission</strong>
+              </TableCell>
+              <TableCell>
+                <strong>Price</strong>
+              </TableCell>
+              <TableCell>
+                <strong>Image</strong>
+              </TableCell>
+              <TableCell>
+                <strong>Actions</strong>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={10} style={{ textAlign: 'center' }}>
+                <TableCell colSpan={10} style={{ textAlign: "center" }}>
                   Loading cars...
                 </TableCell>
               </TableRow>
             ) : filteredCars.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={10} style={{ textAlign: 'center' }}>
+                <TableCell colSpan={10} style={{ textAlign: "center" }}>
                   No cars found matching your criteria
                 </TableCell>
               </TableRow>
@@ -265,7 +304,10 @@ const ManageCars = () => {
                     )}
                   </TableCell>
                   <TableCell>
-                    <IconButton onClick={() => handleDeleteClick(car.id)} color="error">
+                    <IconButton
+                      onClick={() => handleDeleteClick(car.id)}
+                      color="error"
+                    >
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
@@ -278,9 +320,7 @@ const ManageCars = () => {
 
       <Dialog open={openDialog} onClose={handleDeleteCancel}>
         <DialogTitle>Confirm Delete</DialogTitle>
-        <DialogContent>
-          Are you sure you want to delete this car?
-        </DialogContent>
+        <DialogContent>Are you sure you want to delete this car?</DialogContent>
         <DialogActions>
           <Button onClick={handleDeleteCancel} color="primary">
             Cancel
