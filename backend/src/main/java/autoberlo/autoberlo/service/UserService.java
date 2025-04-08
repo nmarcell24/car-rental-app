@@ -41,14 +41,39 @@ public class UserService implements UserDetailsService {
         return UserConverter.convertModelToRead(user);
     }
 
-    public UserRead updateUser (Integer id, @Valid UserSave userSave) {
+    public UserRead updateUser(Integer id, UserSave userSave) {
         if (!userRepository.existsById(id)) {
-            throw new UserNotFoundException(NO_USER_FOUND_BY_USERNAME);
+            throw new RuntimeException("User not found");
         }
-        User user = UserConverter.convertSaveToModel(id, userSave);
-        user = userRepository.save(user);
-        return UserConverter.convertModelToRead(user);
+
+        User user = userRepository.getReferenceById(id);
+
+        if (userSave.getName() != null) {
+            user.setName(userSave.getName());
+        }
+        if (userSave.getUsername() != null) {
+            user.setUsername(userSave.getUsername());
+        }
+        if (userSave.getPassword() != null && !userSave.getPassword().isEmpty()) {
+            user.setPassword(passwordEncoder.encode(userSave.getPassword()));
+        }
+        if (userSave.getPhoneNumber() != null) {
+            user.setPhoneNumber(userSave.getPhoneNumber());
+        }
+        if (userSave.getEmail() != null) {
+            user.setEmail(userSave.getEmail());
+        }
+        if (userSave.getAddress() != null) {
+            user.setAddress(userSave.getAddress());
+        }
+        if (userSave.getDayOfBirth() != null) {
+            user.setDayOfBirth(userSave.getDayOfBirth());
+        }
+
+        User savedUser = userRepository.save(user);
+        return UserConverter.convertModelToRead(savedUser);
     }
+
 
     public UserRead getUser (@Valid Integer id) {
         if (!userRepository.existsById(id)) {

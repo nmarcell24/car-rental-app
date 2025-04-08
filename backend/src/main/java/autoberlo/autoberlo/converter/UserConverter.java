@@ -43,6 +43,9 @@ public class UserConverter {
         user.setId(id);
         user.setName(userSave.getName());
         user.setUsername(userSave.getUsername());
+        if(userSave.getPassword() != "") {
+            user.setPassword(userSave.getPassword());
+        }
         user.setPhoneNumber(userSave.getPhoneNumber());
         user.setEmail(userSave.getEmail());
         user.setAddress(userSave.getAddress());
