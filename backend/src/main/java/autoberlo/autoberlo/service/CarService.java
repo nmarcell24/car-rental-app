@@ -59,7 +59,7 @@ public class CarService {
         car.setTransmissionType(null);
         car.setDriveTrain(null);
         car.setImageUrl(null);
-        car.setPriceCategoryId(-1);
+        car.setPriceCategoryId(0);
 
         carRepository.save(car);
     }
