@@ -4,106 +4,130 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import axios from "axios";
 import { useUserContext } from "../hooks/useUserContext";
+import ErrorSnackbar from "../components/ErrorSnackBar";
 
 const UserProfile = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const { currentUser } = useUserContext();
-  const [users, setUsers] = useState([]);
-  const [userLoans, setUserLoans] = useState([
-    {
-      imageUrl: "./images/car1.png",
-      startDate: "2025-04-03",
-      endDate: "2025-04-03",
-      totalPrice: 0,
-      brand: "Mercedes",
-      priceCategoryId: 1,
-    },
-    {
-      imageUrl: "./images/car2.png",
-      startDate: "2025-03-05",
-      endDate: "2025-03-06",
-      totalPrice: 0,
-      brand: "Ford",
-      priceCategoryId: 4,
-    },
-    {
-      imageUrl: "./images/car1.png",
-      startDate: "2025-04-03",
-      endDate: "2025-04-03",
-      totalPrice: 0,
-      brand: "Mercedes",
-      priceCategoryId: 1,
-    },
-    {
-      imageUrl: "./images/car2.png",
-      startDate: "2025-03-05",
-      endDate: "2025-03-06",
-      totalPrice: 0,
-      brand: "Ford",
-      priceCategoryId: 4,
-    },
-  ]);
+  const { isUniqueUsername } = useUserContext();
+  const [error, setError] = useState("");
+  const [userLoans, setUserLoans] = useState([]);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      await axios.get("/api/user/list").then(({ data }) => setUsers(data));
+    const fetchUserLoans = async () => {
+      try {
+        const { data } = await axios.get("/api/loan/list");
+        const userLoans = data.filter((loan) => loan.userId === currentUser.id);
+
+        const loansWithImages = await Promise.all(
+          userLoans.map(async (loan) => {
+            const res = await axios.get(`/api/car/${loan.carId}`);
+            return {
+              ...loan,
+              imageUrl: res.data.imageUrl,
+            };
+          })
+        );
+
+        setUserLoans(loansWithImages);
+      } catch (error) {
+        alert(
+          "Error fetching loans or car data:",
+          error?.response?.data?.message
+        );
+      }
     };
 
-    fetchUsers();
+    fetchUserLoans();
   }, []);
 
   const [errors, setErrors] = useState({});
   const [dayOfBirth, setDayOfBirth] = useState(dayjs(currentUser.dayOfBirth));
   const [formData, setFormData] = useState({
-    name: currentUser.name,
-    username: currentUser.username,
-    email: currentUser.email,
+    name: currentUser.name || "",
+    username: currentUser.username || "",
+    email: currentUser.email || "",
     password: "",
-    phone: currentUser.phoneNumber,
-    address: currentUser.address,
+    phoneNumber: currentUser.phoneNumber || "",
+    address: currentUser.address || "",
   });
 
-  const isUniqueUsername = () => {
-    if (formData.username === currentUser.username) {
-      return true;
-    }
-    for (let i = 0; i < users.length; i++) {
-      if (users[i].username === formData.username) {
-        return false;
+  const getModifiedFields = () => {
+    const modified = {};
+
+    Object.keys(formData).forEach((key) => {
+      if (key === "password") {
+        if (formData.password && formData.password.trim().length > 0) {
+          modified.password = formData.password;
+        }
+      } else if (formData[key] !== currentUser[key]) {
+        modified[key] = formData[key];
       }
+    });
+
+    if (
+      dayOfBirth?.isValid &&
+      !dayOfBirth.isSame(dayjs(currentUser.dayOfBirth))
+    ) {
+      modified.dayOfBirth = dayOfBirth;
     }
-    return true;
+
+    return modified;
   };
 
-  const validateForm = () => {
+  const validateForm = (dataToValidate) => {
     let newErrors = {};
-    if (!/^[a-záéíóöőúüűÁÉÍÓÖŐÚÜŰA-Z\s]+$/.test(formData.name)) {
+
+    if (
+      dataToValidate.name !== undefined &&
+      !/^[a-záéíóöőúüűÁÉÍÓÖŐÚÜŰA-Z\s]+$/.test(dataToValidate.name)
+    ) {
       newErrors.name = "Name must contain only letters and spaces";
     }
-    if (!isUniqueUsername()) {
-      newErrors.username = "Username must be unique";
+
+    if (dataToValidate.username !== undefined) {
+      if (!isUniqueUsername(dataToValidate.username)) {
+        newErrors.username = "Username already exists";
+      } else if (!/^[a-zA-Z\s]+$/.test(dataToValidate.username)) {
+        newErrors.username = "Invalid username";
+      }
     }
-    if (!/^[a-zA-Z\s]+$/.test(formData.username)) {
-      newErrors.username = "Invalid username";
-    }
+
     if (
-      !/^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/.test(formData.email)
+      dataToValidate.email !== undefined &&
+      !/^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/.test(
+        dataToValidate.email
+      )
     ) {
       newErrors.email = "Invalid email address";
     }
+
     if (
-      !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/.test(formData.password)
+      dataToValidate.password !== undefined &&
+      dataToValidate.password.trim() !== "" &&
+      !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/.test(
+        dataToValidate.password
+      )
     ) {
       newErrors.password =
         "Password must be at least 8 characters long, include at least one letter and one number";
     }
-    if (!/^[0-9]{11}$/.test(formData.phoneNumber)) {
+
+    if (
+      dataToValidate.phoneNumber !== undefined &&
+      !/^[0-9]{11}$/.test(dataToValidate.phoneNumber)
+    ) {
       newErrors.phoneNumber = "Invalid phone number";
     }
-    if (!/^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ0-9\s,.-]+$/.test(formData.address)) {
+
+    if (
+      dataToValidate.address !== undefined &&
+      !/^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ0-9\s,.-]+$/.test(dataToValidate.address)
+    ) {
       newErrors.address = "Invalid address format";
     }
-    setErrors(newErrors);
+
+    setErrors((prevErrors) => ({ ...prevErrors, ...newErrors }));
 
     return Object.keys(newErrors).length === 0;
   };
@@ -116,26 +140,33 @@ const UserProfile = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) {
-      return;
-    } else {
-      if (!dayOfBirth.isValid) {
-        return;
-      }
 
-      axios
-        .post(`/api/user/${currentUser.id}`, {
-          ...formData,
-          dayOfBirth,
-        })
-        .then((response) => {
-          console.log("Profile updated successfully", response.data);
-        })
-        .catch((error) => {
-          console.error("Error updating profile", error);
-        });
+    const modifiedFields = getModifiedFields();
+
+    if (Object.keys(modifiedFields).length === 0) {
+      setError("No changes to submit.");
+      return;
+    }
+
+    const { dayOfBirth: _, ...fieldsToValidate } = modifiedFields;
+    if (!validateForm(fieldsToValidate)) return;
+
+    try {
+      const response = await axios.put(
+        `/api/user/${currentUser.id}`,
+        modifiedFields
+      );
+      console.log("Profile updated successfully", response.data);
+      setFormData({
+        ...response.data,
+        password: "",
+      });
+    } catch (err) {
+      setError(
+        err?.response?.data?.message || "An error occurred while updating user"
+      );
     }
   };
 
@@ -203,9 +234,9 @@ const UserProfile = () => {
               <TextField
                 label="Phone"
                 name="phone"
-                error={!!errors.phone}
-                helperText={errors.phone}
-                value={formData.phone}
+                error={!!errors.phoneNumber}
+                helperText={errors.phoneNumber}
+                value={formData.phoneNumber}
                 onChange={handleInputChange}
                 fullWidth
               />
@@ -241,24 +272,28 @@ const UserProfile = () => {
             </Typography>
             <div className="max-h-[50vh] overflow-y-scroll">
               {userLoans.map((loan) => (
-                <div key={loan.id} className="flex items-center mb-4 bg-gray-50 p-3 rounded-xl text-[120%] px-6">
+                <div
+                  key={loan.id}
+                  className="flex items-center mb-4 bg-gray-50 p-3 rounded-xl text-[120%] px-6"
+                >
                   <img
                     src={loan.imageUrl}
                     alt="Car"
                     className="w-45 h-30 rounded-lg mr-4"
                   />
                   <div className="flex flex-col">
-                    <h1 className="font-bold text-xl mb-2">
-                      {loan.brand}
-                    </h1>
+                    <h1 className="font-bold text-xl mb-2">{loan.brand}</h1>
                     <p>
-                      <span className="text-gray-500">Start Date:</span> {loan.startDate}
+                      <span className="text-gray-500">Start Date:</span>{" "}
+                      {loan.startDate}
                     </p>
                     <p>
-                    <span className="text-gray-500">End Date:</span> {loan.endDate}
+                      <span className="text-gray-500">End Date:</span>{" "}
+                      {loan.endDate}
                     </p>
                     <p>
-                    <span className="text-gray-500">Total Price:</span> {loan.totalPrice} HUF
+                      <span className="text-gray-500">Total Price:</span>{" "}
+                      {loan.totalPrice} HUF
                     </p>
                   </div>
                 </div>
@@ -267,6 +302,8 @@ const UserProfile = () => {
           </>
         )}
       </div>
+
+      <ErrorSnackbar error={error} onClose={() => setError("")} />
     </div>
   );
 };

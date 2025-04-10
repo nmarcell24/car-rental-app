@@ -1,21 +1,20 @@
 import { Box, Button, Checkbox, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { useUserContext } from "../hooks/useUserContext";
-import axios from "axios";
+import ErrorSnackbar from "../components/ErrorSnackBar";
 
 export default function SignIn({ setOpenDialog, setOpenDialogSignUp }) {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
+  const [error, setError] = useState("");
   const [username, setUsername] = useState("");
   const [usernameError, setUsernameError] = useState(false);
-  const { setCurrentUser } = useUserContext();
+  const { logIn } = useUserContext();
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
     if (!/^[a-zA-Z\s]+$/.test(username)) {
-      setUsernameError(
-        "Username must contain only letters and numbers)"
-      );
+      setUsernameError("Username must contain only letters and numbers");
     } else {
       setUsernameError(false);
     }
@@ -23,22 +22,15 @@ export default function SignIn({ setOpenDialog, setOpenDialogSignUp }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (usernameError || passwordError) {
-      alert("Form is invalid! Please check the fields...");
-    } else {
-      axios
-        .post("/api/user/login", {
-          username,
-          password,
-        })
-        .then((res) => {
-          axios.defaults.headers.common['Authorization'] = `Bearer ${res.headers.jwt_token}`;
-          setCurrentUser(res.data);
-
-          localStorage.setItem("token", res.headers.jwt_token);
-        })
+    if (!usernameError && !passwordError) {
+      logIn(username, password)
         .then(() => setOpenDialog(false))
-        .catch((error) => alert(error));
+        .catch((err) => {
+          setError(
+            err?.response?.data?.message ||
+              "An error occurred while creating user account"
+          );
+        });
     }
   };
 
@@ -118,6 +110,7 @@ export default function SignIn({ setOpenDialog, setOpenDialogSignUp }) {
           </Button>
         </div>
       </Box>
+      <ErrorSnackbar error={error} onClose={() => setError("")} />
     </div>
   );
 }

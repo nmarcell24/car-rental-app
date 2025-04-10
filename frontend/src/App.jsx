@@ -5,7 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dialog } from "@mui/material";
 import CarDetail from "./pages/CarDetails";
 import SellYourCar from "./pages/SellYourCar";
@@ -13,15 +13,17 @@ import { NotFound } from "./pages/NotFound";
 import UserProfile from "./pages/UserProfile";
 import AdminDashboard from "./pages/AdminDashboard";
 import { useUserContext } from "./hooks/useUserContext";
+import axios from "axios";
 
 function App() {
   const [openDialogSignIn, setOpenDialogSignIn] = useState(false);
   const [openDialogSignUp, setOpenDialogSignUp] = useState(false);
   const { currentUser } = useUserContext();
 
-  if (currentUser && currentUser.id === 1){
-    return <AdminDashboard/>
+  if (currentUser && currentUser.id === 1) {
+    return <AdminDashboard />;
   }
+
   return (
     <div>
       <Header

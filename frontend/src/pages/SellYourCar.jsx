@@ -5,6 +5,7 @@ import { Create } from "@mui/icons-material";
 import { useNavigate } from "react-router";
 import { useUserContext } from "../hooks/useUserContext";
 import axios from "axios";
+import ErrorSnackbar from "../components/ErrorSnackBar";
 
 //Dummy data
 const carTypes = [
@@ -38,6 +39,7 @@ const SellCarForm = () => {
   const navigate = useNavigate();
   const [priceCategoryId, setPriceCategoryId] = useState("");
   const [created, setCreated] = useState(false);
+  const [error, setError] = useState("");
   const [carDetails, setCarDetails] = useState({
     brand: "",
     carType: "",
@@ -74,7 +76,12 @@ const SellCarForm = () => {
           priceCategoryId === "Low" ? 0 : priceCategoryId === "Mid" ? 1 : 2,
       })
       .then(() => setCreated(true))
-      .catch((err) => console.log(err.message));
+      .catch((err) => {
+        setError(
+          err?.response?.data?.message ||
+            "An error occurred while creating the car"
+        );
+      });
   };
 
   // if no user is logged in
@@ -231,6 +238,7 @@ const SellCarForm = () => {
           </motion.div>
         ) : null}
       </AnimatePresence>
+      <ErrorSnackbar error={error} onClose={() => setError("")} />
     </div>
   );
 };

@@ -1,32 +1,47 @@
-import {
-  Box,
-  Button,
-  Divider,
-  MenuItem,
-  Select,
-  Step,
-  StepLabel,
-  Stepper,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Divider, Step, StepLabel, Stepper } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import React from "react";
-import Timeline from "@mui/lab/Timeline";
-import TimelineItem from "@mui/lab/TimelineItem";
-import TimelineSeparator from "@mui/lab/TimelineSeparator";
-import TimelineConnector from "@mui/lab/TimelineConnector";
-import TimelineContent from "@mui/lab/TimelineContent";
-import TimelineDot from "@mui/lab/TimelineDot";
+import React, { useState } from "react";
 import { CheckCircle } from "@mui/icons-material";
 import { motion } from "framer-motion";
+import dayjs from "dayjs";
+import axios from "axios";
+import { useUserContext } from "../hooks/useUserContext";
+import ErrorSnackbar from "./ErrorSnackBar";
 
-const steps = ["Select time & location", "Summary", "Finish"];
+const steps = ["Select time", "Summary", "Finish"];
 
 export const ReservSteps = ({ car, specLogos, specs, setOpen }) => {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [startDate, setStartDate] = useState(dayjs());
+  const [endDate, setEndDate] = useState(dayjs().add(1, "day"));
+  const [activeStep, setActiveStep] = useState(0);
+  const [error, setError] = useState("");
+  const { currentUser } = useUserContext();
+  let diff =
+    dayjs(endDate).diff(startDate, "day") === 0
+      ? 1
+      : dayjs(endDate).diff(startDate, "day");
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if (activeStep === 1) {
+      axios
+        .post("/api/loan/create", {
+          carId: car.id,
+          startDate: startDate.format("YYYY-MM-DD"),
+          endDate: endDate.format("YYYY-MM-DD"),
+          totalPrice: car.priceCategoryId * diff,
+          userId: currentUser.id,
+        })
+        .then(({ data }) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          setError(
+            err?.response?.data?.message ||
+              "An error occurred while loaning the car."
+          );
+        });
+    }
   };
 
   const handleBack = () => {
@@ -51,38 +66,28 @@ export const ReservSteps = ({ car, specLogos, specs, setOpen }) => {
       {activeStep === 0 ? (
         <div className="px-6">
           <h1 className="text-2xl font-bold my-5">Select the date</h1>
-          <div className="flex gap-5">
-            <DatePicker label="From" />
-            <span className="flex items-center text-2xl"> - </span>
-            <DatePicker label="To" />
+          <div className="flex flex-col gap-5 md:flex-row">
+            <DatePicker
+              label="From"
+              value={startDate}
+              onChange={(newValue) => setStartDate(newValue)}
+              minDate={dayjs()}
+              disablePast
+            />
+            <span className="hidden md:flex items-center text-2xl"> - </span>
+            <DatePicker
+              label="To"
+              value={endDate}
+              onChange={(newValue) => setEndDate(newValue)}
+              minDate={dayjs()}
+              error={endDate.isBefore(startDate, "day")}
+              helperText={
+                endDate.isBefore(startDate, "day")
+                  ? "End date cannot be before start date"
+                  : ""
+              }
+            />
           </div>
-          <div className="flex flex-col md:flex-row items-center gap-5">
-            <div>
-              <h1 className="text-2xl font-bold my-5">
-                Select the pick-up location
-              </h1>
-              <div>
-                <Select label="Age" fullWidth>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </div>
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold my-5">
-                Select the drop-off location
-              </h1>
-              <div>
-                <Select label="Age" fullWidth>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </div>
-            </div>
-          </div>
-
           <div className="flex pt-5">
             <Button
               color="inherit"
@@ -94,7 +99,10 @@ export const ReservSteps = ({ car, specLogos, specs, setOpen }) => {
             </Button>
             <Box sx={{ flex: "1 1 auto" }} />
 
-            <Button onClick={handleNext}>
+            <Button
+              onClick={handleNext}
+              disabled={endDate.isBefore(startDate, "day")}
+            >
               {activeStep === steps.length - 1 ? "Finish" : "Next"}
             </Button>
           </div>
@@ -106,10 +114,14 @@ export const ReservSteps = ({ car, specLogos, specs, setOpen }) => {
           transition={{ duration: 1 }}
           className="md:px-6 h-full"
         >
-          <div className="flex flex-col md:flex-row items-center justify-center gap-3">
+          <div className="flex flex-col md:flex-row items-stretch justify-center gap-3 h-full">
+            {/* Car content */}
             <section className="bg-white p-8 rounded-2xl flex-grow">
               <h1 className="text-3xl font-bold">{car.brand}</h1>
-              <img src={car.imageUrl.slice(1)} />
+              <img
+                src={car.imageUrl.slice(1)}
+                className="w-full object-contain max-h-64 my-4"
+              />
               <div className="grid grid-cols-2 gap-2">
                 {specs.map((spec, index) => (
                   <div key={index} className="border p-2 rounded-lg">
@@ -121,45 +133,30 @@ export const ReservSteps = ({ car, specLogos, specs, setOpen }) => {
                 ))}
               </div>
             </section>
-            <section className="flex flex-col gap-3">
-              <Timeline className="bg-white p-8 rounded-2xl md:max-w-min">
-                <TimelineItem>
-                  <TimelineSeparator>
-                    <TimelineDot />
-                    <TimelineConnector />
-                  </TimelineSeparator>
-                  <TimelineContent>
-                    <h1 className="font-bold">Pick-up</h1>
-                    <h2 className="w-30">Ohio, 4244 Bingamon Road</h2>
-                  </TimelineContent>
-                </TimelineItem>
-                <TimelineItem>
-                  <TimelineSeparator>
-                    <TimelineDot />
-                  </TimelineSeparator>
-                  <TimelineContent>
-                    <h1 className="font-bold">Drop-off</h1>
-                    <h2 className="w-30">Nebraska, 4272 Clousson Road</h2>
-                  </TimelineContent>
-                </TimelineItem>
-              </Timeline>
-              <section className="bg-white p-8 rounded-2xl">
-                <h1 className="text-3xl font-bold">Price summary</h1>
-                <div className="flex items-center justify-between">
-                  <h2 className="text-xl">Price / day</h2>
-                  <h1 className="font-bold">{car.priceCategoryId}Ft</h1>
+
+            {/* Price summary */}
+            <section className="flex flex-col gap-3 flex-grow">
+              <section className="bg-white p-8 rounded-2xl flex flex-col justify-between h-full">
+                <div>
+                  <h1 className="text-3xl font-bold">Price summary</h1>
+                  <div className="flex items-center justify-between mt-4">
+                    <h2 className="text-xl">Price / day</h2>
+                    <h1 className="font-bold">{car.priceCategoryId}Ft</h1>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-xl">Amount</h2>
+                    <h1 className="font-bold">{diff} day</h1>
+                  </div>
+                  <Divider sx={{ marginY: "2rem" }} />
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-xl font-semibold">Total:</h2>
+                    <h1 className="font-bold text-2xl">
+                      {car.priceCategoryId * diff}
+                      Ft
+                    </h1>
+                  </div>
                 </div>
-                <div className="flex items-center justify-between">
-                  <h2 className="text-xl">Amount</h2>
-                  <h1 className="font-bold">2 day</h1>
-                </div>
-                <Divider sx={{ marginY: "2rem" }} />
-                <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-semibold">Total:</h2>
-                  <h1 className="font-bold text-2xl">
-                    {car.priceCategoryId * 2}Ft
-                  </h1>
-                </div>
+
                 <Button
                   sx={{
                     backgroundColor: "#f1c656",
@@ -174,6 +171,7 @@ export const ReservSteps = ({ car, specLogos, specs, setOpen }) => {
               </section>
             </section>
           </div>
+
           <div className="flex pt-5">
             <Button
               color="inherit"
@@ -233,6 +231,8 @@ export const ReservSteps = ({ car, specLogos, specs, setOpen }) => {
       ) : (
         <div></div>
       )}
+
+      <ErrorSnackbar error={error} onClose={() => setError("")} />
     </div>
   );
 };

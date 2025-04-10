@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Button, Card, CardContent, Typography, Box, Divider, Container, Paper } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardContent,
+  Typography,
+  Box,
+  Divider,
+  Container,
+  Paper,
+} from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import PeopleIcon from "@mui/icons-material/People";
@@ -7,6 +16,7 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import ManageCars from "./ManageCars";
 import ManageUsers from "./ManageUsers";
 import { useUserContext } from "../hooks/useUserContext";
+import axios from "axios";
 
 const AdminDashboard = () => {
   const [activeSection, setActiveSection] = useState(null);
@@ -14,6 +24,7 @@ const AdminDashboard = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    axios.defaults.headers.common["Authorization"] = "";
     setCurrentUser(null);
   };
 
@@ -24,7 +35,10 @@ const AdminDashboard = () => {
           <CardContent>
             <Box className="flex flex-col items-center mb-8">
               <DashboardIcon className="text-black" style={{ fontSize: 60 }} />
-              <Typography variant="h3" className="text-center text-black font-bold mt-4">
+              <Typography
+                variant="h3"
+                className="text-center text-black font-bold mt-4"
+              >
                 Admin Dashboard
               </Typography>
             </Box>
@@ -36,7 +50,13 @@ const AdminDashboard = () => {
                 fullWidth
                 variant="contained"
                 startIcon={<DirectionsCarIcon />}
-                style={{ backgroundColor: "#FFD700", color: "black", fontSize: "1.3rem", padding: "15px 0", marginBottom: "20px" }}
+                style={{
+                  backgroundColor: "#FFD700",
+                  color: "black",
+                  fontSize: "1.3rem",
+                  padding: "15px 0",
+                  marginBottom: "20px",
+                }}
                 onClick={() => setActiveSection("cars")}
               >
                 Manage Cars
@@ -46,7 +66,13 @@ const AdminDashboard = () => {
                 fullWidth
                 variant="contained"
                 startIcon={<PeopleIcon />}
-                style={{ backgroundColor: "#FFB700", color: "black", fontSize: "1.3rem", padding: "15px 0", marginBottom: "20px" }}
+                style={{
+                  backgroundColor: "#FFB700",
+                  color: "black",
+                  fontSize: "1.3rem",
+                  padding: "15px 0",
+                  marginBottom: "20px",
+                }}
                 onClick={() => setActiveSection("users")}
               >
                 Manage Users
@@ -57,7 +83,12 @@ const AdminDashboard = () => {
                 fullWidth
                 variant="contained"
                 startIcon={<ExitToAppIcon />}
-                style={{ backgroundColor: "#FF4500", color: "black", fontSize: "1.3rem", padding: "15px 0" }}
+                style={{
+                  backgroundColor: "#FF4500",
+                  color: "black",
+                  fontSize: "1.3rem",
+                  padding: "15px 0",
+                }}
               >
                 Logout
               </Button>
@@ -88,7 +119,11 @@ const AdminDashboard = () => {
             <Button
               variant="contained"
               onClick={() => setActiveSection(null)}
-              style={{ marginTop: "20px", backgroundColor: "#f1c656", color: "black" }}
+              style={{
+                marginTop: "20px",
+                backgroundColor: "#f1c656",
+                color: "black",
+              }}
             >
               Back to Dashboard
             </Button>
@@ -100,4 +135,3 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
-

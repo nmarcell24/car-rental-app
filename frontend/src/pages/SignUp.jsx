@@ -8,8 +8,8 @@ import { useUserContext } from "../hooks/useUserContext";
 
 export default function SignUp({ setOpenDialog, setOpenDialogSignIn }) {
   const [errors, setErrors] = useState({});
-  const [birthDate, setBirthDate] = useState(dayjs("2022-10-04"));
-  const { setCurrentUser, users } = useUserContext();
+  const [birthDate, setBirthDate] = useState(dayjs("2000-10-02"));
+  const { signUp, logIn, users } = useUserContext();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -19,19 +19,6 @@ export default function SignUp({ setOpenDialog, setOpenDialogSignIn }) {
     password: "",
     address: "",
   });
-
-  const addAllocates = async (data) => {
-    await axios.post("api/allocate/create", {
-      data,
-      permission: "UPDATE_USER",
-    });
-    await axios.post("api/allocate/create", { data, permission: "READ_USER" });
-    await axios.post("api/allocate/create", {
-      data,
-      permission: "CREATE_LOAN",
-    });
-    await axios.post("api/allocate/create", { data, permission: "CREATE_CAR" });
-  };
 
   const isUniqueUsername = () => {
     for (let i = 0; i < users.length; i++) {
@@ -90,28 +77,23 @@ export default function SignUp({ setOpenDialog, setOpenDialogSignIn }) {
       if (!birthDate.isValid) {
         return;
       }
-      axios
-        .post(
-          "/api/user/create",
-          {
-            ...formData,
-            dayOfBirth: birthDate.format("YYYY-MM-DD"),
-            role: "COMMON_USER",
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
-        .then((res) => {
-          axios.defaults.headers.common[
-            "Authorization"
-          ] = `Bearer ${res.headers.jwt_token}`;
-          addAllocates(res.data);
-          setOpenDialog(false);
+      signUp({
+        ...formData,
+        dayOfBirth: birthDate.format("YYYY-MM-DD"),
+        role: "COMMON_USER",
+      })
+        .then(() => {
+          return logIn(formData.username, formData.password)
+            .then(() => {
+              setOpenDialog(false);
+            })
+            .catch((err) => {
+              alert("Login failed");
+            });
         })
-        .catch((error) => alert(error));
+        .catch((err) => {
+          alert(err.response?.data?.message || "Signup failed");
+        });
     }
   };
 
@@ -205,6 +187,7 @@ export default function SignUp({ setOpenDialog, setOpenDialogSignIn }) {
             className="!mt-4 w-full col-span-2"
             onChange={(nW) => setBirthDate(nW)}
             value={birthDate}
+            maxDate={dayjs().subtract(17, "year")}
             margin="normal"
             name="birthDate"
             label="Date of Birth"

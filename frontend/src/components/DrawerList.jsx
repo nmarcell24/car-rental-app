@@ -14,6 +14,7 @@ import { userContext } from "../contexts/userContextProvider";
 import { AnimatePresence, motion } from "framer-motion";
 import { Alert } from "@mui/material";
 import { useNavigate } from "react-router";
+import axios from "axios";
 
 export default function DrawerList({
   setOpenDialogSignIn,
@@ -129,6 +130,7 @@ export default function DrawerList({
                 onClick={() => {
                   setCurrentUser(null);
                   localStorage.removeItem("token");
+                  delete axios.defaults.headers.common['Authorization'];
                   navigate("/");
                 }}
                 variant="contained"
@@ -192,6 +194,7 @@ export default function DrawerList({
                 onClick={() => {
                   setCurrentUser(null);
                   localStorage.removeItem("token");
+                  delete axios.defaults.headers.common['Authorization'];
                   navigate("/");
                 }}
                 variant="contained"
