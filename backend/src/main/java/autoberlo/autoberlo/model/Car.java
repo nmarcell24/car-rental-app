@@ -45,7 +45,7 @@ public class Car {
 
 
     private String imageUrl;
-
+    @JoinColumn(name = "price_category_id")
     private int priceCategoryId;
 
 
