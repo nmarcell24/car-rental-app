@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import { useUserContext } from "../hooks/useUserContext";
 import axios from "axios";
 import ErrorSnackbar from "../components/ErrorSnackBar";
+import dayjs from "dayjs";
 
 //Dummy data
 const carTypes = [
@@ -40,6 +41,7 @@ const SellCarForm = () => {
   const [priceCategoryId, setPriceCategoryId] = useState("");
   const [created, setCreated] = useState(false);
   const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
   const [carDetails, setCarDetails] = useState({
     brand: "",
     carType: "",
@@ -67,8 +69,32 @@ const SellCarForm = () => {
     }
   };
 
+  const validateForm = () => {
+    let newErrors = {};
+
+    if (carDetails.horsePower <= 0) {
+      newErrors.horsePower = "Horse Power must be a positive number";
+    }
+    if (
+      carDetails.modelYear < dayjs().subtract(100, "year").get("year") ||
+      carDetails.modelYear > dayjs().year()
+    ) {
+      newErrors.modelYear = "Model Year must be between " + dayjs().subtract(100, "year").get("year") + " and current year";
+    }
+    if (carDetails.numberOfSeats <= 0) {
+      newErrors.numberOfSeats = "Number of Seats must be a positive number";
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!validateForm()) {
+      return;
+    }
     axios
       .post("api/car/create", {
         ...carDetails,
@@ -132,6 +158,8 @@ const SellCarForm = () => {
           label="Horse Power"
           name="horsePower"
           fullWidth
+          error={!!errors.horsePower}
+          helperText={errors.horsePower}
           variant="outlined"
           type="number"
           onChange={handleChange}
@@ -141,6 +169,8 @@ const SellCarForm = () => {
           label="Model Year"
           name="modelYear"
           fullWidth
+          error={!!errors.modelYear}
+          helperText={errors.modelYear}
           variant="outlined"
           type="number"
           onChange={handleChange}
@@ -150,6 +180,8 @@ const SellCarForm = () => {
           label="Number of Seats"
           name="numberOfSeats"
           fullWidth
+          error={!!errors.numberOfSeats}
+          helperText={errors.numberOfSeats}
           variant="outlined"
           type="number"
           onChange={handleChange}
@@ -226,9 +258,9 @@ const SellCarForm = () => {
       <AnimatePresence initial={false}>
         {created ? (
           <motion.div
-            initial={{ opacity: 0, y: 50 }} // Start hidden and move up
-            animate={{ opacity: 1, y: 0 }} // Animate in
-            exit={{ opacity: 0, y: 50 }} // Animate out
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
             transition={{ duration: 0.5 }}
             className="fixed bottom-2 right-2 z-20"
           >

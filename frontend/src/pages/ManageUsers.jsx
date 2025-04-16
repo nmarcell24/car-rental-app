@@ -61,26 +61,34 @@ const ManageUsers = () => {
         {/* Removed the View Deleted Users button */}
       </Grid>
       <hr style={{ borderTop: "2px solid #ccc", margin: "20px 0" }} />
-      <TableContainer component={Paper} style={{ maxHeight: "400px", overflowY: "auto" }}>
+      <TableContainer
+        component={Paper}
+        style={{ maxHeight: "400px", overflowY: "auto" }}
+      >
         <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell><strong>ID</strong></TableCell>
-              <TableCell><strong>Name</strong></TableCell>
-              <TableCell><strong>Username</strong></TableCell>
-              <TableCell><strong>Actions</strong></TableCell>
+              <TableCell>
+                <strong>ID</strong>
+              </TableCell>
+              <TableCell>
+                <strong>Name</strong>
+              </TableCell>
+              <TableCell>
+                <strong>Username</strong>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={4} style={{ textAlign: 'center' }}>
+                <TableCell colSpan={4} style={{ textAlign: "center" }}>
                   Loading users...
                 </TableCell>
               </TableRow>
             ) : users.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={4} style={{ textAlign: 'center' }}>
+                <TableCell colSpan={4} style={{ textAlign: "center" }}>
                   No users found.
                 </TableCell>
               </TableRow>
@@ -90,11 +98,6 @@ const ManageUsers = () => {
                   <TableCell>{user.id}</TableCell>
                   <TableCell>{user.name}</TableCell>
                   <TableCell>{user.username}</TableCell>
-                  <TableCell>
-                    <IconButton onClick={() => handleDeleteClick(user.id)} color="error">
-                      <DeleteIcon />
-                    </IconButton>
-                  </TableCell>
                 </TableRow>
               ))
             )}
@@ -103,10 +106,16 @@ const ManageUsers = () => {
       </TableContainer>
       <Dialog open={openDialog} onClose={handleDeleteCancel}>
         <DialogTitle>Confirm Delete</DialogTitle>
-        <DialogContent>Are you sure you want to delete this user?</DialogContent>
+        <DialogContent>
+          Are you sure you want to delete this user?
+        </DialogContent>
         <DialogActions>
-          <Button onClick={handleDeleteCancel} color="primary">Cancel</Button>
-          <Button onClick={handleDeleteConfirm} color="error">Delete</Button>
+          <Button onClick={handleDeleteCancel} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleDeleteConfirm} color="error">
+            Delete
+          </Button>
         </DialogActions>
       </Dialog>
     </Paper>

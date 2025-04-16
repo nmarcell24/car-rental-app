@@ -38,7 +38,7 @@ export default function SignIn({ setOpenDialog, setOpenDialogSignUp }) {
     <div className="bg-white p-8 rounded-2xl shadow-lg w-full">
       <div className="flex justify-center mb-4">
         <img
-          src="./logos/Rento_yellow-cropped.svg"
+          src="/logos/Rento_yellow-cropped.svg"
           alt="Rento Logo"
           className="h-18"
         />

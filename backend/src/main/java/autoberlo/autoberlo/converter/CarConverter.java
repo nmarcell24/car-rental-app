@@ -75,6 +75,7 @@ public class CarConverter {
         carList.setNumberOfSeats(car.getNumberOfSeats());
         carList.setFuelType(car.getFuelType());
         carList.setTransmissionType(car.getTransmissionType());
+        carList.setDriveTrain(car.getDriveTrain());
         carList.setImageUrl(car.getImageUrl());
         carList.setPriceCategoryId(extracted(car.getPriceCategoryId()));
 

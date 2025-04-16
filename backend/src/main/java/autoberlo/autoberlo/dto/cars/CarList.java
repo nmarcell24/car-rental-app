@@ -33,6 +33,9 @@ public class CarList {
     @NotBlank(message = "A váltó típusa nem lehet üres.")
     private String transmissionType;
 
+    @NotBlank(message = "A hajtáslánc típusa nem lehet üres.")
+    private String driveTrain;
+
     @URL(message = "Kérlek, adj meg egy érvényes URL-t az képhez.")
     private String imageUrl;
 
