@@ -14,11 +14,14 @@ import java.nio.file.AccessDeniedException;
 
 import static org.springframework.http.HttpStatus.*;
 
+
+
 @Hidden
 @RestControllerAdvice
 public class ExceptionHandling implements ErrorController {
-    private static final String INCORRECT_CREDENTIALS = "Username / password incorrect. Please try again";
 
+
+    private static final String INCORRECT_CREDENTIALS = "Username / password incorrect. Please try again";
     private static final String NOT_ENOUGH_PERMISSION = "You do not have enough permission";
 
     private ResponseEntity<ExceptionResponse> createHttpResponse(HttpStatus httpStatus, String message) {
@@ -26,19 +29,26 @@ public class ExceptionHandling implements ErrorController {
                 httpStatus.getReasonPhrase().toUpperCase(), message), httpStatus);
     }
 
+
+
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ExceptionResponse> badCredentialsException() {
         return createHttpResponse(BAD_REQUEST, INCORRECT_CREDENTIALS);
     }
 
+
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ExceptionResponse> accessDeniedException() {
         return createHttpResponse(FORBIDDEN, NOT_ENOUGH_PERMISSION);
     }
+
+
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ExceptionResponse> userNotFoundException(UserNotFoundException exception) {
         return createHttpResponse(BAD_REQUEST, exception.getMessage());
     }
+
+
 
     @ExceptionHandler(TokenExpiredException.class)
     public ResponseEntity<ExceptionResponse> tokenExpiredException(TokenExpiredException exception) {

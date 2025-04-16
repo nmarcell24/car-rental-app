@@ -14,11 +14,33 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Service class responsible for managing car-related operations.
+ *
+ * This includes retrieving, listing, creating, and soft-deleting cars in the system.
+ * It also handles conversion between entity models and DTOs.
+ *
+ * @author Mandrusz Zsolt, Németh Marcell, Szász Kristóf
+ */
+
 @Service
 public class CarService {
 
+
     @Autowired
     private CarRepository carRepository;
+
+
+    /**
+     * Retrieves a specific car by its ID.
+     *
+     * If the car does not exist, an {@link AutoNotFoundException} is thrown.
+     * The result is returned as a {@link CarRead} DTO.
+     *
+     * @param id The ID of the car to retrieve.
+     * @return The car's data in readable DTO format.
+     * @throws AutoNotFoundException if the car is not found.
+     */
 
     public CarRead getAuto(Integer id) {
         if (!carRepository.existsById(id)) {
@@ -27,6 +49,14 @@ public class CarService {
         Car car = carRepository.getReferenceById(id);
         return CarConverter.convertModelToRead(car);
     }
+
+    /**
+     * Retrieves a list of all valid cars.
+     *
+     * Filters out cars with incomplete or placeholder data and converts them to {@link CarList} DTOs.
+     *
+     * @return A list of valid cars in DTO format.
+     */
 
     public List<CarList> listAutok() {
         List<Car> autok = carRepository.findAll().stream()
@@ -41,10 +71,29 @@ public class CarService {
         return CarConverter.convertModelsToList(autok);
     }
 
+    /**
+     * Creates a new car entry in the database.
+     *
+     * The input {@link CarSave} DTO is converted to a {@link Car} entity and saved,
+     * then returned as a {@link CarRead} DTO.
+     *
+     * @param carSave The DTO containing data for the new car.
+     * @return The saved car's data in readable DTO format.
+     */
+
     public CarRead createAuto(@Valid CarSave carSave) {
         Car car = carRepository.save(CarConverter.convertSaveToModel(carSave));
         return CarConverter.convertModelToRead(car);
     }
+
+    /**
+     * Soft-deletes a car by clearing its main fields instead of removing it from the database.
+     *
+     * If the car is not found by ID, an {@link AutoNotFoundException} is thrown.
+     *
+     * @param id The ID of the car to delete.
+     * @throws AutoNotFoundException if the car is not found.
+     */
 
     public void deleteAuto(Integer id) {
         Car car = carRepository.findById(id)

@@ -26,7 +26,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
-@Tag(name="User manage", description = "Crud + list + login")
+@Tag(name="User manage", description = "CRUD operations, list users, and user login")
 public class UserController {
 
     private AuthenticationManager authenticationManager;
@@ -41,7 +41,10 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    @Operation(summary = "User log in")
+    @Operation(
+            summary = "User login",
+            description = "Authenticates the user and returns a JWT token for further requests."
+    )
     public ResponseEntity<UserRead> login(@RequestBody LoginRequest loginRequest) {
         authenticate(loginRequest.getUsername(), loginRequest.getPassword());
         User user = userService.findUserByUsername(loginRequest.getUsername());
@@ -62,7 +65,10 @@ public class UserController {
     }
 
     @GetMapping("/list")
-    @Operation(summary = "List name all of the user")
+    @Operation(
+            summary = "List all users",
+            description = "Returns a list of all users in the system. Requires appropriate permissions."
+    )
     public List<UserList> listUser() {
         return userService.listUsers();
     }
@@ -70,21 +76,30 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create")
-    @Operation(summary = "create new user")
+    @Operation(
+            summary = "Create a new user",
+            description = "Creates a new user record in the system."
+    )
     public UserRead createUser(@RequestBody @Valid UserSave userSave){
         return userService.createUser(userSave);
     }
 
     @PreAuthorize("hasAuthority('UPDATE_USER')")
     @PutMapping("/{id}")
-    @Operation(summary = "Update user by id")
+    @Operation(
+            summary = "Update user by ID",
+            description = "Updates an existing user based on the provided ID and new data."
+    )
     public UserRead updateUser(@Valid @PathVariable Integer id, UserSave userSave ) {
         return userService.updateUser(id, userSave);
     }
 
     @PreAuthorize("hasAuthority('READ_USER')")
     @GetMapping("/{id}")
-    @Operation(summary = "Reads user by id")
+    @Operation(
+            summary = "Read user by ID",
+            description = "Fetches user details by ID from the system."
+    )
     public UserRead getUser(@Valid @PathVariable Integer id ) {
         return userService.getUser(id);
     }

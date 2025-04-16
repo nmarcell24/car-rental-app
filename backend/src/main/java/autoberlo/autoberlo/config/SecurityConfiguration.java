@@ -22,6 +22,18 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
+/**
+ * Security configuration class that sets up authentication, authorization,
+ * and JWT-based security for the application.
+ * <p>
+ * This configuration class handles HTTP security, such as defining the rules for
+ * which users can access which endpoints, setting up JWT-based authentication,
+ * and managing session creation. It also configures password encoding using BCrypt.
+ * </p>
+ *
+ * @author Mandrusz Zsolt, Németh Marcell, Szász Kristóf
+ */
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
@@ -40,6 +52,16 @@ public class SecurityConfiguration {
 
     };
 
+    /**
+     * Constructor to initialize necessary components for security configuration.
+     *
+     * @param jwtAuthorizationFilter the JWT authorization filter
+     * @param jwtAccessDeniedHandler the handler for access denied exceptions
+     * @param jwtAuthenticationEntryPoint the entry point for unauthorized access
+     * @param userDetailsService the user details service for loading user data
+     * @param passwordEncoder the password encoder for hashing passwords
+     */
+
     @Autowired
     public SecurityConfiguration(JwtAuthorizationFilter jwtAuthorizationFilter,
                                  JwtAccessDeniedHandler jwtAccessDeniedHandler,
@@ -54,12 +76,29 @@ public class SecurityConfiguration {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Bean definition for the AuthenticationManager.
+     *
+     * @param http the HttpSecurity object for building the authentication manager
+     * @return an instance of AuthenticationManager
+     * @throws Exception if an error occurs during authentication manager setup
+     */
+
     @Bean
     public AuthenticationManager getAuthenticationManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.userDetailsService(userDetailsService);
         return authenticationManagerBuilder.build();
     }
+
+    /**
+     * Bean definition for the SecurityFilterChain.
+     * Configures security rules, JWT authentication filter, and session management.
+     *
+     * @param http the HttpSecurity object for configuring HTTP security
+     * @return an instance of SecurityFilterChain
+     * @throws Exception if an error occurs during HTTP security setup
+     */
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

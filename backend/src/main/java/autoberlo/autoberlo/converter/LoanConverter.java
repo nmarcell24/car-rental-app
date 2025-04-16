@@ -8,7 +8,27 @@ import autoberlo.autoberlo.model.Loan;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Converter class responsible for transforming Loan entities to their corresponding DTOs and vice versa.
+ * <p>
+ * This utility class includes methods to:
+ * <ul>
+ *     <li>Convert a Loan model to a LoanRead DTO</li>
+ *     <li>Convert a LoanSave DTO to a Loan model</li>
+ *     <li>Convert a list of Loan models to a list of LoanList DTOs</li>
+ * </ul>
+ *
+ * Authors: Mandrusz Zsolt, Németh Marcell, Szász Kristóf
+ */
+
 public class LoanConverter {
+
+    /**
+     * Converts a Loan entity to a LoanRead DTO.
+     *
+     * @param loan the Loan model to convert
+     * @return a LoanRead DTO containing full loan details
+     */
 
     public static LoanRead convertModelToRead(Loan loan){
         LoanRead loanRead = new LoanRead();
@@ -22,6 +42,13 @@ public class LoanConverter {
         return loanRead;
     }
 
+    /**
+     * Converts a LoanSave DTO to a Loan entity.
+     *
+     * @param loanSave the LoanSave DTO containing user input
+     * @return a Loan entity ready for persistence
+     */
+
     public static Loan convertSaveToModel(LoanSave loanSave) {
         Loan loan = new Loan();
         loan.setCarId(loanSave.getCarId());
@@ -33,6 +60,13 @@ public class LoanConverter {
         return loan;
     }
 
+    /**
+     * Converts a list of Loan entities to a list of LoanList DTOs.
+     *
+     * @param loan list of Loan models
+     * @return list of simplified LoanList DTOs
+     */
+
     public static List<LoanList> convertModelsToList(List<Loan> loan) {
         List<LoanList> dtoLoanBody = new ArrayList<>();
         for (Loan loans : loan) {
@@ -40,6 +74,14 @@ public class LoanConverter {
         }
         return dtoLoanBody;
     }
+
+
+    /**
+     * Converts a single Loan entity to a LoanList DTO.
+     *
+     * @param loans the Loan model to convert
+     * @return LoanList DTO containing summary information
+     */
 
     private static LoanList convertModelToList(Loan loans) {
         LoanList loanList = new LoanList();

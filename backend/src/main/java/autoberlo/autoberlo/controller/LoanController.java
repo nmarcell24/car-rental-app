@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/loan")
-@Tag(name="LoanBody manage", description = "Read, list, creat")
+@Tag(name="LoanBody manage", description = "Create, read, and list loans")
 public class LoanController {
 
     @Autowired
@@ -25,7 +25,7 @@ public class LoanController {
 
     @PreAuthorize("hasAuthority('LIST_LOANS')")
     @GetMapping("/list")
-    @Operation(summary = "List id all of the loan")
+    @Operation(summary = "List id all of the loan", description = "Returns a list of all loan records in the system. Requires LIST_LOANS permission.")
     public List<LoanList> listLoan() {
         return loanService.listLoan();
     }
@@ -33,7 +33,10 @@ public class LoanController {
     @PreAuthorize("hasAuthority('CREATE_LOAN')")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create")
-    @Operation(summary = "create new loan")
+    @Operation(
+            summary = "Create a new loan",
+            description = "Adds a new loan record to the system. Requires CREATE_LOAN permission."
+    )
     public LoanRead createLoan(@RequestBody @Valid LoanSave loanSave) {
         return loanService.createLoan(loanSave);
     }

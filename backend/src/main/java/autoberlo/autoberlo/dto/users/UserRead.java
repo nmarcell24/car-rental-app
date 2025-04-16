@@ -8,37 +8,84 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
+/**
+ * DTO class for reading user information.
+ * <p>
+ * This class contains detailed user information such as name, username, phone number, email,
+ * address, birth date, and role, used when retrieving user details from the system.
+ * </p>
+ *
+ * @author Mandrusz Zsolt, Németh Marcell, Szász Kristóf
+ */
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRead {
+
+    /**
+     * The user's unique ID. Cannot be null.
+     */
     @NotNull(message = "Az azonosító nem lehet null.")
     private Integer id;
+
+    /**
+     * The user's name. Cannot be blank.
+     */
 
     @NotBlank(message = "A név nem lehet üres.")
     private String name;
 
+    /**
+     * The user's username. Cannot be blank.
+     */
+
     @NotBlank(message = "A név nem lehet üres.")
     private String username;
+
+    /**
+     * The user's phone number. Cannot be blank, must match a valid phone number format.
+     */
 
     @NotBlank(message = "A telefonszám nem lehet üres.")
     @Pattern(regexp = "^\\+?[0-9. ()-]{7,}$", message = "Kérlek, adj meg egy érvényes telefonszámot.")
     private String phoneNumber;
 
+    /**
+     * The user's email address. Cannot be blank, must match a valid email format.
+     */
+
     @NotBlank(message = "Az email cím nem lehet üres.")
     @Email(message = "Kérlek, adj meg egy érvényes email címet.")
     private String email;
+
+    /**
+     * The user's password. Cannot be blank, must be at least 4 characters long.
+     */
 
     @NotBlank(message = "A jelszó nem lehet üres.")
     @Size(min = 4, message = "A jelszónak legalább 4 karakter hosszúnak kell lennie.")
     private String password;
 
+
+    /**
+     * The user's address. Cannot be blank.
+     */
+
     @NotBlank(message = "A cím nem lehet üres.")
     private String address;
 
+    /**
+     * The user's birthdate. Must be a date in the past.
+     */
+
     @Past(message = "A születési dátumnak a múltban kell lennie.")
     private LocalDate dayOfBirth;
+
+    /**
+     * The user's role, can be any string, e.g., "Admin", "User".
+     */
 
     private String role;
 }

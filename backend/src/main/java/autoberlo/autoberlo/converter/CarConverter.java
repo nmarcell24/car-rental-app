@@ -9,7 +9,27 @@ import autoberlo.autoberlo.model.Car;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Converter class for handling transformations between Car entities and their corresponding DTOs.
+ * <p>
+ * This utility class provides methods to:
+ * <ul>
+ *     <li>Convert a Car model to a CarRead DTO</li>
+ *     <li>Convert a CarSave DTO to a Car model</li>
+ *     <li>Convert a list of Car models to a list of CarList DTOs</li>
+ * </ul>
+ *
+ * Authors: Mandrusz Zsolt, Németh Marcell, Szász Kristóf
+ */
+
 public class CarConverter {
+
+    /**
+     * Converts a Car entity to a CarRead DTO.
+     *
+     * @param car the Car model to convert
+     * @return a CarRead DTO containing detailed car information
+     */
 
     public static CarRead convertModelToRead(Car car) {
         CarRead carRead = new CarRead();
@@ -29,6 +49,13 @@ public class CarConverter {
         return carRead;
     }
 
+    /**
+     * Helper method to convert internal price category IDs to predefined global constants.
+     *
+     * @param priceCategoryId raw price category ID
+     * @return mapped global category constant
+     */
+
     private static int extracted(int priceCategoryId) {
         int category = 0;
         if (priceCategoryId == 0){
@@ -40,6 +67,13 @@ public class CarConverter {
         }
         return category;
     }
+
+    /**
+     * Converts a CarSave DTO to a Car entity.
+     *
+     * @param carSave the DTO containing user input data
+     * @return a Car model ready for persistence
+     */
 
 
     public static Car convertSaveToModel(CarSave carSave) {
@@ -58,6 +92,14 @@ public class CarConverter {
         return car;
     }
 
+    /**
+     * Converts a list of Car entities to a list of CarList DTOs.
+     *
+     * @param autok list of Car models
+     * @return list of simplified CarList DTOs
+     */
+
+
 
     public static List<CarList> convertModelsToList(List<Car> autok) {
         List<CarList> dtoAuto = new ArrayList<>();
@@ -66,6 +108,13 @@ public class CarConverter {
         }
         return dtoAuto;
     }
+
+    /**
+     * Converts a Car model to a simplified CarList DTO.
+     *
+     * @param car the Car model to convert
+     * @return CarList DTO
+     */
 
     private static CarList convertModelToList(Car car) {
         CarList carList = new CarList();
