@@ -78,7 +78,7 @@ public class UserController {
     @PreAuthorize("hasAuthority('UPDATE_USER')")
     @PutMapping("/{id}")
     @Operation(summary = "Update user by id")
-    public UserRead updateUser(@Valid @PathVariable Integer id, UserSave userSave ) {
+    public UserRead updateUser(@Valid @PathVariable Integer id,@RequestBody UserSave userSave ) {
         return userService.updateUser(id, userSave);
     }
 

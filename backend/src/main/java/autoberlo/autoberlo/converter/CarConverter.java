@@ -53,7 +53,7 @@ public class CarConverter {
         car.setTransmissionType(carSave.getTransmissionType());
         car.setDriveTrain(carSave.getDriveTrain());
         car.setImageUrl(carSave.getImageUrl());
-        car.setPriceCategoryId(extracted(carSave.getPriceCategoryId()));
+        car.setPriceCategoryId(carSave.getPriceCategoryId());
 
         return car;
     }
