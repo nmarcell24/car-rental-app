@@ -71,7 +71,12 @@ export default function CarDetail() {
       <div className="grid md:grid-cols-2 gap-6">
         <div>
           <img
-            src={isValidImage ? car.imageUrl && car.imageUrl.slice(1) : "./images/placeholder.svg"} onError={() => setIsValidImage(false)}
+            src={
+              isValidImage
+                ? car.imageUrl && car.imageUrl.slice(1)
+                : "/images/placeholder.svg"
+            }
+            onError={() => setIsValidImage(false)}
             alt="Car"
             className="w-full rounded-lg"
           />
@@ -92,7 +97,11 @@ export default function CarDetail() {
           </h2>
           <div className="flex items-center mt-2">
             <Star className="text-yellow-500" />
-            <span className="ml-1">4.24 (124 reviews)</span>
+            <span className="ml-1 font-semibold">
+              {" "}
+              {(Math.random() * 2 + 3).toString().slice(0, 3)} (
+              {Math.floor(Math.random() * 110 + 10)} rewiews)
+            </span>
           </div>
           <p className="text-gray-700 mt-2">
             <LocationCity /> Hungary
@@ -108,10 +117,10 @@ export default function CarDetail() {
             ))}
           </div>
           <p className="mt-4 text-gray-700">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
-            veniam tempore iusto voluptatem, voluptatum minima perspiciatis
-            ipsam pariatur. Quibusdam nobis repudiandae eum distinctio esse eos
-            corrupti quasi labore rem numquam!
+            Reliable and stylish vehicle in excellent condition! Runs smoothly,
+            great on gas, and has low mileage. Perfect for daily commutes or
+            road trips. Clean title, well-maintained, and priced to sell fast.
+            Don’t miss out—contact now for a test drive!
           </p>
           <div className="mt-4 p-4 border rounded-lg">
             <div className="flex items-center justify-between">

@@ -14,7 +14,7 @@ const Home = () => {
           <Form />
           <motion.img
             className="hidden md:block md:h-52 lg:h-80"
-            src="/dodge_cropped.png"
+            src="/images/dodge_cropped.png"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{

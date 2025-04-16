@@ -72,6 +72,14 @@ public class CarList {
 
 
     /**
+     * The type of drive train in the car.
+     */
+
+
+    @NotBlank(message = "A hajtáslánc típusa nem lehet üres.")
+    private String driveTrain;
+
+        /**
      * The URL of the image representing the car.
      */
 

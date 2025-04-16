@@ -90,7 +90,7 @@ public class UserController {
             summary = "Update user by ID",
             description = "Updates an existing user based on the provided ID and new data."
     )
-    public UserRead updateUser(@Valid @PathVariable Integer id, UserSave userSave ) {
+    public UserRead updateUser(@Valid @PathVariable Integer id, @RequestBody UserSave userSave ) {
         return userService.updateUser(id, userSave);
     }
 

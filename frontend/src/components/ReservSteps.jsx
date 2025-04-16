@@ -14,6 +14,7 @@ export const ReservSteps = ({ car, specLogos, specs, setOpen }) => {
   const [startDate, setStartDate] = useState(dayjs());
   const [endDate, setEndDate] = useState(dayjs().add(1, "day"));
   const [activeStep, setActiveStep] = useState(0);
+  const [isValidImage, setIsValidImage] = useState(true);
   const [error, setError] = useState("");
   const { currentUser } = useUserContext();
   let diff =
@@ -119,7 +120,12 @@ export const ReservSteps = ({ car, specLogos, specs, setOpen }) => {
             <section className="bg-white p-8 rounded-2xl flex-grow">
               <h1 className="text-3xl font-bold">{car.brand}</h1>
               <img
-                src={car.imageUrl.slice(1)}
+                src={
+                  isValidImage
+                    ? car.imageUrl && car.imageUrl.slice(1)
+                    : "/images/placeholder.svg"
+                }
+                onError={() => setIsValidImage(false)}
                 className="w-full object-contain max-h-64 my-4"
               />
               <div className="grid grid-cols-2 gap-2">

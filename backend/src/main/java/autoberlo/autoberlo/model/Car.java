@@ -102,6 +102,7 @@ public class Car {
      * Used for categorizing cars by rental price ranges.
      */
 
+    @JoinColumn(name = "price_category_id")
     private int priceCategoryId;
 
 

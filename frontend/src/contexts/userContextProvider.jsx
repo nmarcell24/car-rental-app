@@ -71,11 +71,6 @@ export const UserContextProvider = ({ children }) => {
       axios.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${res.headers.jwt_token}`;
-      console.log(
-        (axios.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${res.headers.jwt_token}`)
-      );
       setCurrentUser(res.data);
       localStorage.setItem("token", res.headers.jwt_token);
     } catch (error) {

@@ -5,17 +5,17 @@ import { Link } from "react-router";
 
 const PopularRentalDeals = () => {
   const [cars, setCars] = useState([]);
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchCars = async () => {
       const res = await axios.get(`/api/car/list`);
       setCars(res.data);
       setCars((prev) => prev.slice(0, 4));
-      setIsLoading(false)
+      setIsLoading(false);
     };
 
-    fetchCars()
+    fetchCars();
   }, []);
 
   return (
@@ -40,43 +40,47 @@ const PopularRentalDeals = () => {
                 />
               ))
             : cars.map((car, index) => (
-              <div
-                key={index}
-                className="bg-white shadow-lg rounded-lg p-6 text-start hover:scale-105 transition-transform duration-300"
-              >
-                <img
-                  src={car.imageUrl}
-                  alt={car.name}
-                  className="h-52 w-full object-fit rounded-md mb-4"
-                />
-                <h4 className="text-lg font-semibold text-gray-700 mb-2">
-                  {car.brand} {car.carType}
-                </h4>
-                <p className="text-gray-600 text-sm font-medium">
-                  ⭐ <span className="text-yellow-500">4.5</span> ( 30 reviews)
-                </p>
-                <ul className="text-gray-600 text-sm my-2 space-y-1 grid grid-cols-2">
-                  <li>👥 {car.numberOfSeats} Passengers</li>
-                  <li>⚙️ {car.transmissionType}</li>
-                  <li>⛽ {car.fuelType}</li>
-                  <li>🔩 {car.driveTrain}</li>
-                </ul>
-                <hr className="m-4" />
-                <p className="text-lg font-bold text-gray-800 mb-4 flex items-center justify-between">
-                  Price:{" "}
-                  <span>
-                    {car.priceCategoryId}Ft{" "}
-                    <span className="text-gray-600">/day</span>
-                  </span>
-                </p>
-                <Link
-                  to={`/rent/${car.id}`}
-                  className="bg-yellow-500 w-full block text-center text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition"
+                <div
+                  key={index}
+                  className="bg-white shadow-lg rounded-lg p-6 text-start hover:scale-105 transition-transform duration-300"
                 >
-                  Rent Now →
-                </Link>
-              </div>
-            ))}
+                  <img
+                    src={car.imageUrl}
+                    alt={car.name}
+                    className="h-52 w-full object-fit rounded-md mb-4"
+                  />
+                  <h4 className="text-lg font-semibold text-gray-700 mb-2">
+                    {car.brand} {car.carType}
+                  </h4>
+                  <p className="text-gray-600 text-sm font-medium">
+                    ⭐{" "}
+                    <span className="text-yellow-500">
+                      {(Math.random() * 2 + 3).toString().slice(0, 3)}
+                    </span>{" "}
+                    ( {Math.floor(((Math.random() * 110) + 10))} reviews)
+                  </p>
+                  <ul className="text-gray-600 text-sm my-2 space-y-1 grid grid-cols-2">
+                    <li>👥 {car.numberOfSeats} Passengers</li>
+                    <li>⚙️ {car.transmissionType}</li>
+                    <li>⛽ {car.fuelType}</li>
+                    <li>🔩 {car.driveTrain}</li>
+                  </ul>
+                  <hr className="m-4" />
+                  <p className="text-lg font-bold text-gray-800 mb-4 flex items-center justify-between">
+                    Price:{" "}
+                    <span>
+                      {car.priceCategoryId}Ft{" "}
+                      <span className="text-gray-600">/day</span>
+                    </span>
+                  </p>
+                  <Link
+                    to={`/rent/${car.id}`}
+                    className="bg-yellow-500 w-full block text-center text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition"
+                  >
+                    Rent Now →
+                  </Link>
+                </div>
+              ))}
         </div>
         <div className="mt-10">
           <Link

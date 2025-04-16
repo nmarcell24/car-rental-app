@@ -44,12 +44,11 @@ const Form = () => {
 
     if (carBrand !== "all") queryParams.append("brand", carBrand);
     if (carType !== "all") queryParams.append("carType", carType);
-    if (priceCategory !== "all") queryParams.append("priceCategory", priceCategory);
+    if (priceCategory !== "all")
+      queryParams.append("priceCategory", priceCategory);
 
     navigate(`/rent?${queryParams.toString()}`);
   };
-
-  if (loading) return <p>Loading...</p>;
 
   return (
     <div className="bg-white sm:w-96 mx-8 flex items-center justify-center flex-col p-8 pt-6 rounded border-8 border-yellow-50">
@@ -61,13 +60,16 @@ const Form = () => {
         <FormControl sx={{ marginBottom: 2 }}>
           <InputLabel id="car-brand-select-label">Car Brand</InputLabel>
           <Select
+            disabled={loading}
             labelId="car-brand-select-label"
             id="car-brand-select"
             value={carBrand}
             onChange={(e) => setCarBrand(e.target.value)}
             input={<OutlinedInput label="Car Brand" />}
           >
-            <MenuItem value="all"><em>All Brands</em></MenuItem>
+            <MenuItem value="all">
+              <em>All Brands</em>
+            </MenuItem>
             {carBrands.map((brand) => (
               <MenuItem key={brand} value={brand}>
                 {brand}
@@ -80,13 +82,16 @@ const Form = () => {
         <FormControl sx={{ marginBottom: 2 }}>
           <InputLabel id="car-type-select-label">Car Type</InputLabel>
           <Select
+            disabled={loading}
             labelId="car-type-select-label"
             id="car-type-select"
             value={carType}
             onChange={(e) => setCarType(e.target.value)}
             input={<OutlinedInput label="Car Type" />}
           >
-            <MenuItem value="all"><em>All Types</em></MenuItem>
+            <MenuItem value="all">
+              <em>All Types</em>
+            </MenuItem>
             {carTypes.map((type) => (
               <MenuItem key={type} value={type}>
                 {type}
@@ -99,20 +104,27 @@ const Form = () => {
         <FormControl sx={{ marginBottom: 2 }}>
           <InputLabel id="price-select-label">Price Category</InputLabel>
           <Select
+            disabled={loading}
             labelId="price-select-label"
             id="price-select"
             value={priceCategory}
             onChange={(e) => setPriceCategory(e.target.value)}
             input={<OutlinedInput label="Price Category" />}
           >
-            <MenuItem value="all"><em>All Prices</em></MenuItem>
+            <MenuItem value="all">
+              <em>All Prices</em>
+            </MenuItem>
             <MenuItem value="10000">Low (10,000)</MenuItem>
             <MenuItem value="20000">Mid (20,000)</MenuItem>
             <MenuItem value="30000">High (30,000)</MenuItem>
           </Select>
         </FormControl>
 
-        <Button variant="contained" sx={{ backgroundColor: "#f1c656" }} onClick={handleSearch}>
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: "#f1c656" }}
+          onClick={handleSearch}
+        >
           Reserve Now
         </Button>
       </FormControl>

@@ -67,7 +67,7 @@ const ManageCars = () => {
         setCars(cars.filter((car) => car.id !== carToDelete));
       })
       .catch((err) => {
-        console.error("Error deleting car:", err);
+        alert("Error: ", err?.response?.data?.message);
       });
 
     setOpenDialog(false);
