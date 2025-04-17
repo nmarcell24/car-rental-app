@@ -7,8 +7,6 @@ A full-stack Car Rental Management System built with: **MySQL**, **SpringBoot**,
 
 ## 📖 Table of Contents
 
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
 - [Setup Instructions](#️-setup-instructions)
   - [Backend (Spring Boot)](#backend-spring-boot)
   - [Frontend (React Vite)](#frontend-react-vite)
