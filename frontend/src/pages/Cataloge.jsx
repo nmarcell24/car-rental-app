@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import CarCard from "../carcatalogeComponments/CarCard";
+import CarCard from "../components/CarCard";
 import axios from "axios";
 import {
   Select,
@@ -9,6 +9,7 @@ import {
   FormControl,
   InputLabel,
   OutlinedInput,
+  Skeleton,
 } from "@mui/material";
 
 const Cataloge = () => {
@@ -32,24 +33,25 @@ const Cataloge = () => {
     try {
       const response = await axios.get("/api/car/list");
       setCars(response.data);
-      const uniqueBrands = [...new Set(response.data.map(car => car.brand))];
-      const uniqueCarTypes = [...new Set(response.data.map(car => car.carType))];
+      const uniqueBrands = [...new Set(response.data.map((car) => car.brand))];
+      const uniqueCarTypes = [
+        ...new Set(response.data.map((car) => car.carType)),
+      ];
+      setIsLoading(false);
       setBrands(uniqueBrands);
       setCarTypes(uniqueCarTypes);
-      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching car data:", error);
-      setIsLoading(false);
     }
   };
 
   const handleFilterChange = (field) => (event) => {
     const value = event.target.value;
-    setFilters(prev => ({ ...prev, [field]: value }));
+    setFilters((prev) => ({ ...prev, [field]: value }));
     setPage(1);
   };
 
-  const handleChange = (event, value) => {
+  const handleChange = (_, value) => {
     setPage(value);
   };
 
@@ -72,21 +74,26 @@ const Cataloge = () => {
     let filtered = [...cars];
 
     if (filters.brand !== "all") {
-      filtered = filtered.filter(car => car.brand === filters.brand);
+      filtered = filtered.filter((car) => car.brand === filters.brand);
     }
 
     if (filters.carType !== "all") {
-      filtered = filtered.filter(car => car.carType === filters.carType);
+      filtered = filtered.filter((car) => car.carType === filters.carType);
     }
 
     if (filters.priceCategoryId !== "all") {
-      filtered = filtered.filter(car => car.priceCategoryId === Number(filters.priceCategoryId));
+      filtered = filtered.filter(
+        (car) => car.priceCategoryId === Number(filters.priceCategoryId)
+      );
     }
 
     setFilteredCars(filtered);
   }, [cars, filters]);
 
-  const paginatedItems = filteredCars.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+  const paginatedItems = filteredCars.slice(
+    (page - 1) * itemsPerPage,
+    page * itemsPerPage
+  );
 
   useEffect(() => {
     fetchCars();
@@ -98,7 +105,6 @@ const Cataloge = () => {
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-8 px-5 md:px-12">
         <h1 className="text-2xl font-bold">Car Catalog</h1>
         <div className="flex flex-wrap gap-4 items-center justify-start md:justify-end">
-
           {/* Brand Filter */}
           <FormControl className="min-w-[160px]">
             <InputLabel id="brand-select-label">Brand</InputLabel>
@@ -108,9 +114,13 @@ const Cataloge = () => {
               onChange={handleFilterChange("brand")}
               input={<OutlinedInput label="Brand" />}
             >
-              <MenuItem value="all"><em>All Brands</em></MenuItem>
+              <MenuItem value="all">
+                <em>All Brands</em>
+              </MenuItem>
               {brands.map((brand) => (
-                <MenuItem key={brand} value={brand}>{brand}</MenuItem>
+                <MenuItem key={brand} value={brand}>
+                  {brand}
+                </MenuItem>
               ))}
             </Select>
           </FormControl>
@@ -124,9 +134,13 @@ const Cataloge = () => {
               onChange={handleFilterChange("carType")}
               input={<OutlinedInput label="Type" />}
             >
-              <MenuItem value="all"><em>All Types</em></MenuItem>
+              <MenuItem value="all">
+                <em>All Types</em>
+              </MenuItem>
               {carTypes.map((type) => (
-                <MenuItem key={type} value={type}>{type}</MenuItem>
+                <MenuItem key={type} value={type}>
+                  {type}
+                </MenuItem>
               ))}
             </Select>
           </FormControl>
@@ -140,27 +154,39 @@ const Cataloge = () => {
               onChange={handleFilterChange("priceCategoryId")}
               input={<OutlinedInput label="Price" />}
             >
-              <MenuItem value="all"><em>All Prices</em></MenuItem>
+              <MenuItem value="all">
+                <em>All Prices</em>
+              </MenuItem>
               <MenuItem value="10000">Low (10,000)</MenuItem>
               <MenuItem value="20000">Mid (20,000)</MenuItem>
               <MenuItem value="30000">High (30,000)</MenuItem>
             </Select>
           </FormControl>
-
         </div>
       </div>
 
       {/* CAR LIST */}
       <div className="flex items-center justify-center flex-wrap gap-8">
-        {isLoading
-          ? [...Array(10)].map((_, i) => (
-              <div key={i} className="skeleton-card"></div>
-            ))
-          : filteredCars.length === 0
-          ? <div className="w-full text-center">No cars found with the selected filters.</div>
-          : paginatedItems.map((car, index) => (
-              <CarCard {...car} key={car.id} index={index} />
-            ))}
+        {isLoading ? (
+          [...Array(10)].map((_, i) => (
+            <Skeleton
+              key={i}
+              variant="rounded"
+              animation={"wave"}
+              className="!rounded-2xl"
+              width={"16rem"}
+              height={"18.5rem"}
+            />
+          ))
+        ) : filteredCars.length === 0 ? (
+          <div className="w-full min-h-52 flex items-center justify-center text-xl font-bold">
+            No cars found with the selected filters.
+          </div>
+        ) : (
+          paginatedItems.map((car, index) => (
+            <CarCard {...car} key={car.id} index={index} />
+          ))
+        )}
 
         <div className="w-full flex items-center justify-center gap-10">
           <Pagination

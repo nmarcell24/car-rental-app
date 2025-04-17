@@ -1,9 +1,9 @@
-import Browse from "../homeComponents/Browse";
-import BuySellCarSection from "../homeComponents/BuySellCarSection";
-import PopularRentalDeals from "../homeComponents/PopularRentalDeals"
-import Form from "../homeComponents/Form";
-import LogoShow from "../homeComponents/LogoShow";
-import StatsCounter from "../homeComponents/StatsCounter";
+import Browse from "./Browse";
+import BuySellCarSection from "./BuySellCarSection";
+import PopularRentalDeals from "./PopularRentalDeals"
+import Form from "./Form";
+import LogoShow from "./LogoShow";
+import StatsCounter from "./StatsCounter";
 import { motion } from "framer-motion";
 
 const Home = () => {

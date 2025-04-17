@@ -15,7 +15,7 @@ import PeopleIcon from "@mui/icons-material/People";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import ManageCars from "./ManageCars";
 import ManageUsers from "./ManageUsers";
-import { useUserContext } from "../hooks/useUserContext";
+import { useUserContext } from "../../hooks/useUserContext";
 import axios from "axios";
 
 const AdminDashboard = () => {

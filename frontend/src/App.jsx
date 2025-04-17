@@ -1,19 +1,18 @@
 import Footer from "./components/Footer";
-import Home from "./pages/Home";
 import Cataloge from "./pages/Cataloge";
+import Home from "./pages/home/Home";
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
-import { useEffect, useState } from "react";
+import SignIn from "./pages/user/SignIn";
+import SignUp from "./pages/user/SignUp";
+import { useState } from "react";
 import { Dialog } from "@mui/material";
 import CarDetail from "./pages/CarDetails";
 import SellYourCar from "./pages/SellYourCar";
 import { NotFound } from "./pages/NotFound";
-import UserProfile from "./pages/UserProfile";
-import AdminDashboard from "./pages/AdminDashboard";
+import UserProfile from "./pages/user/UserProfile";
 import { useUserContext } from "./hooks/useUserContext";
-import axios from "axios";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 function App() {
   const [openDialogSignIn, setOpenDialogSignIn] = useState(false);

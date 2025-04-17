@@ -1,7 +1,7 @@
 import { Box, Button, Checkbox, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import { useUserContext } from "../hooks/useUserContext";
-import ErrorSnackbar from "../components/ErrorSnackBar";
+import { useUserContext } from "../../hooks/useUserContext";
+import ErrorSnackbar from "../../components/ErrorSnackBar";
 
 export default function SignIn({ setOpenDialog, setOpenDialogSignUp }) {
   const [password, setPassword] = useState("");

@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Tab, Tabs, TextField, Button, Typography } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { Tab, Tabs, TextField, Button, Typography, Alert } from "@mui/material";
+import { AnimatePresence, motion } from "framer-motion";
 import dayjs from "dayjs";
 import axios from "axios";
-import { useUserContext } from "../hooks/useUserContext";
-import ErrorSnackbar from "../components/ErrorSnackBar";
+import { useUserContext } from "../../hooks/useUserContext";
+import ErrorSnackbar from "../../components/ErrorSnackBar";
+import { Link } from "react-router";
 
 const UserProfile = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const { currentUser } = useUserContext();
   const { isUniqueUsername } = useUserContext();
   const [error, setError] = useState("");
+  const [updated, setUpdated] = useState(false);
   const [userLoans, setUserLoans] = useState([]);
 
   useEffect(() => {
@@ -31,7 +34,7 @@ const UserProfile = () => {
 
         setUserLoans(loansWithImages);
       } catch (error) {
-        alert(
+        setError(
           "Error fetching loans or car data:",
           error?.response?.data?.message
         );
@@ -40,6 +43,15 @@ const UserProfile = () => {
 
     fetchUserLoans();
   }, []);
+
+  if (!currentUser) {
+    return (
+      <div className="flex flex-col gap-5 justify-center items-center h-screen">
+        <h1 className="text-2xl font-bold">No user is logged in.</h1>
+        <Link to={"/"} className="">Go to homepage</Link>
+      </div>
+    );
+  }
 
   const [errors, setErrors] = useState({});
   const [dayOfBirth, setDayOfBirth] = useState(dayjs(currentUser.dayOfBirth));
@@ -158,7 +170,7 @@ const UserProfile = () => {
         `/api/user/${currentUser.id}`,
         modifiedFields
       );
-      console.log("Profile updated successfully", response.data);
+      setUpdated(true);
       setFormData({
         ...response.data,
         password: "",
@@ -169,6 +181,12 @@ const UserProfile = () => {
       );
     }
   };
+
+  if (updated) {
+    setTimeout(() => {
+      setUpdated(false);
+    }, 4000);
+  }
 
   return (
     <div className="flex flex-col md:flex-row w-full p-10 bg-gray-100">
@@ -233,7 +251,7 @@ const UserProfile = () => {
               />
               <TextField
                 label="Phone"
-                name="phone"
+                name="phoneNumber"
                 error={!!errors.phoneNumber}
                 helperText={errors.phoneNumber}
                 value={formData.phoneNumber}
@@ -271,7 +289,7 @@ const UserProfile = () => {
               My Rents
             </Typography>
             <div className="max-h-[50vh] overflow-y-scroll">
-              {userLoans.map((loan) => (
+              {userLoans.length === 0 ? <h1 className="text-center mt-10">No rents yet</h1> : userLoans.map((loan) => (
                 <div
                   key={loan.id}
                   className="flex items-center mb-4 bg-gray-50 p-3 rounded-xl text-[120%] px-6"
@@ -303,6 +321,21 @@ const UserProfile = () => {
         )}
       </div>
 
+      <AnimatePresence initial={false}>
+        {updated ? (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+            transition={{ duration: 0.5 }}
+            className="fixed bottom-2 right-2 z-20"
+          >
+            <Alert variant="filled" severity="success">
+              User updated successfully.
+            </Alert>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
       <ErrorSnackbar error={error} onClose={() => setError("")} />
     </div>
   );

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { TextField, MenuItem, Autocomplete, Alert } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import { Create } from "@mui/icons-material";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useUserContext } from "../hooks/useUserContext";
 import axios from "axios";
 import ErrorSnackbar from "../components/ErrorSnackBar";
@@ -79,7 +79,10 @@ const SellCarForm = () => {
       carDetails.modelYear < dayjs().subtract(100, "year").get("year") ||
       carDetails.modelYear > dayjs().year()
     ) {
-      newErrors.modelYear = "Model Year must be between " + dayjs().subtract(100, "year").get("year") + " and current year";
+      newErrors.modelYear =
+        "Model Year must be between " +
+        dayjs().subtract(100, "year").get("year") +
+        " and current year";
     }
     if (carDetails.numberOfSeats <= 0) {
       newErrors.numberOfSeats = "Number of Seats must be a positive number";
@@ -110,12 +113,16 @@ const SellCarForm = () => {
       });
   };
 
-  // if no user is logged in
-  useEffect(() => {
-    if (currentUser === null) {
-      navigate("/");
-    }
-  }, []);
+  if (!currentUser) {
+    return (
+      <div className="flex flex-col gap-5 justify-center items-center h-screen">
+        <h1 className="text-2xl font-bold">No user is logged in.</h1>
+        <Link to={"/"} className="">
+          Go to homepage
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 md:w-[70vw] mx-auto rounded-2xl my-10">

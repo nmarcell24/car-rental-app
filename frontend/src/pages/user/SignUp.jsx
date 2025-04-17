@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import axios from "axios";
 import dayjs from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { useUserContext } from "../hooks/useUserContext";
+import { useUserContext } from "../../hooks/useUserContext";
 
 export default function SignUp({ setOpenDialog, setOpenDialogSignIn }) {
   const [errors, setErrors] = useState({});
