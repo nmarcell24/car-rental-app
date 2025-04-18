@@ -1,18 +1,12 @@
-🚗 Car Rental Management System
-A full-stack Car Rental Management System built with:
+# 🚗 Car Rental Management System
 
-Backend: Spring Boot
+![image](https://github.com/user-attachments/assets/b5a80184-be43-4dc6-8b8a-1a2f314ceaca)
 
-Frontend: React (Vite)
-
-Database: MySQL
-
-This project supports car and user management, loan processing, and allocation features with a RESTful API architecture.
+##
+A full-stack Car Rental Management System built with: **MySQL**, **SpringBoot**, **React**. This project supports car and user management, loan processing, and allocation features with a RESTful API architecture.
 
 ## 📖 Table of Contents
 
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
 - [Setup Instructions](#️-setup-instructions)
   - [Backend (Spring Boot)](#backend-spring-boot)
   - [Frontend (React Vite)](#frontend-react-vite)
