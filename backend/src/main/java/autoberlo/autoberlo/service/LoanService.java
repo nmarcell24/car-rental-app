@@ -56,9 +56,7 @@ public class LoanService {
             LocalDate existingStart = loan.getStartDate();
             LocalDate existingEnd = loan.getEndDate();
 
-            // Check if the date ranges overlap
-            if (!(loanSave.getEndDate().isBefore(existingStart) || loanSave.getStartDate().isAfter(existingEnd))) {
-                System.out.println("old: " + loan.getStartDate() + ", " + loan.getEndDate() + "\nnew: " + loanSave.getStartDate() + ", " + loanSave.getEndDate());
+            if (loan.getCarId() == loanSave.getCarId() && !(loanSave.getEndDate().isBefore(existingStart) || loanSave.getStartDate().isAfter(existingEnd))) {
                 throw new LoanAlreadyExcistsException("Car is already loaned during this period.");
             }
         }

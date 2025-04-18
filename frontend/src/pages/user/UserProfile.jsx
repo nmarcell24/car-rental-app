@@ -15,6 +15,7 @@ const UserProfile = () => {
   const [error, setError] = useState("");
   const [updated, setUpdated] = useState(false);
   const [userLoans, setUserLoans] = useState([]);
+  const [isValidImage, setIsValidImage] = useState(true);
 
   useEffect(() => {
     const fetchUserLoans = async () => {
@@ -48,7 +49,9 @@ const UserProfile = () => {
     return (
       <div className="flex flex-col gap-5 justify-center items-center h-screen">
         <h1 className="text-2xl font-bold">No user is logged in.</h1>
-        <Link to={"/"} className="">Go to homepage</Link>
+        <Link to={"/"} className="">
+          Go to homepage
+        </Link>
       </div>
     );
   }
@@ -289,33 +292,42 @@ const UserProfile = () => {
               My Rents
             </Typography>
             <div className="max-h-[50vh] overflow-y-scroll">
-              {userLoans.length === 0 ? <h1 className="text-center mt-10">No rents yet</h1> : userLoans.map((loan) => (
-                <div
-                  key={loan.id}
-                  className="flex items-center mb-4 bg-gray-50 p-3 rounded-xl text-[120%] px-6"
-                >
-                  <img
-                    src={loan.imageUrl}
-                    alt="Car"
-                    className="w-45 h-30 rounded-lg mr-4"
-                  />
-                  <div className="flex flex-col">
-                    <h1 className="font-bold text-xl mb-2">{loan.brand}</h1>
-                    <p>
-                      <span className="text-gray-500">Start Date:</span>{" "}
-                      {loan.startDate}
-                    </p>
-                    <p>
-                      <span className="text-gray-500">End Date:</span>{" "}
-                      {loan.endDate}
-                    </p>
-                    <p>
-                      <span className="text-gray-500">Total Price:</span>{" "}
-                      {loan.totalPrice} HUF
-                    </p>
+              {userLoans.length === 0 ? (
+                <h1 className="text-center mt-10">No rents yet</h1>
+              ) : (
+                userLoans.map((loan) => (
+                  <div
+                    key={loan.id}
+                    className="flex items-center mb-4 bg-gray-50 p-3 rounded-xl text-[120%] px-6"
+                  >
+                    <img
+                      src={
+                        isValidImage
+                          ? loan.imageUrl
+                          : "./images/placeholder.svg"
+                      }
+                      onError={() => setIsValidImage(false)}
+                      alt="Car"
+                      className="w-45 h-30 rounded-lg mr-4"
+                    />
+                    <div className="flex flex-col">
+                      <h1 className="font-bold text-xl mb-2">{loan.brand}</h1>
+                      <p>
+                        <span className="text-gray-500">Start Date:</span>{" "}
+                        {loan.startDate}
+                      </p>
+                      <p>
+                        <span className="text-gray-500">End Date:</span>{" "}
+                        {loan.endDate}
+                      </p>
+                      <p>
+                        <span className="text-gray-500">Total Price:</span>{" "}
+                        {loan.totalPrice} HUF
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </>
         )}
