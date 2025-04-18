@@ -80,7 +80,7 @@ public class UserService implements UserDetailsService {
 
     public UserRead updateUser(Integer id, UserSave userSave) {
         if (!userRepository.existsById(id)) {
-            throw new RuntimeException("User not found");
+            throw new UserNotFoundException(NO_USER_FOUND_BY_USERNAME);
         }
 
         User user = userRepository.getReferenceById(id);

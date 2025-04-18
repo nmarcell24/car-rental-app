@@ -23,7 +23,6 @@ export const ReservSteps = ({ car, specLogos, specs, setOpen }) => {
       : dayjs(endDate).diff(startDate, "day");
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
     if (activeStep === 1) {
       axios
         .post("/api/loan/create", {
@@ -33,15 +32,15 @@ export const ReservSteps = ({ car, specLogos, specs, setOpen }) => {
           totalPrice: car.priceCategoryId * diff,
           userId: currentUser.id,
         })
-        .then(({ data }) => {
-          console.log(data);
-        })
+        .then(() => setActiveStep((prevActiveStep) => prevActiveStep + 1))
         .catch((err) => {
           setError(
             err?.response?.data?.message ||
               "An error occurred while loaning the car."
           );
         });
+    } else {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
   };
 

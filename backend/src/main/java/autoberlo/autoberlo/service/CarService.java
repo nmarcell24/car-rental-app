@@ -4,7 +4,7 @@ import autoberlo.autoberlo.converter.CarConverter;
 import autoberlo.autoberlo.dto.cars.CarList;
 import autoberlo.autoberlo.dto.cars.CarRead;
 import autoberlo.autoberlo.dto.cars.CarSave;
-import autoberlo.autoberlo.exception.AutoNotFoundException;
+import autoberlo.autoberlo.exception.CarNotFoundException;
 import autoberlo.autoberlo.model.Car;
 import autoberlo.autoberlo.repository.CarRepository;
 import jakarta.validation.Valid;
@@ -34,17 +34,17 @@ public class CarService {
     /**
      * Retrieves a specific car by its ID.
      *
-     * If the car does not exist, an {@link AutoNotFoundException} is thrown.
+     * If the car does not exist, an {@link CarNotFoundException} is thrown.
      * The result is returned as a {@link CarRead} DTO.
      *
      * @param id The ID of the car to retrieve.
      * @return The car's data in readable DTO format.
-     * @throws AutoNotFoundException if the car is not found.
+     * @throws CarNotFoundException if the car is not found.
      */
 
     public CarRead getAuto(Integer id) {
         if (!carRepository.existsById(id)) {
-            throw new AutoNotFoundException();
+            throw new CarNotFoundException();
         }
         Car car = carRepository.getReferenceById(id);
         return CarConverter.convertModelToRead(car);
@@ -89,15 +89,15 @@ public class CarService {
     /**
      * Soft-deletes a car by clearing its main fields instead of removing it from the database.
      *
-     * If the car is not found by ID, an {@link AutoNotFoundException} is thrown.
+     * If the car is not found by ID, an {@link CarNotFoundException} is thrown.
      *
      * @param id The ID of the car to delete.
-     * @throws AutoNotFoundException if the car is not found.
+     * @throws CarNotFoundException if the car is not found.
      */
 
     public void deleteAuto(Integer id) {
         Car car = carRepository.findById(id)
-                .orElseThrow(AutoNotFoundException::new);
+                .orElseThrow(CarNotFoundException::new);
 
         car.setBrand(null);
         car.setCarType(null);
