@@ -1,0 +1,12 @@
+{
+  "summary": "A robust full-stack Car Rental Management System designed to streamline vehicle leasing operations. Built with a Spring Boot backend and a dynamic React frontend, it delivers seamless user and fleet management capabilities.",
+  "description": "This comprehensive Car Rental Management System offers a modern digital solution for vehicle rental businesses. At its core, the application features a powerful Spring Boot backend that handles complex business logic and data persistence via MySQL, ensuring data integrity and fast response times. The frontend, developed with React and Vite, provides a responsive and interactive user experience enhanced by TailwindCSS and Material UI. Key functionalities include intuitive dashboards for managing car inventories, detailed user profile administration, and a streamlined loan processing workflow. The system is designed with scalability in mind, utilizing RESTful APIs to facilitate secure and efficient communication between client and server.",
+  "features": {
+    "Fleet Management": "Complete CRUD operations for managing vehicle inventory, including specifications and availability status.",
+    "User Administration": "Secure user authentication and profile management for both administrators and customers.",
+    "Loan Processing": "Streamlined workflow for processing vehicle loans, tracking rentals, and managing returns.",
+    "Modern UI/UX": "Responsive interface built with React, styled with TailwindCSS and MUI, and enhanced with GSAP animations.",
+    "Data Persistence": "Robust MySQL database integration using Hibernate ORM for reliable data storage and retrieval.",
+    "RESTful Architecture": "Scalable API design ensuring efficient data exchange between the client and server."
+  }
+}
