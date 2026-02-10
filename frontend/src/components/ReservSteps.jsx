@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import dayjs from "dayjs";
 import axios from "axios";
 import { useUserContext } from "../hooks/useUserContext";
-import ErrorSnackbar from "./ErrorSnackBar";
+import ErrorSnackbar from "./ErrorSnackbar";
 
 const steps = ["Select time", "Summary", "Finish"];
 
@@ -36,7 +36,7 @@ export const ReservSteps = ({ car, specLogos, specs, setOpen }) => {
         .catch((err) => {
           setError(
             err?.response?.data?.message ||
-              "An error occurred while loaning the car."
+            "An error occurred while loaning the car."
           );
         });
     } else {

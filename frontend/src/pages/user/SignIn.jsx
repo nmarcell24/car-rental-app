@@ -28,7 +28,7 @@ export default function SignIn({ setOpenDialog, setOpenDialogSignUp }) {
         .catch((err) => {
           setError(
             err?.response?.data?.message ||
-              "An error occurred while creating user account"
+            "An error occurred while creating user account"
           );
         });
     }
