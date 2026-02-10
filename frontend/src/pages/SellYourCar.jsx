@@ -5,7 +5,7 @@ import { Create } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router";
 import { useUserContext } from "../hooks/useUserContext";
 import axios from "axios";
-import ErrorSnackbar from "../components/ErrorSnackBar";
+import ErrorSnackbar from "../components/ErrorSnackbar";
 import dayjs from "dayjs";
 
 //Dummy data
@@ -108,7 +108,7 @@ const SellCarForm = () => {
       .catch((err) => {
         setError(
           err?.response?.data?.message ||
-            "An error occurred while creating the car"
+          "An error occurred while creating the car"
         );
       });
   };

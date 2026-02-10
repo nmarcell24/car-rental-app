@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import dayjs from "dayjs";
 import axios from "axios";
 import { useUserContext } from "../../hooks/useUserContext";
-import ErrorSnackbar from "../../components/ErrorSnackBar";
+import ErrorSnackbar from "../../components/ErrorSnackbar";
 import { Link } from "react-router";
 
 const UserProfile = () => {
