@@ -100,36 +100,81 @@ public class SecurityConfiguration {
      * @throws Exception if an error occurs during HTTP security setup
      */
 
-   @Bean
-   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    http
-        .cors(withDefaults()) 
-        .csrf(AbstractHttpConfigurer::disable)
-        .authorizeHttpRequests(request -> request
-            .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
-            .requestMatchers(PUBLIC_URLS).permitAll()
-            .requestMatchers("/user/login").permitAll()
+   import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.springframework.security.config.Customizer.withDefaults;
+// ... keep your other imports (DispatcherType, HttpMethod, etc.)
+
+@Configuration
+public class SecurityConfig {
+
+    // ... keep your injections (jwtAuthorizationFilter, etc.) ...
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            // 1. Explicitly use the CORS source defined below
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             
-            // 2. FIXED PATHS (Added leading slash '/')
-            .requestMatchers(HttpMethod.POST, "/loan/create").hasAnyAuthority("CREATE_LOAN")
-            .requestMatchers(HttpMethod.GET, "/loan/list").hasAnyAuthority("LIST_LOANS")
-            .requestMatchers(HttpMethod.POST, "/car/create").hasAnyAuthority("CREATE_CAR")
-            .requestMatchers(HttpMethod.PUT, "/user/{id}").hasAnyAuthority("UPDATE_USER")
-            .requestMatchers(HttpMethod.GET, "/user/{id}").hasAnyAuthority("READ_USER")
-            .requestMatchers(HttpMethod.DELETE, "/car/{id}").hasAnyAuthority("DELETE_CAR")
+            .csrf(AbstractHttpConfigurer::disable)
+            .authorizeHttpRequests(request -> request
+                .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
+                // .requestMatchers(PUBLIC_URLS).permitAll() // Ensure PUBLIC_URLS is defined or remove this
+                .requestMatchers("/user/login").permitAll()
+                .requestMatchers(HttpMethod.POST, "/loan/create").hasAnyAuthority("CREATE_LOAN")
+                .requestMatchers(HttpMethod.GET, "/loan/list").hasAnyAuthority("LIST_LOANS")
+                .requestMatchers(HttpMethod.POST, "/car/create").hasAnyAuthority("CREATE_CAR")
+                .requestMatchers(HttpMethod.PUT, "/user/{id}").hasAnyAuthority("UPDATE_USER")
+                .requestMatchers(HttpMethod.GET, "/user/{id}").hasAnyAuthority("READ_USER")
+                .requestMatchers(HttpMethod.DELETE, "/car/{id}").hasAnyAuthority("DELETE_CAR")
+                
+                // Allow OPTIONS requests (Pre-flight checks) for everyone
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                
+                .anyRequest().authenticated()
+            )
+            .httpBasic(withDefaults())
+            .formLogin(withDefaults())
+            .exceptionHandling(exception -> exception
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .accessDeniedHandler(jwtAccessDeniedHandler)
+            )
+            .authenticationManager(getAuthenticationManager(http))
+            .sessionManagement(sess -> sess.sessionCreationPolicy(STATELESS))
+            .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
+            
+        return http.build();
+    }
 
-            .anyRequest().authenticated()
-        )
-        .httpBasic(withDefaults())
-        .formLogin(withDefaults())
-        .exceptionHandling(exception -> exception
-            .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-            .accessDeniedHandler(jwtAccessDeniedHandler)
-        )
-        .authenticationManager(getAuthenticationManager(http))
-        .sessionManagement(sess -> sess.sessionCreationPolicy(STATELESS))
-        .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
-
-    return http.build();
+    // 2. THE "NUCLEAR" CORS BEAN
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        
+        // ALLOW YOUR VERCEL URL HERE (No trailing slash!)
+        configuration.setAllowedOrigins(Arrays.asList(
+            "https://autoberlo.vercel.app", // REPLACE with your actual Vercel URL
+            "http://localhost:5173"         // Keep localhost for testing
+        ));
+        
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With"));
+        configuration.setAllowCredentials(true);
+        
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+    
+    // ... keep your getAuthenticationManager bean ...
 }
 }
