@@ -100,30 +100,36 @@ public class SecurityConfiguration {
      * @throws Exception if an error occurs during HTTP security setup
      */
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(request -> request
-                        .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
-                        .requestMatchers(PUBLIC_URLS).permitAll()
-                        .requestMatchers("/user/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "loan/create").hasAnyAuthority("CREATE_LOAN")
-                        .requestMatchers(HttpMethod.GET, "loan/list").hasAnyAuthority("LIST_LOANS")
-                        .requestMatchers(HttpMethod.POST, "car/create").hasAnyAuthority("CREATE_CAR")
-                        .requestMatchers(HttpMethod.PUT, "user/{id}").hasAnyAuthority("UPDATE_USER")
-                        .requestMatchers(HttpMethod.GET, "user/{id}").hasAnyAuthority("READ_USER")
-                        .requestMatchers(HttpMethod.DELETE, "car/{id}").hasAnyAuthority("DELETE_CAR")
+   @Bean
+   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http
+        .cors(withDefaults()) 
+        .csrf(AbstractHttpConfigurer::disable)
+        .authorizeHttpRequests(request -> request
+            .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
+            .requestMatchers(PUBLIC_URLS).permitAll()
+            .requestMatchers("/user/login").permitAll()
+            
+            // 2. FIXED PATHS (Added leading slash '/')
+            .requestMatchers(HttpMethod.POST, "/loan/create").hasAnyAuthority("CREATE_LOAN")
+            .requestMatchers(HttpMethod.GET, "/loan/list").hasAnyAuthority("LIST_LOANS")
+            .requestMatchers(HttpMethod.POST, "/car/create").hasAnyAuthority("CREATE_CAR")
+            .requestMatchers(HttpMethod.PUT, "/user/{id}").hasAnyAuthority("UPDATE_USER")
+            .requestMatchers(HttpMethod.GET, "/user/{id}").hasAnyAuthority("READ_USER")
+            .requestMatchers(HttpMethod.DELETE, "/car/{id}").hasAnyAuthority("DELETE_CAR")
 
-                        .anyRequest().authenticated()
-                )
-                .httpBasic(withDefaults())
-                .formLogin(withDefaults())
-                .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                        .accessDeniedHandler(jwtAccessDeniedHandler))
-                .authenticationManager(getAuthenticationManager(http))
-                .sessionManagement(sess -> sess.sessionCreationPolicy(STATELESS))
-                .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
-        return http.build();
-    }
+            .anyRequest().authenticated()
+        )
+        .httpBasic(withDefaults())
+        .formLogin(withDefaults())
+        .exceptionHandling(exception -> exception
+            .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+            .accessDeniedHandler(jwtAccessDeniedHandler)
+        )
+        .authenticationManager(getAuthenticationManager(http))
+        .sessionManagement(sess -> sess.sessionCreationPolicy(STATELESS))
+        .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
+
+    return http.build();
+}
 }
